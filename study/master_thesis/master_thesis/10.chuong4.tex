@@ -1,0 +1,225 @@
+\chapter{Thực nghiệm}\label{exper}
+Để mô tả hiệu suất của PFST, chúng tôi so sánh PFST với một số kĩ thuật gồm
+\begin{itemize}
+	\item Parallel Sequential Forward Selection (PSFS) \cite{scikit-learn},
+	\item Parallel Sequential Backward Selection (PSBS) \cite{scikit-learn},
+	\item Parallel Support Vector Machine Feature Selection based on Recursive Feature Elimination with Cross-Validation (PSVMR) \cite{guyon2002gene},
+	\item Parallel Mutual Information-based Feature Selection (PMI) \cite{bennasar2015feature}.
+\end{itemize}
+Dưới đây là chúng tôi xin trình bày tóm tắt các thuật toán lựa chọn đặc trưng mà chúng tôi sử dụng để so sánh với thuật toán của chúng tôi.
+\section{Một vài thuật toán lựa chọn đặc trưng }
+\subsection[PSFS và PSBS]{Thuật toán lựa chọn tuần tự song song \cite{scikit-learn}}
+Thuật toán lựa chọn tuần tự song song có hai phiên bản
+\begin{itemize}
+	\item Thuật toán Sequential Forward Selection (SFS): được xây dựng trên cơ sở toán học của bài toán tối ưu hóa. Mục tiêu của SFS là tìm kiếm một tập con tối ưu của các đặc trưng để cải thiện hiệu suất của một mô hình dự đoán. Cụ thể, SFS bắt đầu với một tập con rỗng của các đặc trưng và tìm kiếm lần lượt các tập con tốt hơn bằng cách thêm một đặc trưng mới vào mỗi lần. SFS sẽ kiểm tra tất cả các tập con con của tập con hiện tại, thêm đặc trưng nào cải thiện hiệu suất của mô hình dự đoán nhất, và sau đó thêm đặc trưng đó vào tập con mới. Thuật toán tiếp tục lặp lại quá trình này cho đến khi không thể tìm thấy thêm đặc trưng nào có thể cải thiện hiệu suất của mô hình.
+	
+	Để đánh giá hiệu suất của mô hình trên mỗi tập con, SFS sử dụng một hàm mục tiêu, thường là độ chính xác (accuracy) hoặc F1 score. Mục tiêu của SFS là tối đa hóa hàm mục tiêu này trên tất cả các tập con có thể có.
+	
+	Ngoài ra, việc tính toán độ đo đánh giá của một tập con đặc trưng độc lập với các tập con khác nên ta có thể áp dụng tính toán song song để tính toán các giá trị đánh giá tập con đặc trưng cho các bước chuyển tiến. Tuy nhiên, việc sử dụng song song cho SFS có thể khó khăn vì mỗi bước chuyển tiến cần phải sử dụng kết quả của bước trước đó.
+	\item Thuật toán Sequential Backward Selection (SBS): là một thuật toán tiếp cận từng bước để chọn lọc đặc trưng, trong đó bắt đầu với toàn bộ tập dữ liệu và lần lượt loại bỏ các đặc trưng ít quan trọng nhất cho đến khi đạt được số lượng đặc trưng mong muốn.
+	
+	Đầu tiên, tập dữ liệu được đưa vào mô hình học máy để đánh giá hiệu suất của từng đặc trưng. Sau đó, đặc trưng ít quan trọng nhất được loại bỏ khỏi tập dữ liệu và mô hình lại được đánh giá hiệu suất với các đặc trưng còn lại. Quá trình này được lặp lại cho đến khi số lượng đặc trưng mong muốn được đạt được.
+	
+	Để đánh giá độ quan trọng của từng đặc trưng, SBS sử dụng một giá trị đánh giá hiệu suất của mô hình, chẳng hạn như độ chính xác hoặc sai số, và đo lường hiệu suất của mô hình trên tập dữ liệu huấn luyện sau khi loại bỏ một số lượng đặc trưng.
+	
+	SBS có thể giúp giảm chiều của tập dữ liệu và cải thiện hiệu suất của mô hình bằng cách loại bỏ những đặc trưng ít quan trọng nhất. Tuy nhiên, nó có thể mất thời gian để chạy trên tập dữ liệu lớn và có số lượng đặc trưng lớn.
+	
+	Việc chạt song song thuật toán Sequential Backward Selection (SBS) cần phải chia tập dữ liệu và tính toán các mẫu con độc lập. Tuy nhiên, điều này đòi hỏi một số điều kiện nhất định, chẳng hạn như phải có thể xác định được các tính năng có thể bị loại bỏ độc lập và cùng phân phối trên các mẫu con. Vì vậy, khả năng chạy song song của SBS phụ thuộc vào đặc tính của tập dữ liệu và thuật toán. Trong nhiều trường hợp, việc thực hiện SBS song song có thể không hiệu quả và không cải thiện thời gian chạy.
+\end{itemize}
+
+\subsection[PSVMR]{Thuật toán Máy vectơ hỗ trợ lựa chọn đặc trưng song song dựa trên việc loại bỏ các đặc trưng đệ quy bằng xác thực chéo (Parallel Support Vector Machine Feature Selection based on Recursive Feature Elimination with Cross-Validation - PSVMR) \cite{guyon2002gene}}
+Thuật toán Máy vectơ hỗ trợ lựa chọn đặc trưng song song dựa trên việc loại bỏ các đặc trưng đệ quy bằng xác thực chéo là một phương pháp chọn đặc trưng cho bài toán phân loại, kết hợp việc sử dụng mô hình Support Vector Machine (SVM) và phương pháp RFE-CV. PSVMR sử dụng kỹ thuật đệ quy để loại bỏ các thuộc tính dư thừa, và sử dụng kiểm tra chéo để đánh giá hiệu suất của mô hình và chọn ra các thuộc tính quan trọng nhất.
+
+Thuật toán bắt đầu bằng việc huấn luyện một mô hình SVM với toàn bộ các đặc trưng của tập dữ liệu. Sau đó, các đặc trưng được xếp hạng dựa trên giá trị hệ số của SVM. Các đặc trưng có hệ số nhỏ nhất sẽ được loại bỏ khỏi tập dữ liệu.
+
+Tiếp theo, một mô hình SVM mới được huấn luyện trên tập dữ liệu đã loại bỏ các đặc trưng dư thừa. Quá trình này được lặp lại đến khi đạt được số lượng đặc trưng cần chọn. Thuật toán cũng sử dụng tính toán song song để tăng tốc độ thực thi của thuật toán trên các bộ dữ liệu lớn.
+\subsection[PMI]{Thuật toán lựa chọn đặc trưng song song dựa trên thông tin lẫn nhau (Parallel Mutual Information-based Feature Selection - PMI) \cite{bennasar2015feature}}
+\begin{definition}
+	Thông tin lẫn nhau (mutual infomation - MI) giữa hai biến ngẫu nhiên $X$ và $Y$ là $$I(X; Y) = H(X) - H(X|Y),$$ trong đó $H(X) = -\sum_{x\in X}p(x)\log p(x)$ là hàm mất mát entropy và $H(X|Y) = -\sum_{y\in Y}p(y)\sum_{x\in X}p(x|y)\log p(x|y)$.
+\end{definition}
+Thuật toán lựa chọn đặc trưng song song dựa trên thông tin lẫn nhau là một phương pháp lựa chọn đặc trưng dựa trên thông tin lẫn nhau được thực hiện song song để tăng tốc độ xử lý. Mục tiêu của PMI là giảm số lượng đặc trưng cần thiết để đạt được hiệu suất phân loại (hoặc hồi quy) tốt nhất, đồng thời giảm chi phí tính toán.
+
+Các bước chính của thuật toán PMIFS:
+\begin{itemize}
+	\item Tính toán MI giữa mỗi đặc trưng và nhãn của bài toán (hoặc giá trị hồi quy). Lưu trữ kết quả vào một danh sách.
+	\item Sắp xếp danh sách đặc trưng theo giá trị MI giảm dần.
+	\item Chia danh sách đặc trưng thành các phần nhỏ để thực hiện song song trên nhiều CPU hoặc GPU.
+	\item Trong mỗi phần, xác định các cặp đặc trưng có MI cao (tức là có mối tương quan mạnh) và loại bỏ một trong hai đặc trưng trong mỗi cặp.
+	\item Kết thúc khi tất cả các phần đã được xử lý. Kết hợp các phần lại để tạo thành tập đặc trưng được lựa chọn.
+\end{itemize}
+
+PMI giúp tăng tốc quá trình chọn đặc trưng bằng cách phân chia công việc và thực hiện song song trên nhiều thiết bị xử lý. Điều này làm giảm thời gian tính toán và cho phép xử lý bộ dữ liệu lớn hơn trong thời gian ngắn hơn.
+
+Ngoài ra, thuật toán này có ba phương pháp để áp dụng tiêu chí MI vào lựa chọn đặc trưng. Trong luận văn này, chúng tôi đã sử dụng phương pháp Joint Mutual Infomation (JMI) được tính như sau
+\begin{definition}
+	Cho ba biến ngẫu nhiên rời rạc $X, Y, Z$, khi đó MI điều kiện (conditional mutual information) được định nghĩa:
+	$$I(X;Y|Z) = H(X|Z) - H(X|Y, Z) = I(X;Y,Z) - I(X;Z),$$ với $I(X;Y,Z)$ là joint mutual information.
+\end{definition}
+\section{Thông tin về các tập dữ liệu và các thiết lập}
+\begin{table}[htbp]
+	\caption{Các tập dữ liệu được sử dụng trong thực nghiệm}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Tập dữ liệu & \# Số lớp & \# Số đặc trưng & \# Kích thước mẫu \\
+			\hline
+			Breast cancer & $2$ & $30$ & $569$ \\
+			\hline
+			Parkinson & $2$ & $754$ & $756$ \\
+			\hline
+			Mutants & $2$  & $5408$ & $31419$\\
+			\hline
+			Gene & $5$ & $20531$ & $801$ \\
+			\hline
+			Micromass & $10$ & $1087$ & $360$\\
+			\hline
+		\end{tabular}
+		\label{table_info_datasets}
+	\end{center}
+\end{table}
+Các thực nghiệm đã được hoàn thành trên các tập dữ liệu lấy từ thư viện Scikit-learn \cite{scikit-learn} và kho dữ liệu máy học UCI \cite{Dua:2019}. Thông tin số liệu của các tập dữ liệu này được trình bày trong bảng \ref{table_info_datasets}.
+
+Chúng tôi đã cộng một lượng nhỏ nhiễu vào tập dữ liệu Gene và tập dữ liệu Mutants để tránh lỗi không tìm được nghịch đảo của các ma trận đơn khi chạy thuật toán PSFT. Ngoài ra, đối với tập dữ liệu Mutants, chúng tôi đã loại bỏ một dòng mà tất cả các giá trị trong dòng đều là rỗng. 
+
+Về cấu hình, chúng tôi chạy thực nghiệm trên một CPU là AMD Ryzen 7 3700X với 8 nhân và 16 luồng, 3.6GHz và 16GB ram. Sau khi chọn được các đặc trưng, chúng tôi thực hiện bài toán phân loại bằng việc sử dụng mô hình phân tích biệt thức tuyến tính (linear discriminant analysis - LDA) và trình bày kết quả của 5-fold misclassification rate trong bảng \ref{table_error}. Ngoài ra, chúng tôi cũng trình bày thời gian chạy và số lượng đặc trưng được chọn từ tất cả đặc trưng ban đầu trong bảng \ref{tab_time}
+
+Chúng tôi sẽ bỏ những trường hợp nếu không nhận được kết quả sau 5 giờ hoặc khi có vấn đề về việc tràn RAM, và ký hiệu NA trong bảng \ref{table_error} và \ref{tab_time}) để chỉ những trường hợp như vậy.
+
+Với thuật toán PSFT, các tham số được sử dụng là $\alpha=\gamma=0.05$, $\beta=0.01$. Với thuật toán PSBS và PSFS, chúng tôi đã sử dụng thuật toán KNN với $K=3$ làm hàm ước lượng. Với thuật toán PSVMR, chúng tôi sử dụng kernel tuyến tính và sử dụng kernel \lq\lq JMI\rq\rq~ cho thuật toán PMI. Để cho việc so sánh được công bằng, chúng tôi đã set số lượng đặc trưng cần được chọn từ các kĩ thuật khác bằng với số lượng đặc trưng mà PSFT chọn được.
+
+\section{Độ đo đánh giá}
+Ta sử dụng k-fold misclassification rate là một sự kết hợp của phương pháp kiểm tra chéo (cross-validation) với k phần (k-fold cross-validation) và tỷ lệ phân loại sai (misclassification rate). Cụ thể,
+\begin{itemize}
+	\item k-fold cross-validation là một kỹ thuật kiểm định chéo được sử dụng trong học máy và thống kê để đánh giá hiệu suất của mô hình trên một tập dữ liệu chưa được sử dụng. Tập dữ liệu được chia thành k phần (folds) cân bằng, trong đó k-1 phần được sử dụng để huấn luyện mô hình và phần còn lại được sử dụng để kiểm tra. Quá trình này được lặp lại k lần, sao cho mỗi phần đều được sử dụng làm tập kiểm tra đúng một lần. Kết quả cuối cùng là trung bình của kết quả từ các lần kiểm tra chéo.
+	\item Misclassification rate: Là một phép đo hiệu suất của mô hình phân loại, đo lường tỷ lệ mẫu bị phân loại sai. Nó được tính bằng cách lấy tổng số mẫu bị phân loại sai chia cho tổng số mẫu trong tập dữ liệu.
+\end{itemize}
+
+Để tính toán chỉ số này, ta cần thực hiện quá trình kiểm tra chéo k-fold và tính tỷ lệ phân loại sai cho mỗi lần kiểm tra, sau đó lấy trung bình của các tỷ lệ đó để thu được k-fold misclassification rate.
+
+Trong thực nghiệm, chúng tôi sử dụng 5-fold misclassification rate để đánh giá hiếu suất của mô hình LDA tương ứng với mỗi tập con các đặc trưng được chọn của mỗi phương pháp.
+\section{Kết quả và thảo luận}
+\begin{table*}[htbp]
+	\caption{5-fold misclassification rate}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|c|c|c|c|c|c|c|}
+			\hline
+			\textbf{Datasets} &
+			\textbf{\# Selected Features} & 
+			{\textbf{PFST (our)}} &
+			{\textbf{PSFS}} &
+			{\textbf{PSBS}} &
+			{\textbf{PSVMR}} &
+			{\textbf{PMI}} &
+			\textbf{Full Features} \\ \hline
+			\textbf{Breast cancer} &
+			$3$ &
+			{$\boldsymbol{0.042}$} &
+			{$0.111$} &
+			{$0.074$} &
+			{$0.051$} &
+			{$0.076$} &
+			$0.042$ \\ \hline
+			\textbf{Parkinson} &
+			$11$ &
+			{$\boldsymbol{0.112}$} &
+			{$0.234$} &
+			{NA} &
+			{NA} &
+			{$0.181$} &
+			$0.362$ \\ \hline
+			\textbf{Mutants} &
+			$6$ &
+			{\textbf{0.008}} &
+			{NA} &
+			{NA} &
+			{NA} &
+			{NA} &
+			0.010 \\ \hline
+			\textbf{Gene} &
+			$12$ &
+			{$\boldsymbol{0.006}$} &
+			{$0.009$} &
+			{NA} &
+			{NA} &
+			{$0.007$} &
+			$0.042$ \\ \hline
+			\textbf{Micromass} &
+			$19$ &
+			{$0.115$} &
+			{$0.310$} &
+			{$0.218$} &
+			{$\boldsymbol{0.096}$} &
+			{$0.228$} &
+			$0.129$ \\ \hline
+		\end{tabular}
+		\label{table_error}
+	}
+\end{table*}
+
+\begin{table*}[htbp]
+	\caption{Thời gian chạy và số lượng đặc trưng chọn được}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|c|c|ccccc|}
+			\hline
+			\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Datasets}}} &
+			\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}\# selected\\ features\end{tabular}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{\# Features}}} &
+			\multicolumn{5}{c|}{\textbf{Running Time (s)}}  \\ \cline{4-8} 
+			\multicolumn{1}{|c|}{} &
+			& &
+			\multicolumn{1}{c|}{\textbf{PFST (our)}} &
+			\multicolumn{1}{c|}{\textbf{PSFS}} &
+			\multicolumn{1}{c|}{\textbf{PSBS}} &
+			\multicolumn{1}{c|}{\textbf{PSVMR}} &
+			\multicolumn{1}{c|}{\textbf{PMI}} 
+			\\ \hline
+			\textbf{Breast cancer} &
+			3 & 30& 
+			\multicolumn{1}{c|}{\textbf{0.095}} &
+			\multicolumn{1}{c|}{1.403} &
+			\multicolumn{1}{c|}{8.268} &
+			\multicolumn{1}{c|}{12.470} &
+			\multicolumn{1}{c|}{0.646}    \\ \hline
+			\textbf{Parkinson} &
+			11 & 754&
+			\multicolumn{1}{c|}{\textbf{3.219}} &
+			\multicolumn{1}{c|}{163.32} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{77.269}   \\ \hline
+			\textbf{Mutants} &
+			6 & 5408 &
+			\multicolumn{1}{c|}{\textbf{674.702}} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} \\ \hline
+			\textbf{Gene} &
+			12 & 20531 & 
+			\multicolumn{1}{c|}{\textbf{172.386}} &
+			\multicolumn{1}{c|}{5350.14} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{2706.45}   \\ \hline
+			\textbf{Micromass} &
+			19 & 1087&
+			\multicolumn{1}{c|}{\textbf{16.1}} &
+			\multicolumn{1}{c|}{252.9} &
+			\multicolumn{1}{c|}{10561.3} &
+			\multicolumn{1}{c|}{46.909} &
+			\multicolumn{1}{c|}{144.684} 
+			\\ \hline
+		\end{tabular}
+		\label{tab_time}
+	}
+\end{table*}  
+
+Từ bảng \ref{table_error} và \ref{tab_time}, ta có thể thấy rằng phương pháp lựa chọn đặc trưng PFST không chỉ có hiệu suất tốt về mặt tốc độ mà con đạt độ chính xác cao cho bài toán phân loại, Ví dụ, với tập dữ liệu \lq\lq Breast cancer\rq\rq, PFST đã chọn ra tập hợp gồm 3 đặc trưng từ 30 đặc trưng ban đầu với chỉ 0.095 giây, trong khi PSBS cần 8.268 giây và PSVMR cần 12.470 giây. Không chỉ có thời gian chạy tốt nhất, phương pháp PFST còn đạt được kết quả phân loại tốt nhất với tỉ lệ phân loại sai chỉ 0.042, đây cũng là tỉ lệ phân loại sai khi sử dụng tất cả đặc trưng. Rõ ràng, kết quả này đã cho thấy, PFST lựa chọn được các đặc trưng tốt, ảnh hưởng thật sự đến kết quả phân loại. Ngoài ra, ta cũng thấy rằng hiệu suất của PFST tốt hơn PSBS - một phiên bản lựa chọn đặc trưng lùi.
+
+
+Với tập dữ liệu Parkinson, PFST đã lựa chọn ra 11 trong tổng số 754 đặc trưng. Kết quả thu được là tỉ lệ phân loại sai vẫn là thấp nhất với chỉ 0.112, khoảng 33\% tỉ lệ phân loại sai khi sử dụng toàn bộ đặc trưng (0.362), và 66.87\% tỉ lệ phân loại sai của phương pháp tốt thứ hai là PMI (0.181). Điều này cho thấy PFST đã loại bỏ rất hiệu quả các đặc trưng dư thừa và đẩy được hiệu suất lên đáng kể. Về mặt thời gian chạy, PFST chỉ mất 3.219 giây để chọn 11 đặc trưng từ 754 đặc trưng, trong khi PMI cần đến 77.269 giây, PSFS cần 163.32 giây. PSBS và PSVMR không thể thu được kết quả khi thời gian chạy vượt quá 5 giờ.
+
+Trong tập dữ liệu nhiều đặc trưng nhất, tập dữ liệu Gene, PFST đã rút gọn 20531 đặc trưng xuống còn 12 đặc trưng trong chưa đầy 3 phút và đạt được tỉ lệ phân loại sai tốt nhất với chỉ 0.006. Mặc dùng PSFS và PMI cũng đạt được kết quả phân loại tốt với tỉ lệ phân loại sai lần lượt là 0.009 và 0.007, nhưng hai phương pháp này chạy lâu hơn PFST, còn đối với PSBS và PSVMR đã không thể thu được kết quả trong vòng 5 giờ chạy.
+
+Mặc dù PFST là thuật toán nhanh nhất trong số các thuật toán được sử dụng trong phần thực nghiệm này, nhưng phương pháp này cũng làm tốt hơn các phương pháp khác về tỉ lệ phân loại sai với bốn trong năm tập dữ liệu. Với tập dữ liệu Micromass, hiệu suất tốt nhất về kết quả phân loại thuộc về phương pháp PSVMR, và tốt thứ hai là PFST. Tuy nhiên, PSVMR chỉ tốt hơn PFST rất ít, không đáng kể (chỉ thấp hơn 1.9\% tỉ lệ phân loại sai), nhưng thời gian chạy lại gần gấp 3 lần PSFT (46.909 giây so với 16.1 giây).
+
+

@@ -1,0 +1,291 @@
+\documentclass[notheorems,envcountsect,serif,12pt]{beamer}
+\usepackage{preamble}
+\usepackage{amsmath, amsthm, amssymb,amsxtra,latexsym,amscd,graphics,graphpap,graphicx}
+\usepackage[mathscr]{eucal}
+\usepackage[english]{babel}
+\usepackage[utf8]{vietnam}
+
+%---------------------------------------------------
+
+%------------------------------------
+\usefonttheme[onlylarge]{structurebold}
+\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=true,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdftitle={Thesis Project for the Degree of Bachelor of Science in Mathematics},    % title
+    pdfauthor={Quang Minh Tran},     % author
+    pdfsubject={Thesis Project for the Degree of Bachelor of Science in Mathematics},   % subject of the document
+    pdfcreator={Quang Minh Tran},   % creator of the document
+    pdfproducer={Quang Minh Tran}, % producer of the document
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=false,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\vt}[1]{\left\langle#1\right\rangle}
+\newcommand{\function}[3]{#1 \hspace{0.4cm} : \hspace{0.4cm} \mathbb{#2} \rightarrow \mathbb{#3}}
+\newcommand{\hoac}[1]{\left[\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\heva}[1]{\left\{\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\ve}{vectơ }
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\E}{\mathbb{E}}
+%-----------------------------------------
+
+%---------------------------------------Choose theme
+%\usetheme{Ilmenau}
+%\usetheme{lined} %don gian
+%\usetheme{Madrid} % hoanh trang
+%\usetheme{boadilla} % nhe nhan
+%\usetheme{CambridgeUS} %dep
+%\usetheme{Darmstadt}
+%\usetheme{Warsaw}
+%\usetheme{Rochester}
+%\usetheme{Pittsburgh}
+%\usetheme{Antibes}
+%\usetheme{Montpellier}
+%\usetheme{Berkeley}
+%\usetheme{PaloAlto}
+%\usetheme{Goettingen}
+%\usetheme{Marburg} %giong voi Hannover
+%\usetheme{Hannover} %phong cach la
+%\usetheme{Berlin}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Singapore} % on day
+%\usetheme{Szeged} %Tam duoc
+\usetheme{Copenhagen}
+%\usetheme{Malmoe}
+% ------------------------------------------Choose color scheme
+%---------------------------------------
+\numberwithin{equation}{section}
+\setbeamertemplate{theorems}[numbered]
+\newtheorem{theorem}{Định lý}[section]
+\newtheorem{lemma}[theorem]{Bổ đề}
+\newtheorem{proposition}[theorem]{Mệnh đề}
+\newtheorem{corollary}[theorem]{Hệ quả}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Định nghĩa}
+\newtheorem{example}[theorem]{Ví dụ}
+\newtheorem{remark}[theorem]{Nhận xét}
+\numberwithin{equation}{section}
+\title[\bf LUẬN VĂN TỐT NGHIỆP]{\small {KHÓA LUẬN TỐT NGHIỆP} \\
+\small QUY DẪN\\TỪ TRƯỜNG HỢP TRUNG BÌNH\\VỀ TRƯỜNG HỢP XẤU NHẤT\\ DỰA TRÊN ĐỘ ĐO GAUSS} 
+\author[Phan Thành Nhân]{ Sinh viên: Phan Thành Nhân.\\
+Giảng viên hướng dẫn: TS Lê Văn Luyện.}
+\institute[HCMUS]{ĐẠI HỌC KHOA HỌC TỰ NHIÊN TP. HỒ CHÍ MINH}
+\begin{document}
+	\fontsize{12pt}{10pt}\selectfont
+	\frame{\maketitle}
+	\begin{frame}{Mục lục}
+	\tableofcontents
+\end{frame}
+\section{Tổng quan}
+\begin{frame}{Tổng quan}
+Trong khóa luận này, em trình bày chứng minh việc quy dẫn từ bài toán $IncGDD$ trong trường hợp xấu nhất về bài toán $SIS$ trong trường hợp trung bình với xác suất đáng kể.\pause 
+
+\begin{block}{Cụ thể:}
+	Với mọi hàm $g(n)>0$, các hàm đa thức bị chặn $m(n), \beta(n)=n^{O(1)}$, hàm nhỏ không đáng kể $\epsilon(n)=n^{-\omega(1)}$, và $q(n)\ge g(n)n\sqrt{m(n)}\beta(n)$, có một quy dẫn xác suất thời gian đa thức từ việc giải bài toán $IncGDD_{\gamma, g}^{\eta_\epsilon}$ với $\gamma(n)=\beta(n)\sqrt{n}$ trên $n$ chiều trong trường hợp xấu nhất về việc giải bài toán $SIS$ trong trường hợp trung bình với xác suất đáng kể.	
+\end{block}
+\end{frame}
+
+\section{Kiến thức chuẩn bị}
+\begin{frame}{Kiến thức chuẩn bị}
+\begin{block}\quad
+	Chương này trình bày về các kiến thức chuẩn bị như:
+	\begin{enumerate}
+		\item Nhắc lại định nghĩa về dàn và một số bài toán trên dàn,
+		\item Khoảng cách thống kê,
+		\item Giá trị kỳ vọng,
+		\item Độ đo Gauss,
+		\item Biến đổi Fourier. 
+	\end{enumerate} 
+	Các kết quả này không mới và nhằm mục đích quy ước các ký hiệu và sử dụng công cụ có sẵn cho thuận tiện.
+\end{block}
+\end{frame}
+\section{Từ trường hợp xấu nhất đến trường hợp trung bình}
+\subsection{Tổng của các véc-tơ độc lập tuyến tính}
+\begin{frame}{Tổng của các véc-tơ độc lập tuyến tính}
+
+Trong mục này, ta chứng minh một bổ đề đề chặn kỳ vọng chuẩn bình phương của tổng các vectơ độc lập tuyến tính, đây là tính chất cực kỳ quan trọng được dùng để giúp hoàn tất chứng minh cho định lý \ref{IncGDD-SIS}.\pause
+	\begin{lemma}\label{TDLTT}
+		Gọi $v_1, \cdots, v_m$ là $m$ vectơ độc lập tuyến tính được chọn với phân phối xác suất $V_1, \cdots, V_m$ sao cho $\E\left(\norm{v_i}^2\right)\le l$ và $\norm{\E(v_i)}^2\le \epsilon$ với mọi $i=1,\cdots,m$. Khi đó, với mọi $z\in R^m$, kỳ vọng chuẩn bình phương của $\sum v_iz_i$ lớn nhất là $$\E\left(\norm{\sum_{i=1}^{m}v_iz_i}^2\right)\le (l+\epsilon\cdot m)\norm{z}.$$
+	\end{lemma}\pause
+	Bổ đề này về cơ bản cho ta thấy được khi tính tổng $m$ biến ngẫu nhiên độc lập tuyến tính, kỳ vọng độ dài của tổng sẽ tăng theo $\sqrt{m}$ chứ không phải $m$.
+\end{frame}
+\subsection{Tham số trơn}\label{TST}
+\begin{frame}{Tham số trơn}
+	Trong mục này, ta định nghĩa một tham số mới của dàn liên quan đến độ đo Gauss trên dàn. Ta gọi tham số này là \textit{tham số trơn} (smoothing parameter).\pause
+	\begin{definition}
+		Cho một dàn $n$ chiều $\Lambda $, và một số thực dương $\epsilon >0$, \textit{tham số trơn} của dàn $\eta_\epsilon(\Lambda)$ là giá trị $s$ nhỏ nhất thỏa $\rho_{1/s}\left(\Lambda^*\setminus\{0\}\right)\le \epsilon$.
+	\end{definition}\pause
+	Từ định nghĩa này, ta có mỗi liên hệ giữa tham số trơn và một số tham số tiêu chuẩn trên dàn, ta có hai bổ đề sau.\pause
+	\begin{lemma}\label{TST_BD1}
+			Với mọi dàn $n$ chiều $\Lambda$, $\eta_\epsilon(\Lambda)\le \sqrt{n}/\lambda_1(\Lambda^*)$ với $\epsilon=2^{-n}$
+	\end{lemma}\pause
+	\begin{lemma}\label{TST_BD2}
+		Với mọi dàn $n$ chiều $\Lambda$ và số thực dương $\epsilon>0$, $$\eta_\epsilon(\Lambda)\le\sqrt{\frac{\ln(2n(1+1/\epsilon))}{\pi}}\cdot \lambda_n(\Lambda).$$
+	\end{lemma}
+\end{frame}
+
+\subsection{Một số tính chất của phân phối Gauss}\label{Gauss}
+\begin{frame}{Một số tính chất của phân phối Gauss}
+	Trong mục này, ta sẽ đi chứng minh một số tính chất của phân phối Gauss liên quan đến dàn thông qua các bổ đề và hệ quả sau.\pause
+	\begin{lemma}\label{Gauss_BD1}
+		Với mọi $s>0, c\in \R^n$, và dàn $\mathcal{L}(B)$, khoảng cách thống kê giữa $D_{s,c}\text{ mod } \mathcal{P}(B)$ và phân phối đều trên $\mathcal{P}(B)$ lớn nhất là $\rho_{1/s}\left(\mathcal{L}(B)^*\setminus\{0\}\right)/2$.
+		
+		Đặc biệt, với mọi $\epsilon >0$ và mọi $s\ge \eta_\epsilon(B)$, ta có $$\Delta\left(D_{s,c}\text{ mod }\mathcal{P}(B),U(\mathcal{P}(B))\right)\le\epsilon/2.$$
+	\end{lemma}\pause
+	\begin{lemma}\label{Gauss_BD2}
+		Cho dàn $n$ chiều $\Lambda$, vectơ $c\in \R^n$, vectơ đơn vị $u$ và số thực $0<\epsilon <1, s\ge 2\eta_\epsilon(\Lambda)$, $$\abs{\mathop \E\limits_{x\sim D_{\Lambda, s, c}}\left[\vt{x-c, u}\right]}\le \frac{\epsilon s}{1-\epsilon}, \text{ và }\abs{\mathop \E\limits_{x\sim D_{\Lambda, s, c}}\left[\vt{x-c, u}^2\right]-\frac{s^2}{2\pi}}\le \frac{\epsilon s^2}{1-\epsilon}$$
+	\end{lemma}
+\end{frame}
+\begin{frame}{Một số tính chất của phân phối Gauss}
+Từ bổ đề \ref{Gauss_BD2}, ta chứng minh được hệ quả sau\pause
+\begin{corollary}\label{Gauss_HQ}
+	Cho dàn $n$ chiều $\Lambda$, vectơ $c\in \R^n$, vectơ đơn vị $u$ và số thực $0<\epsilon <1, s\ge 2\eta_\epsilon(\Lambda)$, khi đó $$\norm{\mathop \E\limits_{x\sim D_{\Lambda, s, c}}\left[x-c\right]}^2\le \left(\frac{\epsilon}{1-\epsilon}\right)^2s^2n;$$ $$\mathop \E\limits_{x\sim D_{\Lambda, s, c}}\left[\norm{x-c}^2\right]\le \left(\frac{1}{2\pi}+\frac{\epsilon}{1-\epsilon}\right)s^2n.$$
+\end{corollary}
+\end{frame}
+\subsection[Bài toán tìm véc-tơ ngắn nguyên]{short integer solution- SIS}
+\begin{frame}{Bài toán tìm véc-tơ ngắn nguyên (short integer solution- SIS)}
+	Bài toán $SIS$ là bài toán trường hợp trung bình mà chúng ta sẽ xét tới, bài toán yêu cầu tìm một nghiệm nguyên nhỏ khác $0$ cho hệ phương trình tuyến tính ngẫu nhiên của hệ phương trình module.
+	\begin{definition}
+		Một nghiệm nguyên nhỏ của bài toán $SIS$ (trong chuẩn $l_2$) là: cho trước một số nguyên $q$, một ma trận $A\in \Z_q^{n\times m}$ và một số thực $\beta$, tìm một vectơ nguyên $z\in \Z^m\setminus\{0\}$ sao cho $Az=0 \mod q$ và $\norm{z}\le \beta$.
+		
+		Tức là, bài toán $SIS$ yêu cầu tìm một vectơ $z\in \Lambda_q(A)\setminus\{0\}$ với $\norm{z}\le \beta$ trong đó $$\Lambda_q(A)=\{z\in \Z^m \| Az=0 \mod q\}$$
+	\end{definition}
+\end{frame}
+\begin{frame}{Bài toán tìm véc-tơ ngắn nguyên (short integer solution- SIS)}
+	Trong định nghĩa của bài toán $SIS$, bài toán sẽ trở nên tầm thường nếu như không tồn tại nghiệm, điều mà ta chưa đảm bảo được. Bổ đề sau chỉ ra điều kiện để đảm bảo các bài toán $SIS$ luôn có nghiệm.\pause
+	\begin{lemma}\label{BTTB_BD1}
+		Với mọi $q\in \Z, A\in \Z_q^{n\times m}$ và $\beta \ge \sqrt{m}\cdot q^{n/m}$, bài toán $SIS$ trong trường hợp $(q, A, \beta)$ luôn có một nghiệm thỏa mãn, nghĩa là, tồn tại một vectơ $z\in \Z^m\setminus\{0\}$ thỏa $Az=0\mod q$ và $\norm{z}\le \beta$.
+	\end{lemma}
+\end{frame}
+\begin{frame}{Bài toán tìm véc-tơ ngắn nguyên (short integer solution- SIS)}
+Từ điều kiện của bổ đề \ref{BTTB_BD1} ta sẽ tìm hiểu độ khó của bài toán $SIS$ trong trường hợp $(q, A, \beta)$ ($SIS$ instance $(q, A, \beta)$). Để thuận tiện trong việc xác định tập hợp xác suất (probability ensembles) xảy ra bài toán $SIS$ trong trường hợp trên, ta sẽ sử dụng số các phương trình $n$ như một tham số bảo mật, và biểu diễn các tham số khác xác định bởi $q(n), m(n)$ và $\beta(n)$ theo $n$.\pause
+\begin{definition}
+		Với mọi hàm $q(n), m(n)$ và $\beta(n)$, đặt $$SIS_{q, m, \beta}=\left\{\left(q(n), U\left(\Z_{q(n)}^{n\times m(n)}\right), \beta(n)\right)\right\}_n$$ là tập hợp xác suất trên bài toán $SIS$ trong trường hợp $\left(q(n), A, \beta(n)\right)$ với $A$ được chọn ngẫu nhiên theo phân phối đều từ tất cả các ma trận nguyên $n\times m(n)$ module $q(n)$. Khi $\beta(n)=\sqrt{m}q(n)^{n/m(n)}$ là chặn trên thỏa mãn bổ đề \ref{BTTB_BD1}, do đó để đơn giản ta chỉ cần viết $SIS_{q, m}$.
+\end{definition}
+\end{frame}
+\subsection[Bài toán đảm bảo giải mã khoảng cách gia tăng]{Bài toán đảm bảo giải mã khoảng cách gia tăng (incremental guaranteed distance decoding - IncGDD)}\label{IncGDD}
+\begin{frame}{Bài toán đảm bảo giải mã khoảng cách gia tăng (incremental guaranteed distance decoding - IncGDD)}
+	\begin{definition}
+		Một đầu vào của $IncGDD_{\gamma, g}^{\phi}$ là một dàn cơ sở $B$ có $n$ chiều, một tập hợp $n$ vectơ độc lập tuyến tính $S\subset \mathcal{L}(B)$, một vectơ mục tiêu $t$, và một số thực $r>\gamma(n)\cdot \phi(B)$. Mục đích là xuất ra một vectơ dàn $u\in \mathcal{L}(B)$ thỏa $$\norm{u-t}\le \left(\norm{S}/g\right)+r$$.
+	\end{definition}\pause
+	Nói cách khác, bài toán $IncGDD$ yêu cầu tìm một vectơ dàn mà có khoảng cách với vectơ mục tiêu không vượt quá $\left(\norm{S}/g\right)+r$. Thông thường, $\norm{S}$ lớn hơn $r$ rất nhiều, vì vậy yêu cầu về khoảng cách chủ yếu phụ thuộc vào $\norm{S}/g$. Tuy vậy, tham số $r$ vẫn đóng một vai trò quan trọng để đảm bảo được bài toán luôn tồn tại nghiệm
+\end{frame}
+
+\subsection{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+\begin{frame}{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+	Trong mục này, ta sẽ chỉ ra rằng việc giải bài toán $SIS$ trong trường hợp trung bình với xác suất đáng kể (non-negligible probability) ít nhất khó như việc giải bài toán $IncGDD$.\pause
+	
+	Mục đích của chúng ta là quy dẫn từ bài toán $IncGDD$ trong trường hợp xấu nhất về trường hợp ngẫu nhiên của bài toán $SIS$. Nghĩa là, ta muốn giải bài toán $IncGDD$ trong trường hợp $(B, S, t, r)$ với sự trợ giúp của một oracle $F$ như sau:
+	\begin{block}{\quad}
+		Khi nhập vào một ma trận ngẫu nhiên đều $A$, oracle $F$ trả về với xác suất đáng kể một vectơ $z\ne 0$ nguyên, ngắn sao cho $Az=0\mod q$
+	\end{block}\pause
+\end{frame}
+\begin{frame}{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+		Tiếp theo đây, chúng ta sẽ mô tả phép quy dẫn một cách chi tiết hơn. Ta bắt đầu với mội quy trình lấy mẫu $\mathcal{S}$. Quy trình này nhận đầu vào là một cở sở dàn $B$ và thêm hai tham số $t, s$, $s$ không quá nhỏ. Và đầu ra của chu trình là một cặp vectơ $(c, y)$ với các tính chất sau
+	\begin{block}{\quad}
+		\begin{enumerate}
+			\item Vectơ $c$ có phân phối rất gần với phân phối đều trên hình bình hành cơ bản $\mathcal{P}(B)$.
+			\item vectơ $y$ là một vectơ dàn được phân phối theo phân phối Gauss rời rạc xung quanh $t+c$ với tham số $s$.
+		\end{enumerate}
+	\end{block}
+	Ta gọi quy trình này là \textit{Quy trình lấy mẫu}, và tính đúng được chứng minh thông qua bổ đề sau.
+\end{frame}
+\begin{frame}{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+	\begin{lemma}[Bổ đề lấy mẫu]\label{BDLM}
+		Có một thuật toán xác suất thời gian đa thức $\mathcal{S}(B, t, s)$ có đầu vào là một cơ sở dàn $B\in \R^{n\times n}$, một vectơ $t\in \R^n$, và một số thực $s\ge \eta_\epsilon\left(\mathcal{L}(B)\right)$, với $\epsilon>0$. Đầu ra của thuật toán là là một cặp vectơ $(c, y)\in \mathcal{P}(B)\times \mathcal{L}(B)$ thỏa mãn
+		\begin{enumerate}
+			\item Khoảng cách thống kê giữa phân phối của vectơ $c$ và phân phối đều là $$\Delta\left(c, U\left(\mathcal{P}(B)\right)\right)\le \epsilon/2;$$
+			\item Với mọi $\widehat{c}\in \mathcal{P}(B)$, thì phân phối điều kiện của $y$ cho bởi $c=\widehat{c}$ là $D_{\mathcal{L}(B),s,(t+\widehat{c})}$.
+		\end{enumerate}
+	\end{lemma}
+\end{frame}
+\begin{frame}{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+	Tiếp theo, ta sẽ mô tả một quy trình được gọi là \textit{quy trình kết hợp} (combining procedure) $\mathcal{A}$. Quy trình này chính là "trái tim" cho quy dẫn từ trường hợp trung bình về trường hợp xấu nhất. Nó ánh xạ các vectơ $c_i$ đến các vectơ trong hình bình hành $\mathcal{P}(S)$ và các phần tử nhóm $a_i$, và sau đó áp dụng oracle $F$.
+	\begin{lemma}[Quy trình kết hợp]\label{QTKH}
+		Có một thuật toán sác xuất thời gian đa thức cho oracle $\mathcal{A}^{\mathcal{F}}(B, S, C, q)$ với đầu vào là một cơ sở dàn $B\in \R^{n\times n}$, một dàn con đầy đủ $S\subset \mathcal{L}(B)$, và $m$ vectơ $C=\left(c_1,\ldots, c_m\right)\in \mathcal{P}(B)^m$, và một số nguyên dương $q$, với $A\in \Z_q^{n\times m}$, oracle $\mathcal{F}$ trả ra $\mathcal{F}(A)=z$. Kết quả đầu ra là một vectơ $x\in \R^n$ thỏa mãn
+		\begin{enumerate}
+			\item Nếu đầu vào ma trận $C\in \mathcal{P}(B)^m$ là phân phối ngẫu nhiên đều, thì ma trận $A\in \Z_q^{n\times m}$ cũng là phân phối đều;
+			\item Nếu đầu ra của oracle $\mathcal{F}(A)=z\in\Lambda_q(A)$, thì vectơ đầu ra $x$ thuộc vào dàn $\mathcal{L}(B)$;
+			\item Khoảng cách giữa đầu ra là vectơ $x$ và $Cz$ lớn nhất là $\left(n\sqrt{m}\norm{z}\norm{S}\right)/q$
+		\end{enumerate}
+	\end{lemma}
+\end{frame}
+\begin{frame}{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+	Cuối cùng, từ kết quả của các bổ đề \ref{BDLM}, \ref{QTKH}, \ref{TDLTT} và hệ quả \ref{Gauss_HQ}, ta chứng minh được định lý sau
+\begin{theorem}\label{IncGDD-SIS}
+	Với mọi hàm $g(n)>0$, các hàm đa thức bị chặn $m(n), \beta(n)=n^{O(1)}$, hàm nhỏ không đáng kể $\epsilon(n)=n^{-\omega(1)}$, và $q(n)\ge g(n)n\sqrt{m(n)}\beta(n)$, có một quy dẫn xác suất thời gian đa thức từ việc giải bài toán $IncGDD_{\gamma, g}^{\eta_\epsilon}$ với $\gamma(n)=\beta(n)\sqrt{n}$ trên $n$ chiều trong trường hợp xấu nhất về việc giải bài toán $SIS$ trong trường hợp trung bình với xác suất đáng kể.
+\end{theorem}
+\end{frame}
+\begin{frame}{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+	Định lý \ref{IncGDD-SIS} đã chứng minh được tính đúng của việc quy dẫn theo các bước sau
+	\begin{enumerate}
+		\item Chọn một chỉ số $j\in M=\{1,\ldots,m\}$ và số nguyên $\alpha\in N=\{-[\beta], \ldots, -1,1,\ldots, [\beta]\}$ được chọn ngẫu nhiên đều. Với mỗi $i\in M$, ta xác định vectơ $t_i$ như sau $$t_i=\heva{-t/\alpha \text{ nếu }i=j\\ 0 \text{ nếu } i\ne j}$$
+		\item Với $i=1,\ldots,m$, sử dụng quy trình lấy mẫu trong bổ đề \ref{BDLM}, để tính các cặp $$(c_i, y_i)=\mathcal{S}(B, t_i, 2r/\gamma)$$ mỗi lần ngẫu nhiên độc lập.
+		\item Đặt các ma trận $$C=\left(c_1,\ldots, c_m\right) \text{ và } Y=\left(y_1,\ldots, y_m\right)$$
+		\item Cuối cùng, sử dụng thuật toán kết hợp $\mathcal{A}^{\mathcal{F}}(B, S, C, q)=x$, và đầu ra là vectơ $u=x-Yz$, với $z=\mathcal{F}(A)$.
+	\end{enumerate}
+\end{frame}
+\begin{frame}{Quy dẫn từ bài toán IncGDD về bài toán SIS}
+	Sơ đồ sau đây cho ta cái nhìn khái quát về các bước của phép quy dẫn từ trường hợp xấu nhất đến trường hợp trung bình.
+	
+	\begin{center}
+		\includegraphics[scale=0.6]{Dinhly_1}
+	\end{center}
+\end{frame}
+\section{Kết luận}
+\begin{frame}{Kết luận}
+	Nội dung chính của khóa luận này chính là việc đi trình bày chi tiết chứng minh của quy dẫn từ trường hợp xấu nhất (bài toán $IncGDD$) về trường hợp trung bình (bài toán $SIS$), từ đó đưa ra kết luận: Việc giải bài toán $IncGDD$ trong trường hợp xấu nhất, ít nhất là khó như việc giải bài toán $IncGDD$ trong trường hợp trung bình.
+\end{frame}
+\section{Tài liệu tham khảo}
+\begin{frame}{Tài liệu tham khảo}
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+	\bibitem{Ajtai96}M. Ajtai. \textit{Generating hard instances of lattice problems. In Proc. 28th ACM Symp. on Theory of Computing, pages 99–108, 1996. Available from ECCC at http://www.uni-trier.de/eccc/.}
+	\bibitem{main} Daniele Micciancio, Oded Regev, \textit{Worst-case to Average-case Reduction based on Gaussian Measures} 
+	\bibitem{Peikert1} Chris Peikert, \textit{Latiices in cryptography - Lecture 1 - Mathematical Background}.
+	\bibitem{Regev9} Oded Regev, \textit{Lattices in Computer Science - Lecture 9 - Fourier transform}
+	\bibitem{MiGo} D. Micciancio and S. Goldwasser, \textit{Complexity of Lattice Problem: A Cryptographic Perspective, volume 671 of The Kluwer International Series in Engineering and Computer Science}. Kluwer Academic Publishers, Boston, Massachusetts, Mar. 2002
+\end{thebibliography}
+\end{frame}
+\begin{frame}{Tài liệu tham khảo}
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+	\bibitem{Baibai86} L. Baibai. \textit{On Lovasz' lattice reduction and the nearest lattice point problem. Combinatorica, 6(1):1–13, 1986. Preliminary version in STACS 1985.}
+	\bibitem{Mic02} D. Micciancio. \textit{Generalized compact knapsacks, cyclic lattices, and efficient one-way functions from worst-case complexity assumptions. Technical Report TR04-095, ECCC Electronic Colloquium on Computational Complexity, 2004. Preliminary version in FOCS 2002}.
+	\bibitem{Ban93}W. Banaszczyk. \textit{New bounds in some transference theorems in the geometry of numbers. Mathematische Annalen, 296(4):625–635, 1993}
+	\bibitem{YCai03}J.-Y. Cai. \textit{A new transference theorem in the geometry of numbers and new bounds for Ajtai’s connection factor. Discrete Applied Mathematics, 126(1):9–31, Mar. 2003. Preliminary version in CCC 1999.}
+	\bibitem{Regev03} O. Regev. \textit{New lattice-based cryptographic constructions. Journal of the ACM, 51(6):899–942, 2004. Preliminary version in STOC 2003}.
+\end{thebibliography}
+\end{frame}
+\begin{frame}{Tài liệu tham khảo}
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+	\bibitem{AhaReg04} D. Aharonov and O. Regev. \textit{Lattice problems in NP intersect coNP. Journal of the ACM, 52(5):749–765, 2005. Preliminary version in FOCS 2004}.
+	\bibitem{Mic02-STOC} D. Macciancio. \textit{Almost perfect lattices, the covering radius problem, and applications to Ajtai’s connection factor. SIAM Journal on Computing, 34(1):118–169, 2004. Preliminary version in STOC 2002}.
+	\bibitem{HaPham02} Hà Huy Khoái - Phạm Huy Điển. \textit{Số học thuật toán, NXB ĐHQG Hà Nội, 2002}.
+\end{thebibliography}
+\end{frame}
+\begin{frame}
+	\begin{center}
+		\selectfont\color{red!50!blue}\centering\scshape\Large\bfseries\huge CẢM ƠN THẦY/CÔ VÀ MỌI NGƯỜI\\
+		ĐÃ LẮNG NGHE!
+	\end{center}
+\end{frame}
+\end{document}

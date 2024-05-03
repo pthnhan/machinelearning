@@ -1,0 +1,382 @@
+\chapter{Kiến thức nền tảng}
+
+\section{Quy trình của lớp các bài toán phân loại}
+Để giải quyết một bài toán phân loại, ta cần phải hiểu dữ liệu, tính chất các đặc trưng và quá trình chọn các đặc trưng phù hợp với mô hình cũng cần phải có một quy trình rõ ràng.
+
+Bước đầu tiên là xác định bài toán, nghĩa là xác định nhãn của bài toán và xây dựng tập dữ liệu (data collection). Phải đảm bảo là tập dữ liệu phải liên quan đến bài toán được mô hình hóa. Bước này rất quan trọng vì sẽ ảnh hưởng rất nhiều đến kết quả phân loại. Ngoài ra, chỉ những đặc trưng có thông tin hữu ích về bài toán là nên được sử dụng. Trong một số trường hợp, khi gặp khó khăn về kiến thức cũng như khả năng thu thập dữ liệu. Chúng ta có thể sử dụng phương pháp brute-force để thay thế. Brute-force là một phương pháp giải quyết vấn đề bằng cách thực hiện tất cả các giải pháp có thể có và chọn ra giải pháp tốt nhất. Nó được sử dụng khi không có một thuật toán cụ thể nào có thể giải quyết vấn đề hoặc khi không có đủ kiến thức về vấn đề để thiết kế một giải pháp tối ưu. Tuy nhiên, phương pháp này có thể rất tốn kém và thời gian, đặc biệt là đối với các vấn đề có kích thước lớn. Do vậy, trong trường hợp này sẽ có một lượng rất lớn các biến được đo, xử lý và thêm vào tập dữ liệu. Tuy nhiên, hi vọng, trong tương lại có thể tác được các đặc trưng tốt nhất và phù hợp nhất với bài toán.
+
+Nếu vấn đề về dữ liệu có thể được giải quyết, chúng ta sẽ nên bước tiếp theo trong quy trình phân loại là tiền xử lý dữ liệu (data pre-processing). Ở bước này, vấn đề chính là thiếu dữ liệu (missing data) và dữ liệu ngoại lai (outlier) cần phải được xử lý. Có một vài phương pháp phân tích thống kê \cite{aggarwal2001outlier, hodge2004survey} để có thể dử lý các vấn đề này. Hơn nữa, đây là bước mà số lượng các đặc trưng của bài toán có thể giảm đi bằng việc áp dụng thuật toán lựa chọn đặc trưng.
+
+Vấn đề này có thể được giải quyết, đưa chúng ta đến bước tiếp theo trong quy trình phân loại: tiền xử lý dữ liệu. Ở giai đoạn này, các vấn đề chính như giá trị bị thiếu và phát hiện ngoại lệ nên được xử lý. Có nhiều phương pháp phân tích thống kê để giải quyết các vấn đề này [1, 26]. Ngoài ra, đây là giai đoạn trong vấn đề mà số lượng đặc trưng của vấn đề có thể được giảm bằng thuật toán lựa chọn đặc trưng.
+
+Bước tiếp theo là lựa chọn thuật toán phân loại. Có rất nhiều các thuật tóa phân loại, và mặc dù các thuật toán rất đa dạng và khác nhau về ý tưởng, nhưng không dễ dàng chọn được thuật toán nào là tốt nhất cho một bài toán cụ thể. Do đó, việc thử nghiệm và so sánh một số thuật toán là một cách làm tương đối phổ biến, mục tiêu cuối cùng là lựa chọn được thuật toán cho kết quả tốt nhất \cite{kotsiantis2007supervised}.
+
+Việc đánh giá các thuật toán phân loại thường dựa trên độ chính xác của việc dự đoán. Một kỹ thuật điển hình là chia dữ liệu thành hai phần để huấn luyện mô hình và sử dụng phần còn lại để kiểm tra độ chính xác. Tuy nhiên, quy trình này thường dẫn đến kết quả không tốt khi áp dụng vào tập dữ liệu bên ngoài. Do đó, để giảm thiểu sai số, một số kỹ thuật phức tạp hơn như kiểm tra chéo (cross-validation) \cite{kohavi1995study} có thể được sử dụng.
+
+Để có cái nhìn tổng quan, chúng tôi xin trình bày theo sơ đồ khối của toàn bộ quy trình của một bài toán phân loại.
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[thick, scale=0.8, every node/.style={scale=0.7}]
+		\path
+		(0:0) coordinate (O)
+		(0:3) coordinate (A)
+		(0:6.5) coordinate (B)
+		(0:10) coordinate (C)
+		(0:13.5) coordinate (D)
+		(0:17) coordinate (E)
+		(D) ++ (-90:3) coordinate (F)
+		(E) ++ (-90:5) coordinate (G)
+		(G) ++ (-90:3) coordinate (H)
+		;
+		\draw 
+		(O) circle (1)
+		($(A)+(180:1.25)+(-90:0.5)$) rectangle ($(A)+(0:1.25)+(90:0.5)$)
+		($(B)+(180:1.25)+(-90:0.5)$) rectangle ($(B)+(0:1.25)+(90:0.5)$)
+		($(C)+(180:1.25)+(-90:1)$) rectangle ($(C)+(0:1.25)+(90:1)$)
+		($(D)+(180:1.25)+(-90:0.5)$) rectangle ($(D)+(0:1.25)+(90:0.5)$)
+		($(E)+(180:1.25)+(-90:0.5)$) rectangle ($(E)+(0:1.25)+(90:0.5)$)
+		
+		($(F)+(180:1.25)+(-90:0.5)$) rectangle ($(F)+(0:1.25)+(90:0.5)$)
+		
+		(G)+(180:1)--+(90:1)--+(0:1)--+(-90:1)--cycle
+		
+		($(H)+(180:1.25)+(-90:0.5)$) rectangle ($(H)+(0:1.25)+(90:0.5)$)
+		;
+		\path 
+		(O) ++ (90:0.25) node{Xác định} ++ (-90:0.5) node{bài toán}
+		
+		(A) ++ (90:0.25) node{Xây dựng} ++ (-90:0.5) node{tập dữ liệu}
+		
+		(B) ++ (90:0.25) node{Tiền xử lý} ++ (-90:0.5) node{dữ liệu}
+		
+		(C) ++ (90:0.5) node{Lựa chọn} ++ (-90:0.5) node{mô hình} ++ (-90:0.5) node{phân loại}
+		
+		(D) ++ (90:0.25) node{Huấn luyện} ++ (-90:0.5) node{mô hình}
+		
+		(E) ++ (90:0.25) node{Đánh giá} ++ (-90:0.5) node{mô hình}
+		
+		(F) ++ (90:0.25) node{Điều chỉnh} ++ (-90:0.5) node{tham số}
+		(G) ++ (90:0.25)node {Kiểm} ++ (-90:0.5)node{tra}
+		(H) node {Kết thúc}
+		;
+		\draw[->]
+		($(O) + (0:1)$) -- ($(A)+(180:1.25)$)
+		;
+		
+		\draw[->] ($(A) + (0:1.25)$) -- ($(B)+(180:1.25)$);
+		\draw[->] ($(A) + (-90:5)$) -- ($(A)+(-90:0.5)$);
+		
+		\draw[->] ($(B) + (0:1.25)$) -- ($(C)+(180:1.25)$);
+		\draw[->] ($(B) + (-90:5)$) -- ($(B)+(-90:0.5)$);
+		
+		\draw[->] ($(C) + (0:1.25)$) -- ($(D)+(180:1.25)$);
+		\draw[->] ($(C) + (-90:5)$) -- ($(C)+(-90:1)$);
+		
+		\draw[->] ($(D) + (0:1.25)$) -- ($(E)+(180:1.25)$);
+		\draw[->] ($(D) + (-90:5)$) -- ($(F)+(-90:0.5)$);
+		\draw[->] ($(F) + (90:0.5)$) -- ($(D)+(-90:0.5)$);
+		
+		\draw[->] ($(D) + (0:1.25)$) -- ($(E)+(180:1.25)$);
+		\draw[->] ($(E) + (-90:0.5)$) -- ($(G)+(90:1)$);
+		\draw[->] ($(G) + (-90:1)$) -- node[right]{Đạt} ($(H)+(90:0.5)$);
+		
+		\draw ($(A) + (-90:5)$) -- ($(D)+(-90:5)$) -- node[above]{Chưa đạt} ($(G)+(180:1)$);
+	\end{tikzpicture}
+	\caption{Quy trình giải bài toán phân loại}
+\end{figure}
+
+Trong toàn bộ quy trình, nếu có bất kì bước nào không tốt, quy trình phải quy trở lại bước trước đó. Có nhiều nguyên nhân có thể ảnh hưởng đến hiếu suất của một bài toán phân loại \cite{kotsiantis2007supervised} như:
+\begin{itemize}
+	\item Đặc trưng phù hợp không được lựa chọn tốt.
+	\item Tập dữ liệu không đủ, ít mẫu quan sát.
+	\item Số lượng các đặc trưng quá nhiều.
+	\item Kỹ thuật tiền xử lý dữ liệu chưa được tốt.
+	\item Mô hình phân loiaj được chọn không phù hợp cho vấn đề hoặc cần điều chỉnh tham số.
+\end{itemize}
+
+Vì vậy, không thể chỉ ra rõ ràng bước nào trong quy trình cần trở lại. Tuy nhiên, mục tiêu cuối cùng là giải quyết bài toán phân loại đạt kết quả tốt nhất cho dữ liệu chưa được quan sát. Đây là bài toán khó, và mỗi bước thường được thực hiện trong thời gian dài, thông thường chúng ta cần phải liên tục thực hiện nhiều thử nghiệm mới để cải thiện khả năng dự đoán của mô hình.
+
+\section{Quy trình lựa chọn đặc trưng}
+Các thuật toán lựa chọn đặc trưng 
+hoạt động bằng cách kết hợp một ý tưởng tìm kiếm để xác định tập hợp các đặc trưng, với một phương pháp đánh giá chúng. Mục tiêu cuối cùng của quá trình này là xác định các tập con có điểm số cao nhất. Mặc dù có nhiều thuật toán khác nhau, nhưng chúng đều tuân theo một quy trình chung gồm bốn bước: Sinh ra tập con (subset generation), đánh giá tập con (subset evaluation), tiêu chí dừng (stopping criteria), đánh giá kết quả (result validation) \cite{molina2002feature, liu2005toward, kumar2014feature}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[thick]
+		\path 
+		(0:0) coordinate (O)
+		(0:3) coordinate (A)
+		(0:7.5) coordinate (B)
+		(B)++(-90:4) coordinate (C)
+		(C) ++ (0:4.5) coordinate (D)
+		;
+		\draw 
+		($(A)+(180:1.25)+(-90:0.5)$) rectangle ($(A)+(0:1.25)+(90:0.5)$)
+		($(B)+(180:1.25)+(-90:0.5)$) rectangle ($(B)+(0:1.25)+(90:0.5)$)
+		(C)+(180:1.5)--+(90:1)--+(0:1.5)--+(-90:1)--cycle
+		($(D)+(180:1.25)+(-90:0.5)$) rectangle ($(D)+(0:1.25)+(90:0.5)$)
+		;
+		\path
+		(O) ++ (90:0.5) node[left]{Tập các} ++ (-90:0.5) node[left]{đặc trưng} ++ (-90:0.5) node[left]{ban đầu}
+		(A) ++ (90:0.25) node{Sinh} ++ (-90:0.5) node{tập con}
+		
+		(B) ++ (90:0.25) node{Đánh giá} ++ (-90:0.5) node{tập con}
+		(C) ++ (90:0.25) node{Tiêu chí} ++ (-90:0.5) node{dừng}
+		(D) ++ (90:0.25) node{Đánh giá} ++ (-90:0.5) node{kết quả}
+		;
+		\draw[->] (O) -- ($(A)+(180:1.25)$);
+		\draw[->] ($(A)+(0:1.25)$) -- ($(B)+(180:1.25)$);
+		\draw[->] ($(B)+(-90:0.5)$) -- ($(C)+(90:1)$);
+		\draw[->] ($(C)+(180:1.5)$)--node[above]{Không thỏa}($(A)+(-90:4)$) -- ($(A)+(-90:0.5)$);
+		\draw[->] ($(C)+(0:1.5)$) --node[above]{Thỏa} ($(D)+(180:1.25)$);
+	\end{tikzpicture}
+	\caption{Bốn bước của quy trình lựa chọn đặc trưng}
+	\label{tikz:fs}
+\end{figure}
+
+Bước đầu tiên sẽ xác định những tập con nào sẽ được kiểm tra, bước tiếp theo đánh giá đặc trưng bằng việc gán điểm cho các tập con, cho phép xếp hạng chúng. Tiêu chí dừng điều chỉnh độ tập trung của thuật toán. Cuối cùng, xác nhận kết quả là đánh giá chất lượng của quy trình lựa chọn đặc trưng. Hình \ref{tikz:fs} mô tả các bước của quy trình này, chúng tôi sẽ giới thiệu chi tiết hơn trong phần tiếp theo.
+
+Bước đầu tiên xác định những tập con nào sẽ được kiểm tra trong quá trình, bước tiếp theo đại diện cho hàm gán điểm cho các tập con, cho phép xếp hạng chúng. Tiêu chí dừng điều chỉnh độ tập trung của tìm kiếm. Cuối cùng, xác nhận kết quả là phần đánh giá chất lượng của giải pháp. Hình 2.3 minh họa các bước này.
+%\section{Lựa chọn đặc trưng}
+%Ngày nay, các phương pháp học máy xuất hiện ngày càng nhiều và rất mạnh mẽ để giải quyết các bài toán dữ liệu lớn. Các mô hình học máy phổ biến hiện nay như cây quyết định (decision tree), rừng ngẫu nhiên (random forest), SVM, KNN,\ldots đều là những mô hình mạnh mẽ, linh hoạt và có độ chính xác cao cả trong bài toán phân loại hay bài toán hồi quy. Tuy nhiên, bên cạnh việc áp dụng các mô hình học máy, chúng ta cần phải chuẩn hóa dữ liệu tốt, bởi vì dữ liệu là nguyên liệu để mô hình học máy học dựa trên đó. Kết quả của một bài toán sử dụng học máy có thể sẽ được cải thiện rõ rệt nếu có bước chuẩn bị dữ liệu tốt. Và việc lựa chọn đặc trưng là một kĩ thuật quan trọng bênh cạnh việc trích xuất đặc trưng hay biến đổi đặc trưng. Trong phạm vi của khóa luận này, chúng tôi chỉ xin nhắc lại khái quát về lựa chọn đặc trưng và các thuật toán liên quan.
+
+\subsection{Sinh tập con}
+Việc tạo các tập con đại diện cho thuật toán tìm kiếm đặc trưng và xác định một tập con tốt để đánh giá. Do đó, hai vấn đề chính được giải quyết ở bước này là: successor generation và search organization.
+
+\subsubsection{Successor generation}
+Successor generation là quá trình tạo ra các tập con mới từ tập con hiện tại. Trong thuật toán lựa chọn đặc trưng, các tập con được tạo ra bằng cách loại bỏ hoặc bổ sung các đặc trưng vào tập con hiện tại. Quá trình này được lặp lại để tạo ra các tập con mới cho đến khi đạt được một số tiêu chí dừng nhất định. Successor generation đóng vai trò quan trọng trong thuật toán lựa chọn đặc trưng, vì nó xác định các tập con mới mà thuật toán sẽ đánh giá để tìm ra tập con tốt nhất.
+Theo các tác giả của \cite{liu2005toward}, có bốn toán tử cơ bản để giải quyết vấn đề này:
+\begin{itemize}
+	\item \textbf{Chuyển tiếp (Forward):} Tập con mới được tạo ra bằng cách thêm từng đặc trưng một vào tập con.
+	\item \textbf{Chuyển lùi (Backward):} Tập con mới được tạo ra bằng cách loại bỏ từng đặc trưng một khỏi tập con.
+	\item \textbf{Kết hợp (Compound):} Toán tử này áp dụng $k$ bước chuyển tiếp, theo sau bởi $l$ bước chuyển lùi. Bằng cách làm như vậy, các vòng lặp mới giữa các đặc trưng khác nhau được khám phá \cite{kumar2014feature}.
+	\item \textbf{Ngẫu nhiên (Random):} Các tập con được lựa chọn ngẫu nhiên.
+\end{itemize}
+
+\subsubsection{Search Organization}
+Search Organization là cách thức tổ chức và quản lý quá trình tìm kiếm trong các thuật toán tối ưu hóa, trong đó các trạng thái và hành động được xác định để tìm kiếm đặc trưng tốt nhất. Search Organization đóng vai trò quan trọng trong việc tối ưu hóa hiệu suất thuật toán, đảm bảo rằng nó không bỏ sót đặc trưng tốt nhất và tránh tình trạng bị tối ưu hóa địa phương (local optima). Do đó, có thể xem đây là phần quan trọng nhất của toàn bộ quy trình. Các tác giả của \cite{liu2005toward} phân loại tìm kiếm thành ba loại:
+\begin{itemize}
+	\item \textbf{TÌm kiếm vét cạn (Complete Search):} Hướng tìm kiếm này đảm bảo tìm ra được nghiệm tối ưu. Tìm kiếm vét cạn là một kỹ thuật tốt nếu có đủ thời gian để đi qua hết tất cả các lời giải, vì việc tìm kiếm thường dễ để thực thi và nó luôn cho ra lời giải chính xác. Nếu tìm kiếm vét cạn là quá chậm, thì có thể tính đến các thuật toán tham lam hoặc quy hoạch động. Thuật toán Fast brand \& bound trong \cite{somol2004fast} là một ví dụ về tìm kiếm vét cạn.
+	\item \textbf{Tìm kiếm tuần tự (Sequence Search)}: là một phương pháp tìm kiếm một phần tử cho trước trong một danh sách bằng cách duyệt lần lượt từng phần tử của danh sách đó cho đến lúc tìm thấy giá trị mong muốn hay đã duyệt qua toàn bộ danh sách. Các tìm kiếm này dễ dàng triển khai và thường cung cấp kết quả rất nhanh chóng. Tuy nhiên, chất lượng của các giải pháp thường là kém. Một số ví dụ về tìm kiếm này được đề cập trong \cite{hao2003comparison}.
+	\item \textbf{Tìm kiếm ngẫu nhiên (Random Search):} Trong phương pháp tiếp cận này, ý tưởng là dẫn dắt tìm kiếm một cách ngẫu nhiên. Cả thuật toán Las Vegas và Las Vegas Incremental \cite{molina2002feature} đều là các ví dụ thuộc loại này.
+	\item\textbf{ Tìm kiếm di truyền (Genetic Search)}: Đây là một loại tìm kiếm khác đã tích hợp sẵn việc tạo ra các trạng thái tiếp theo. Ý tưởng của chúng là mô phỏng quá trình lựa chọn tự nhiên gồm ba toán tử: lựa chọn, đột biến và ghép cặp. Ban đầu, một số nghiệm tiêu biểu được sinh ra. Sau đó, chất lượng của từng nghiệm được đánh giá và các nghiệm tốt nhất được chọn. Trong bước tiếp theo, các nghiệm tiềm năng mới được tạo ra bằng cách kết hợp các nghiệm được bầu chọn từ giai đoạn trước. Các toán tử di truyền như ghép cặp và đột biến được sử dụng ở giai đoạn này. Quá trình này lặp lại cho đến khi kết thúc. Có nhiều loại tìm kiếm kiểu này được đề cập trong tài liệu \cite{yusta2009different}.
+\end{itemize}
+
+\subsection{Đánh giá tập con}
+Quá trình đánh giá và cho điểm các tập con được thực hiện. Tiêu chí đánh giá định nghĩa chất lượng của một tập con và ảnh hướng đến nghiệm tối ưu của bài toán. Cụ thể hơn, nghiệm tối ưu toàn cục (global optima) đối với một tiêu chí đánh giá nhất định, có thể không phải là nghiệm tối ưu địa phương trên một tiêu chí đánh giá khác. Có hai nhóm phân loại hàm đánh giá: đánh độc lập (independent) và đánh giá phụ thuộc (dependent) \cite{liu2005toward}.
+
+\subsubsection{Đánh giá độc lập}
+Tiêu chí độc lập đánh giá chất lượng của một tập con đặc trưng dựa trên các đặc điểm của dữ liệu. Hầu hết các lần, các thước đo này được sử dụng để đánh giá chất lượng của một đặc trưng riêng biệt. Bên cạnh đó, chúng liên quan đến các phương pháp filter (đã được nhắc đến trong \ref{section:relative_work}). Dựa trên các chỉ số được sử dụng, các tiêu chí này được chia thành nhiều loại khác nhau \cite{molina2002feature}:
+\begin{itemize}
+	\item \textbf{Các chỉ số khoảng cách hoặc độ khác biệt (Distance or divergence measures)}: đánh giá khả năng của các đặc trưng để phân biệt xác suất có điều kiện giữa các lớp. Các ví dụ về các chỉ số này bao gồm độ khác biệt Jeffrey và độ khác biệt Kaga \cite{kumar2014feature}.
+	\item \textbf{Các chỉ số thông tin hoặc sự không chắc chắn (Infomation or uncertainly measures)}: xác định thông tin mà một đặc trưng đóng góp cho các lớp. Khái niệm này được gọi là lợi ích thông tin và các ví dụ bao gồm entropy Shannon và tất cả các biến thể của nó \cite{vergara2014review}.
+	\item\textbf{ Các chỉ số xác suất lỗi (Probability of error measures)}: ước lượng khả năng của một đặc trưng để giảm thiểu xác suất lỗi phân loại. Xác suất Bayes là ví dụ phổ biến nhất của kỹ thuật này \cite{vehtari2002bayesian}.
+	\item \textbf{Các chỉ số phụ thuộc (Dependency measures):}  đánh giá khả năng của các đặc trưng trong việc dự đoán nhãn. Hệ số tương quan có thể được coi là một ví dụ \cite{guyon2003introduction}.
+	\item \textbf{Các chỉ số khoảng cách giữa các lớp (Interclass distance measures)}: khoảng cách trong không gian dữ liệu được sử dụng để xác định các đặc trưng tốt nhất để phân tách các lớp khác nhau. Khoảng cách Euclid là một ví dụ về kỹ thuật này \cite{kumar2014feature}.
+	\item \textbf{Các chỉ số tính nhất quán (Consistency measures)}: dựa trên nguyên tắc các đặc trưng có cùng giá trị thì thuộc về cùng một lớp. Vi phạm quy tắc này dẫn đến sự trừ điểm cho đặc trưng. Một số cách tiếp cận của loại này được đề cập trong \cite{molina2002feature}.
+\end{itemize}
+
+\subsubsection{Đánh giá phụ thuộc}
+Các đánh giá phụ thuộc sử dụng các thuật toán để học sau đó ước tính chất lượng của các đặc trưng. Mỗi tập con được đánh giá được sử dụng để huấn luyện mô hình, sau đó hiệu suất của mô hình được sử dụng để gán một điểm cho tập con. Trong lớp các bài toán phân loại, cách thường được sử dụng để định lượng hiệu suất của thuật toán học là sử dụng độ chính xác của dự đoán.
+
+\subsection{Tiêu chí dừng}
+Tiêu chí dừng được hiểu là điều kiện để kết thúc tìm kiếm. Một vài tiêu chí là \cite{kumar2014feature}:
+\begin{itemize}
+	\item Tìm kiếm đã vét cạn hoàn toàn.
+	\item Đạt đến một ngưỡng được xác định. Ngưỡng có thể là số lượng tối thiểu hoặc tối đa của tập con đặc trưng hoặc số lượng lặp tối đa.
+	\item Tìm thấy một tập con đủ tốt.
+	\item Các tập con mới tiếp theo không cải thiện đáng kể các tiêu chí đánh giá.
+\end{itemize}
+
+\subsection{Đánh giá kết quả}
+Sau khi quá trình hoàn tất, một tập con cuối cùng của các đặc trưng được chọn ra. Để kiểm tra xem tập các đặc trưng này có đủ tốt cho bài toán phân loại hay không, quá trình đánh giá kết quả là rất quan trọng. Một phương pháp trực tiếp để đánh giá kết quả thu được bằng việc sử dụng kiến thức trước đó về bộ dữ liệu. Nếu có thông tin về các đặc trưng quan trọng, có thể đánh giá bằng cách so sánh các đặc trưng được chọn với những đặc trưng được biết là quan trọng. Trong các trường hợp này, thông tin về các đặc trưng không quan trọng hoặc trùng lặp cũng quan trọng, chủ yếu bởi vì sự hiện diện của chúng phản ánh chất lượng của tập các đặc trưng được chọn.
+
+Tình huống phổ biến nhất là thiếu thông tin về bộ dữ liệu. Do đó, cần sử dụng các kỹ thuật khác nhau. Ví dụ, có thể sử dụng hiệu suất của tập đặc trưng cuối cùng trên mô hình và so sánh nó với với toàn bộ tập đặc trưng hoặc bất kỳ tập con đặc trưng nào khác. Ngoài ra, một cách thông thường là sử dụng các mô hình thuật toán khác nhau và so sánh hiệu suất \cite{chen2006combining}.
+
+\section{Sử dụng tính toán song song để lựa chọn đặc trưng}
+Như đã biết, việc lựa chọn ra một tập hợp các đặc trưng tốt cho bài toán phân loại cụ thể là một bài toán không dễ. Thông thường, điều này yêu cầu các nhà nghiên cứu phải thực hiện nhiều lần thử nghiệm cho đến khi đạt được kết quả như mong muốn. Một cách tiếp cận thông thường là thay đổi các tham số trên các mô hình hoặc kiểm tra các mô hình khác nhau để so sánh kết quả. Ngoài ra, quá trình lựa chọn đặc trưng có thể cần một lượng lớn thời gian tùy thuộc vào kích thước của bộ dữ liệu và mô hình được chọn.
+
+Vì thế, tính toán song song đã nổi lên như một giải pháp tiềm năng để giải quyết vấn đề này. Việc thực hiện nhiều tính toán đồng thời để giải quyết một bài toán dựa trên nguyên tắc rằng các bài toán lớn có thể được chia thành các vấn đề nhỏ hơn \cite{denning1990highly}.Xem xét kỹ hơn về quy trình tổng quát cho lựa chọn đặc trưng, nó bao gồm việc tạo ra và đánh giá một lượng lớn các tập con cho đến khi đạt được điều kiện dừng, và thu được tập con tốt nhất. Vấn đề này có thể dễ dàng chia thành các tác vụ nhỏ hơn, trong đó mỗi tác vụ được xác định là quy trình tổng thể trên mỗi tập con, điều này lý tưởng cho các kỹ thuật tính toán song song, và do vậy kích thích các nhà nghiên cứu khai thác tính song song trong các thuật toán lựa chọn đặc trưng để cải thiện thời gian thực thi của chúng. Ví dụ, Azmandian và các cộng sự \cite{azmandian2012gpu} đã sử dụng đơn vị xử lý đồ họa để tăng tốc thuật toán lựa chọn đặc trưng của họ. Lopez và các cộng sự \cite{lopez2006solving} cũng sử dụng tính song song để tăng tốc một tìm kiếm phân tán để đạt được hiệu suất tốt hơn về thời gian thực thi và chất lượng.
+
+\section{Sơ lược về hướng tiếp cận}\label{section:preliminaire}
+%Để xây dựng mô hình, chúng ta sẽ cần đến thông tin. Thông tin đến tự những bộ dữ liệu, nhưng với sự bùng nổ của dữ liệu lớn (bigdata), dữ liệu dường như trở nên quá nhiều, khiến việc xây dựng mô hình gặp nhiều khó khăn như tăng chi phí tính toán, quá nhiều đặc trưng có thể dẫn tới hiện tượng quá khớp (overfitting) - là hiện tượng mô hình hoạt động tốt trên tập huấn luyện (training set), nhưng tệ trên tập thử nghiệm (testing set), một số đặc trưng có thể gây nhiễu và làm giảm chất lượng mô hình,\ldots
+
+Có rất nhiều thuật toán lựa chọn đặc trưng đã được phát triển từ rất lâu đến tận thời điểm hiện tại. Trong đó, lựa chọn tiến (forward feature selection), lựa chọn lùi (backward feature selection) và lựa chọn từng bước (stepwise feature selection) là ba thuật toán rất phổ biến. Trong phần này, chúng tôi sẽ tóm tắt lại ba kĩ thuật này, và trình bày chi tiết cách chúng tôi sử dụng trong các thuật toán \ref{alg:ffs}, \ref{alg:bfs}, và \ref{alg:sfs}.
+
+\subsection{Thuật toán lựa chọn chuyển tiến}
+Thuật toán lựa chọn chuyển tiến được sử dụng rất rộng rãi vì sự hiệu quả trong việc tính toán của nó, cùng với khả năng xử lý hiệu quả các vấn đề bao gồm việc số lượng đặc trưng vượt quá số lượng quan sát. Tuy nhiên, một số đặc trưng có thể xuất hiện dư thừa sau khi đã lựa chọn các đặc trưng khác. Về các điều kiện đủ để lựa chọn tiến nhằm khôi phục mô hình ban đầu và tính ổn định của nó, chúng tôi tham khảo từ \cite{tropp2004greed} và \cite{donoho2005stable}. Dưới đây là chi tiết thuật toán
+
+\begin{breakablealgorithm}
+	\caption{\textbf{Lựa chọn tiến}\\
+		(Forward Feature Selection)}\label{alg:ffs}
+	\noindent\textbf{Input:} Một tập dữ liệu gồm $p$ đặc trưng $f_1,f_2,...,f_p$, tham số tiến là $\alpha$.\\
+	\textbf{Output:} Một tập hợp $R$ gồm các đặc trưng được chọn.
+	\begin{algorithmic}[1]
+		\State $R \gets \emptyset$
+		\State $S \gets \{f_1, f_2,\ldots, f_p\}$
+		\While {True}
+		\State $f_j \gets$ đặc trưng hữu ích nhất trong $S$
+		\If{mô hình được cải thiện tốt hơn một lượng là $\alpha$ sau khi thêm vào $f_j$}
+		\State $R \gets R \cup \{f_j\}$
+		\State $S \gets S\setminus \{f_j\}$
+		\Else
+		\State \Return $R$
+		\EndIf
+		\EndWhile
+	\end{algorithmic}
+\end{breakablealgorithm}
+
+\subsection{Thuật toán lựa chọn chuyển lùi}
+Thuật toán lựa chọn chuyển lùi \cite{james2013introduction} được trình bày chi tiết trong thuật toán \ref{alg:bfs}. Bắt đầu với toàn bộ đặc trưng, sau đó lần lượt loại bỏ các đặc trưng ít hữu ích nhất từ từ, mỗi lần một đặc trưng. Yêu cầu của bfs bảo đảm những đặc trưng dư thừa được loại bỏ khỏi mô hình. Tuy nhiên, thuật toán lựa chọn chuyển lùi thì có tốc độ tính toán khá chậm, và chậm hơn nhiều khi so với thuật toán lựa chọn chuyển tiến.
+
+\begin{breakablealgorithm}
+	\caption{\textbf{Lựa chọn lùi}\\
+		(Backward Feature Selection)}\label{alg:bfs}
+	\noindent\textbf{Input:} Một tập dữ liệu gồm $p$ đặc trưng $f_1,f_2,...,f_p$, tham số lùi là $\beta$.\\
+	\textbf{Output:} Một tập hợp $R$ gồm các đặc trưng được chọn.
+	\begin{algorithmic}[1]
+		\State $R \gets \{f_1, f_2,\ldots, f_p\}$
+		\While {True,}
+		\State $f_j \gets$ là đặc trưng ít hữu ích nhất trong R.
+		\If {giá trị mất mát của mô hình sau khi loại $f_j$ là nhỏ hơn $\beta$}
+		\State $R \gets R\setminus \{f_j\}$
+		\Else 
+		\State \Return $R$
+		\EndIf
+		\EndWhile
+	\end{algorithmic}
+\end{breakablealgorithm} 
+
+\subsection{Thuật toán lựa chọn từng bước}
+Ngoài hai thuật toán được nêu ra ở trên, một thuật toán khác, là phiên bản kết hợp của cả thuật toán lựa chọn chuyển tiến và thuật toán lựa chọn chuyển lùi là thuật toán lựa chọn từng bước, được trình bày chi tiết trong thuật toán \ref{alg:sfs}. Trong cách tiếp cận này, các đặc trưng được thêm vào mô hình một cách có tuần tự như trong lựa chọn tiến. Tuy nhiên, sau khi thêm vào các đặc trưng mới, phương pháp này có thể loại bỏ bất kỳ đặc trưng nào mà có vẻ không còn phù hợp.
+
+\begin{breakablealgorithm}
+	\caption{\textbf{Lựa chọn từng bước}\\
+		(Stepwise Feature Selection)}\label{alg:sfs}
+	%\hspace*{\algorithmicindent} 
+	\noindent\textbf{Input:} Một tập hợp gồm $p$ đặc trưng $f_1,f_2,...,f_p$, tham số tiến là $\alpha$, tham số lùi là $\beta$.\\
+	\textbf{Output:} Một tập hợp $R$ gồm các đặc trưng được chọn.
+	\begin{algorithmic}[1]
+		\State $R \gets \emptyset$
+		\State $S \gets \{f_1, f_2,\ldots, f_p\}$
+		\While {True,}
+		\State $f_j \gets$ là đặc trưng hữu ích nhất trong $S$
+		\If{mô hình cải thiện hơn một lượng là $\alpha$ sau khi thêm $f_j$}
+		\State $R \gets R \cup \{f_j\}$
+		\State $S \gets S\setminus \{f_j\}$
+		\While{True}
+		\State {$f_k\gets$ là đặc trưng ít hữu ích nhất trong R}
+		\If {hiệu suất của mô hình giảm một lượng nhỏ hơn $\beta$ sau khi loại bỏ $f_j$.}
+		\State $R \gets R\setminus \{f_k\}$
+		\Else {\;break}
+		\EndIf
+		\EndWhile\;
+		\Else 
+		\State{\;\Return $R$}
+		\EndIf
+		\EndWhile
+	\end{algorithmic}
+\end{breakablealgorithm}
+
+\section{Một số khái niệm toán học}
+\subsection{Vết của ma trận}
+\begin{definition}
+	Vết của ma trận (trace) là tổng các phần tử trên đường chéo chính của ma trận vuông. Ký hiệu là $trace(A)$, trong đó $A$ là ma trận vuông.
+	
+	Cho $A$ là ma trận vuông kích thước $n\times n$, với các phần tử $a_{ij}$, vết của $A$ được tính như sau:
+	\begin{equation}
+		trace(A) = \sum\limits_{i=1}^n a_{ii}
+	\end{equation}
+\end{definition}
+Vết của ma trận có một số tính chất quan trọng:
+\begin{itemize}
+	\item $trace(A \pm B) = trace(A) \pm trace(B)$ với $A$ và $B$ là hai ma trận cùng kích thước.
+	\item $trace(cA) = c * trace(A)$, trong đó $c$ là một hằng số và $A$ là một ma trận.
+	\item $trace(A') = trace(A)$, trong đó $A'$ là ma trận chuyển vị của $A$.
+	\item $trace(AB) = trace(BA)$, trong đó $A$ và $B$ là hai ma trận hợp lệ để nhân với nhau.
+\end{itemize}
+
+Vết của ma trận được sử dụng trong nhiều ứng dụng trong toán học, đại số tuyến tính, thống kê và học máy, bao gồm tính toán độ đo Frobenius norm, tìm dạng đường chéo hóa của ma trận và phân tích thành phần chính (PCA).
+
+\subsection{Trung bình bình phương sai số}
+Trung bình bình phương sai số (Mean Squared Error - MSE) là một phép đo chất lượng trong dự đoán, được sử dụng để đánh giá độ chính xác của mô hình dự đoán hoặc ước lượng. Nó đo lường mức độ khác biệt giữa các giá trị dự đoán và giá trị thực tế của dữ liệu, và thường được sử dụng trong học máy và thống kê để đánh giá hiệu suất của các mô hình hồi quy, phân loại và dự đoán.
+
+\begin{definition}
+	Cho tập dữ liệu gồm $n$ mẫu với các giá trị là $\left(y_1,\ldots,y_n\right)$ và các giá trị dự đoán là $\left(\hat{y}_1,\ldots,\hat{y}_n\right)$. Khi đó,
+	\begin{equation*}
+		MSE = \frac{1}{n}\sum\limits_{i=1}^n\left(y_i-\hat{y}_i \right)^2
+	\end{equation*}
+\end{definition}
+MSE là một phép đo không âm, với giá trị càng gần 0, mô hình dự đoán càng chính xác. Một ưu điểm của MSE so với các phép đo khác như trung bình của sai số tuyệt đối (Mean Absolute Error - MAE) là nó đánh giá nặng hơn các lỗi lớn hơn, do tính chất của bình phương sai số. Tuy nhiên, do vậy mà MSE không cùng đơn vị giống với đại lượng cần dự đoán. Để khắc phục điều này, người ta thường sử dụng căn bậc hai của trung bình bình phương sai số (Root Mean Squared Error - RMSE), giúp đưa về cùng đơn vị với giá trị dự đoán và giá trị thực tế.
+
+\subsection{Khoảng cách Mahalanobis}
+Khoảng cách Mahalanobis là một phép đo khoảng cách giữa các điểm trong không gian đa chiều, được đặt theo tên của P. C. Mahalanobis, một nhà thống kê Ấn Độ. Khoảng cách Mahalanobis có tính chất đặc biệt so với các phép đo khoảng cách khác, như khoảng cách Euclid, bởi vì nó tính toán khoảng cách giữa các điểm dựa trên mối tương quan giữa các biến và độ lớn của chúng.
+
+Khoảng cách Mahalanobis được tính bằng công thức sau:
+\begin{equation}
+	D^2 = \left(x-\mu\right)' \cdot S^{-1} \cdot \left(x-\mu\right),
+\end{equation}
+trong đó:
+\begin{itemize}
+	\item $D^2$ là bình phương của khoảng cách Mahalanobis.
+	\item $x$ là một vector đại diện cho một điểm trong không gian đa chiều.
+	\item $\mu$ là vector giá trị trung bình của từng biến trong tập dữ liệu.
+	\item $S$ là ma trận hiệp phương sai (covariance) của tập dữ liệu.
+\end{itemize}
+
+Ưu điểm của khoảng cách Mahalanobis so với các phép đo khoảng cách khác là nó có thể xử lý hiệu quả các biến có tính chất tương quan cao và độ lớn khác nhau. Khoảng cách Mahalanobis thường được sử dụng trong các bài toán nhận dạng mẫu, phân tích thành phần chính (PCA) và phát hiện ngoại lai (outlier detection).
+
+\subsection{Phân kỳ Kullback-Leibler}
+Phân kỳ Kullback-Leibler là một phép đo không đối xứng giữa hai phân phối xác suất. Nó được sử dụng để đo mức độ khác biệt giữa hai phân phối xác suất và chủ yếu được áp dụng trong lý thuyết thông tin, thống kê và học máy. Phân kỳ Kullback-Leibler được đặt theo tên của hai nhà khoa học Solomon Kullback và Richard Leibler, người đã đề xuất nó vào năm 1951.
+\begin{definition}
+	Cho $P(x)$ và $Q(x)$ là xác suất của một sự kiện $x$ lần lượt trong phân phối $P$ và $Q$, ta có
+	\begin{equation*}
+		D_{KL}\left(P || Q\right) = \sum\limits_{x} P(x) \cdot \log\frac{P(x)}{Q(x)}
+	\end{equation*}
+	Ký hiệu $D_{KL}\left(P || Q\right)$ là phân kỳ Kullback-Leibler đo lường mức độ bất đồng về thông tin khi sử dụng phân phối $Q$ để ước lượng hoặc mô phỏng phân phối $P$.
+	
+	Lưu ý rằng phân kỳ Kullback-Leibler không đối xứng, tức là $D_{KL}\left(P || Q\right)$ không bằng $D_{KL}\left(Q || P\right)$. Nó cũng không thỏa mãn bất đẳng thức tam giác, do đó không phải là một khoảng cách theo nghĩa toán học chặt chẽ.
+	
+	Phân kỳ Kullback-Leibler được sử dụng trong nhiều ứng dụng như phân tích phân cụm, phát hiện ngoại lai, nén dữ liệu, ước lượng hợp lý tối đa và các thuật toán học máy liên quan đến phân phối xác suất.
+\end{definition}
+
+\section{Mô hình LDA (Linear Discriminant Analysis)}
+Mô hình LDA (Linear Discriminant Analysis) là một mô hình học máy giám sát được sử dụng trong các bài toán phân loại. LDA tìm một đường phẳng tuyến tính để phân tách các lớp dữ liệu sao cho khoảng cách giữa các lớp là lớn nhất và phương sai bên trong mỗi lớp là nhỏ nhất. Nói cách khác, LDA cố gắng tối đa hóa giữa tỷ lệ giữa phương sai giữa các lớp và phương sai bên trong mỗi lớp. Để đạt được mục tiêu này, LDA sử dụng hai ma trận quan trọng: ma trận phân tán giữa các lớp (between-class scatter matrix) và ma trận phân tán trong lớp (within-class scatter matrix).
+
+\begin{definition}[Ma trận phân tán giữa các lớp]
+	Cho một tập dữ liệu gồm $C$ lớp, và có $n_i$ quan sát cho lớp thứ $i$, và đặt $\boldsymbol{x}_{ij}$ là mẫu thứ $j$ của lớp thứ $i$. Khi đó, ma trận phân tán giữa các lớp được tính như sau
+	\begin{equation}
+		S_b = \sum_{i=1}^Cn_i(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })'.
+	\end{equation}
+	Ma trận phân tán giữa các lớp dùng để đo lường mức độ phân tán giữa các lớp trong không gian dữ liệu và được sử dụng để tìm ra một không gian chiếu tối ưu, giúp giữ cho các lớp phân biệt tốt hơn.
+\end{definition}
+%\subsection{Ma trận tán xạ trong lớp}
+\begin{definition}[Ma trận tán xạ trong lớp]
+	Cho một tập dữ liệu gồm $C$ lớp, và có $n_i$ quan sát cho lớp thứ $i$, và đặt $\boldsymbol{x}_{ij}$ là mẫu thứ $j$ của lớp thứ $i$. Khi đó, ma trận tán xạ trong lớp được tính như sau
+	\begin{equation}
+		S_w = \sum_{i=1}^C\sum_{j=1}^{n_i}( {\boldsymbol{x}  }_{ij}-\bar{\boldsymbol{x} }_i)({\boldsymbol{x} }_{ij}-\bar{\boldsymbol{x} }_i)'.
+	\end{equation}
+
+	Ma trận phân tán trong lớp dùng để đo lường mức độ phân tán của các điểm dữ liệu bên trong mỗi lớp và được sử dụng để tìm ra một không gian chiếu tối ưu, giúp giữ cho các điểm dữ liệu trong cùng một lớp gần nhau.
+\end{definition}
+
+\begin{definition}
+	
+Cho một tập dữ liệu gồm $C$ lớp, phép chiếu tập dữ liệu xuống một đường thẳng là một ma trận hệ số $\boldsymbol{W}$.
+Khi đó, ta có hàm mục tiêu
+\begin{equation}
+	J(\boldsymbol{W}) = \frac{\boldsymbol{W}'S_b\boldsymbol{W}}{\boldsymbol{W}'S_w\boldsymbol{W}}
+\end{equation}
+Thuật toán LDA đi tìm giá trị lớn nhất của $J(\boldsymbol{W})$. Nghiệm $W$ được tìm bằng cách giải phương trình đạo hàm hàm mục tiêu bằng $0$. Phương trình này tương đương với $J(\boldsymbol{W}) \boldsymbol{W} = \left(\boldsymbol{S}_w^{-1} \boldsymbol{S}_b\right) \boldsymbol{W}$.
+
+Từ đây suy ra, mỗi cột của $\boldsymbol{W}$ là một véc-tơ riêng của $\boldsymbol{S}_w^{-1} \boldsymbol{S}_b$ ứng với trị riêng lớn nhất.
+\end{definition}
+
+Vậy các cột của $\boldsymbol{W}$ cần phải độc lập tuyến tính. Câu hỏi đặt ra là: Có nhiều nhất bao nhiêu vector riêng độc lập tuyến tính ứng với trị riêng lớn nhất của $\boldsymbol{S}_W^{-1} \boldsymbol{S}_B$ ?
+
+Số lượng lớn nhất các vector riêng độc lập tuyến tính ứng với 1 trị riêng chính là số chiều của không gian riêng ứng với trị riêng đó, và không thể lớn hơn hạng của ma trận.
+Ta có một bổ đề quan trọng:
+\begin{lemma}
+	$\operatorname{rank}\left(\boldsymbol{S}_B\right) \leq C-1$
+\end{lemma}

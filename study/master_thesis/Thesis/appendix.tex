@@ -1,0 +1,31 @@
+\chapter*{Phụ lục}
+\addcontentsline{toc}{chapter}{Phụ lục}
+
+Trong khóa luận này, chúng tôi đã trình bày về thuật toán PFST, một thuật toán lựa chọn đặc trưng song song dựa trên tiêu chí vết và tối ưu được tốc độ tính toán cũng như hiệu suất của mô hình cho bài toán phân loại. Trong phần này, chúc tôi xin gửi các đoạn mã được viết bằng python cho từng giai đoạn của thuật toán, để người đọc có thể hiểu được thuật toán rõ hơn. Ngoài ra, chúng tôi cũng đã xây dựng thuật toán như một thư viện trong python. Người dùng có thể tìm thấy và cài đặt trong github sau \url{https://github.com/pthnhan/PFST}
+
+\section*{Tiêu chí tỉ lệ vết}
+\begin{lstlisting}[language=Python]
+import numpy as np
+from numpy.linalg import inv
+
+# return trace ratio for univariate case
+def univariate(x,y,ni, C):
+x = x.flatten()
+xbar = np.mean(x)
+num_i = lambda i: sum(y==i)*(np.mean(x[y==i])-xbar)**2
+numerator = sum(np.array([num_i(i) for i in np.arange(C)]))
+den_i = lambda i: (ni[i]-1)*np.var(x[y==i])
+denominator = sum(np.array([den_i(i) for i in np.arange(C)]))
+return numerator/denominator #np.divide(class_mean_diff, denominator)
+
+# compute trace ratio
+def mult_trace(Xmat,y,ni,g):
+xbar = np.mean(Xmat, axis = 0)
+Sw = 0
+Sb = 0
+for cl in np.arange(g):
+u = np.mean(Xmat[y==cl,:], axis=0)-xbar
+Sb += ni[cl]*np.outer(u,u)
+Sw += (ni[cl]-1)*np.cov(Xmat[y==cl,:].T)
+return np.trace(np.matmul(inv(Sw),Sb))
+\end{lstlisting}

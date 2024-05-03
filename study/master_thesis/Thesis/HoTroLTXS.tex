@@ -1,0 +1,160 @@
+Xét $\Omega$ là một tập bất kì khác $\emptyset$. Kí hiệu $\mathcal{P}(\Omega)$ là tập hợp gồm tất cả các tập con của $\Omega$.
+
+Với $\mathscr{A} \subset \mathcal{P}(\Omega)$, xét các tính chất dưới đây:
+\begin{enumerate}[\qquad 1{)}]
+	\item $\emptyset \in \mathscr{A}$ và $\Omega \in \mathscr{A}$; 
+	
+	\item Nếu $A \in \mathscr{A} $  thì $\bar{A} = \Omega \backslash A \in \mathscr{A} $; 
+	
+	\item $\mathscr{A}$ đóng kín với phép hợp hữu hạn và phép giao hữu hạn: nghĩa là, Nếu $ A_1, A_2, \ldots, A_n $ đều thuộc $\mathscr{A}$ thì $\bigcup\limits_{n = 1}^n  {{A_n}} \in \mathscr{A}, \bigcap\limits_{n = 1}^n  {A_n} \in \mathscr{A}$
+	
+	\item $\mathscr{A}$ đóng kín với phép hợp đếm được và phép giao đếm được: nghĩa là, Nếu $ A_1, A_2, A_3, \ldots$  là một dãy đếm được các tập con của  $\mathscr{A}$ thì $\bigcup\limits_{n = 1}^n  {{A_n}} \in \mathscr{A}, \bigcap\limits_{n = 1}^n  {A_n} \in \mathscr{A}$
+\end{enumerate}
+
+\begin{DN}
+	$\mathscr{A}$ được gọi là một đại số nếu nó thoả mãn (1), (2) và (3)  ở trên, $\mathscr{A}$ được gọi là một $\sigma$ - đại số (hay là một $\sigma$ -trường) nếu nó thoả mãn (1), (2) và (4) ở trên. 
+	\end{DN}
+
+\begin{DN}
+	Nếu $\mathscr{C} \subset \mathcal{P}(\Omega)$ ,  thì $\sigma$ - đại số được sinh bởi $\mathscr{C}$, kí hiệu là $\sigma \left (\mathscr{C}\right)$ là $\sigma$ - đại số nhỏ nhất chứa $\mathscr{C}$. (Nó luôn luôn tồn tại vì $\mathcal{P}(\Omega)$ là một  $\sigma$ - đại số, và giao của họ các $\sigma$ - đại số vẫn là một $\sigma $ - đại số)
+\end{DN}
+
+\begin{VD}
+		$\Omega$ là tập đếm được. Lớp gồm mọi tập con của $\Omega$ là $\sigma$-đại số hay đại số khi $\Omega$ hữu hạn.
+	\end{VD}
+
+\begin{VD}
+	$\Omega = \mathbb{R}$ (đường thẳng thực). Lớp gồm mọi nửa đường thẳng $(-\infty, \infty)$ không phải là đại số ($\sigma$-đại số).
+\end{VD}
+\begin{VD}
+	$\sigma$-đại số Borel $\mathcal{B}^1$ trên đường thẳng $\mathbb{R}^1$
+Là $\mathcal{B}^1=\mathcal{B}(\mathscr{C})$ với $\mathscr{C}=\left\{ (-\infty,x),\forall\ x \in \mathbb{R} \right\}$. Tập Borel là tập $\in \mathcal{B}^1$. Ví dụ $[a,b)$ là tập Borel, vì $[a,b)=(-\infty,b)\cap \overline{(-\infty,a)}$
+	\end{VD}
+
+\begin{DL}
+	$\sigma$-đại số Borel trên đường thẳng thực $\mathcal{R}$ được sinh bởi các khoảng có dạng $\left( -\infty, a \right]$, với $a \in \mathcal{Q}$
+	\end{DL}
+
+\begin{CM}
+	Phần chứng minh của định lí có thể tìm thấy trong .... trang 8.
+	\end{CM}
+
+\begin{DN}
+	Một độ đo xác suấtt xác định trên $\sigma$ - đại số  $\mathscr{A}$ của $\Omega$ là một hàm số P : $\mathscr{A} \rightarrow [0,1]$ thoả mãn:
+	\begin{enumerate}[\qquad 1{)}]
+		\item $P(\Omega) = 1$
+		\item Với mọi dãy đếm được $\left(A_n \right) _{n\ge 1}$ các phần tử của $\mathscr{A}$, từng đôi rời nhau (nghĩa là $A_n \cap A_m = \emptyset, \forall n \ne m$), khi đó:
+		\[ P \left( \sum_{i = 1}^{\infty}A_i\right)=\sum_{i = 1}^{\infty} P \left(A_i\right) \]
+		
+	\end{enumerate}
+\end{DN}
+
+Tiên đề (2) ở trên được gọi là \textit{cộng tính đếm được}. Giá trị $P \left(A \right)$ được gọi là \textit{xác suất} của biến cố A.
+
+\begin{DL}
+	Nếu P là một độ đo xác suất trên $\left( \Omega, \mathscr{A} \right)$, thì:
+	\begin{enumerate}[\qquad i {)}]
+		\item $P \left(\emptyset \right) = 0$
+		\item P cộng tính.
+		\end{enumerate}
+	\end{DL}
+
+\begin{DL}
+	Cho $\mathscr{A} $ là một $\sigma$ - đại số. Giả sử $P : \mathscr{A} \rightarrow [0, 1]$ thoả mãn $P \left( \Omega \right) = 1$ và cộng tính. Khi đó các khẳng định dưới đây là tương đương:
+	\begin{enumerate}[\qquad i {)}]
+		
+		\item Tiên đề (2) của Định nghĩa (1.1.2).
+		\item Nếu $A_n \in \mathscr{A}$ và $A_n \downarrow \emptyset$, thì $P \left( A_n \right) \downarrow 0.$
+		\item Nếu $A_n \in \mathscr{A}$ và $A_n \downarrow A$, thì $P \left( A_n \right) \downarrow P \left( A \right)$
+		\item Nếu $A_n \in \mathscr{A}$ và $A_n \uparrow \Omega $, thì $P \left( A_n \right) \uparrow 1$
+		\item Nếu $A_n \in \mathscr{A}$ và $A_n \uparrow A$, thì $P \left( A_n \right) \uparrow P \left( A \right)$
+			
+	\end{enumerate}
+\end{DL}
+
+\begin{DL}
+Cho $P$ mà một độ đo xác suất và cho $A_n$ là một dãy các biến cố trong $\mathscr{A}$ mà tiến về A. khi đó $A \in \mathscr{A}$ và $ \lim \limits_{n \to \infty } P \left( A_n \right) = P \left( A \right)$.
+\end{DL}
+
+
+\section{Xác Suất Có Điều Kiện Và Sự Độc Lập }
+
+\begin{DN}
+	
+	\begin{enumerate}[\qquad a{)}] 
+	 \item Hai biến cố A và B được gọi là độc lập nếu $P\left( A \cap B \right) = P\left( A\right)P\left( B\right)$
+	 \item Một họ các biến cố $\left( A_i\right)_{i \in I}$ là một họ độc lập nếu với mọi tập con $J$ của $I$, có được
+	 	\[ P\left( \cap_{i \in J} A_i\right) = \prod\limits_{i \in J} {P\left( A_i\right)} \]
+		
+	\end{enumerate}
+
+\end{DN}
+\indent \textit{Chú ý}: Nếu họ $\left( A_i\right)_{i \in I}$ độc lập, thì chúng từng độc lập từng đôi một, nhưng điều ngược lại là không đúng. ($\left( A_i\right)_{i \in I}$ độc lập từng đôi nếu $A_i$ và $A_j$ độc lập $\forall i, j$ với $i \ne j$ )
+
+\begin{DL}
+	Nếu A và B độc lập, thì các cặp biến cố sau cũng độc lập: A và $\bar{B}$, $\bar{A}$ và B, và $\bar{A}$ và $\bar{B}$.
+	
+	\end{DL}
+
+\begin{CM}
+	Trường hợp A và $\bar{B}$
+	
+	$P \left( A \cap \bar{B} \right) = P \left( A \right) - P \left( A \cap B \right) = P \left( A \right) - P \left( A \right) P \left( B \right) = P \left( A \right) \left[ 1 - P \left( B \right) \right] = P \left( A \right) P \left( \bar{B} \right) $
+	\end{CM}
+\begin{flushright}
+	$\Box$
+\end{flushright}
+
+Các trường hợp còn lại chứng minh tương tự.
+
+\begin{DN}
+	Cho A, B là hai biến cố, $P \left(B\right) > 0.$ Xác suất có điều kiện của A cho trước B là $P \left(A \vert B\right) = P \left(A \cap B \right)/P \left(B\right) $
+	\end{DN}
+
+\begin{DL}
+	giả sử  $P \left(B\right) > 0.$
+	\begin{enumerate}[\qquad a{)}]
+		
+		\item A và B độc lập khi và chỉ khi $P \left( A  \vert B \right) =P \left( A \right)$.
+		\item phép toán xác định trên A $\rightarrow P \left( A  \vert B \right)$  từ $\mathscr{A} \rightarrow [0, 1] $ định nghĩa một độ đo xác suất mới trên $\mathscr{A}$, gọi là "độ đo xác suất có điều kiện theo B".
+		\end{enumerate}
+	\end{DL}
+
+\begin{DL}
+	Nếu $A_1, \ldots, A_n \in \mathscr{A}$ và nếu $P \left( A_1 \cap \ldots \cap A_{n - 1} \right) >0, $ thì
+	\[ P \left( A_1 \cap \ldots \cap A_n \right) = P \left( A_1 \right)P \left( A_2 \vert A_1 \right) P \left( A_3 \vert A_1 \cap A_2 \right) \ldots  P \left( A_n \vert  A_1 \cap \ldots \cap A_{n - 1} \right) \]
+\end{DL}
+
+Một hệ biến cố $\left( E_n  \right)$ của $\Omega$ được gọi là đầy đủ nếu $\left( E_n  \right) \in \mathscr{A}$, với mỗi n khác nhau thì chúng đôi một rời nhau, $P \left( E_n  \right) >0$ với mỗi n, và $\cup _n E_n = \Omega$
+\begin{DL} 
+\textbf{Công Thức Xác Suất Đầy Đủ}. Cho $\left( E_n  \right)_{n \ge 1}$ là một dãy biến cố đầy đủ hữu hạn hoặc đếm được của $\Omega$. Khi đó nếu $A \in \mathscr{A}$, 
+\[  P \left( A  \right) = \sum \limits_n{P \left( A \vert E_n \right) }P \left( E_n  \right)  \]
+\end{DL}
+
+\begin{CM}
+	
+	Ta có: 
+	\[ A = A \cap \Omega = A \cap \left( \cup _n E_n \right) = \cup _n \left( A \cap E_n \right)\]
+	Vì $E_n$ đôi một rời nhau nên dãy $\left( A \cap E_n \right)$ cũng đôi một rời nhau, do đó:
+	\[  P \left( A  \right) = P \left( \cup _n \left( A \cap E_n \right) \right) = 	\sum \limits_n{P\left( A \cap E_n \right)} =  \sum \limits_n{P \left( A \vert E_n \right) }P \left( E_n  \right) \] 
+\begin{flushright}
+	$\Box$
+\end{flushright}
+	\end{CM}
+\section{Xác Suất trên Không Gian Hữu Hạn Hoặc Vô Hạn Đếm Được}
+
+Trong chương này, ta xét $\Omega$ là hữu hạn hoặc vô hạn đếm được, lấy $\sigma$ - đại số $\mathscr{A} = 2^\Omega$.
+
+\begin{DL} 
+\begin{enumerate}[\qquad a{)}]
+	\item Một xác suất trên không gian $\Omega$ hữu hạn hoặc vô hạn đếm được thì được xác định dựa vào các giá trị của nó trên các biến cố sơ cấp: $p_\omega = P \left(\{\omega\} \right), \omega \in \Omega.$
+	\item Cho $\left( p_\omega \right)_{\omega \in \Omega}$ là một họ các số thực được đánh chỉ số hữa hạn hoặc vô hạn đếm được theo $\Omega$. Khi đó tồn tại một xác suất duy nhất P sao cho $ P \left( \{\omega\} \right) = p_\omega$ khi và chỉ khi $p_\omega \ge 0$ và $\sum _{\omega \in \Omega} p_\omega = 1.$
+	\end{enumerate}
+\end{DL}
+
+\begin{DN}
+	Một xác suất P trên không gian hữu hạn $\Omega$ được gọi là đều nếu $p_\omega = P \left(\{\omega\} \right)$ không phụ thuộc vào $\omega$
+	\end{DN}
+	
+	Trong trường hợp này, ta có ngay được:
+	\[ P \left(A \right) = \frac{n(A)}{n( \Omega)}\]

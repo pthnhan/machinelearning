@@ -1,0 +1,122 @@
+
+
+\makeatletter
+%\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}
+{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+			\usebeamerfont{author in head/foot} \insertshortauthor
+		\end{beamercolorbox}%  -uytrfder      jo  
+		\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+			\usebeamerfont{title in head/foot}\insertshorttitle
+		\end{beamercolorbox}%
+		\begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+			\usebeamerfont{date in head/foot}\insertshortdate \hspace*{1.5em}
+			%	Trang \insertframenumber\hspace*{2ex} 
+			%	\insertframenumber/39 \hspace*{2ex}
+			\insertframenumber/\inserttotalframenumber \hspace*{2ex}
+		\end{beamercolorbox}}%
+		\vskip0pt%
+	}
+	\makeatother
+
+	
+
+
+
+
+
+\newcommand{\doo}[1]{\textcolor{red}{#1}}
+\newcommand{\mdo}[1]{\textcolor{red}{\bm{#1}}}
+\newcommand{\tdo}[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\nau}[1]{\textcolor{brown}{#1}}
+\newcommand{\mnau}[1]{\textcolor{brown}{\bm{#1}}}
+\newcommand{\xanh}[1]{\textcolor{green}{#1}}
+\newcommand{\duong}[1]{\textcolor{blue}{#1}}
+\newcommand{\mduong}[1]{\textcolor{blue}{\bm{#1}}}
+\newcommand{\tduong}[1]{\textcolor{blue}{\textbf{#1}}}
+\newcommand{\bich}[1]{\textcolor{cyan}{#1}}
+\newcommand{\mbich}[1]{\textcolor{cyan}{\bm{#1}}}
+\newcommand{\tbich}[1]{\textcolor{cyan}{\textbf{#1}}}
+\newcommand{\hong}[1]{\textcolor{magenta}{#1}}
+\newcommand{\vang}[1]{\textcolor{yellow}{#1}}
+\newcommand{\pt}[1]{\textcolor{green}{\mathbf{#1}}}
+
+%\newcommand{\dn}[1]{\textcolor{red}{\textbf {\textit  {#1}}}}
+
+\newcommand{\dn}[1]{\textcolor{ForestGreen}{\textbf {\textit  {#1}}}}  %Màu dùng có các định nghĩa
+
+%\newcommand{\dnt}[1]{\textcolor{blue}{\bm{#1}}} 
+\newcommand{\dnt}[1]{\textcolor{RoyalBlue}{\bm{#1}}}   %Màu dùng cho công thức toán đặc biệt 
+
+
+\newenvironment{test}{\textbf{Thử nghiệm}}{}
+\def\K{\mathbb{R}}
+\def\R{\mathbb{R}}
+\def\N{\mathbb{N}}
+\def\Q{\mathbb{Q}}
+\def\C{\mathbb{C}}
+\def\Z{\mathbb{Z}} 
+\def\F{\mathbb{F}}
+\def\rank{\mathrm{rank}}
+\def\Id{\mathrm{Id}}
+
+
+
+
+
+
+\newcommand{\cm}{\notab{\mau{Chứng minh.}} }
+\newcommand{\gt}{\notab{\mau{Giải thích.}} }
+\newcommand{\giai}{\notab{\mau{Giải.}} }
+\newcommand{\gthich}{\notab{\mau{Giải thích.}} }
+%\newcommand{\cm}{\notab{\textcolor{brown}{\bf Chứng minh.}} } 
+%\newcommand{\giai}{\notab{\textcolor{brown}{\bf Giải.}} }
+
+
+ 
+\newcommand{\dpcm}{ \hfill \nau{\rule{2.5mm}{2.5mm}}}
+\newcommand{\giua}[1]{\begin{center}#1\end{center}}
+
+
+
+
+
+
+\newenvironment{DL}{ \begin{block}{} \textbf{\duong{Định lý.}} \begin{itshape}} {\end{itshape}\end{block}}
+\newenvironment{MD}{ \begin{block}{} \textbf{\duong{Mệnh đề.}} \begin{itshape}} {\end{itshape}\end{block}}
+\newenvironment{HQ}{ \begin{block}{} \textbf{\duong{Hệ quả.}} \begin{itshape}} {\end{itshape}\end{block}}
+\newenvironment{BD}{ \begin{block}{} \textbf{\duong{Bổ đề.}} \begin{itshape}} {\end{itshape}\end{block}}
+\newenvironment{TC}{ \begin{block}{} \textbf{\duong{Tính chất.}} \begin{itshape}} {\end{itshape}\end{block}}
+\newenvironment{GT}{ \begin{block}{} \textbf{\duong{Giả thiết.}} \begin{itshape}} {\end{itshape}\end{block}}
+\newenvironment{NX}{ \begin{block}{} \textbf{\duong{Nhận xét.}} \begin{itshape}} {\end{itshape}\end{block}}
+
+
+
+\newenvironment{prob}{ \begin{block}{\textbf{Problem}}} {\end{block}}
+
+\newenvironment{moti}{ \begin{block}{\textbf{Motivation}}} {\end{block}}
+
+\newenvironment{exam}{ \begin{block}{\textbf{Example}}}{\end{block}}
+
+\newenvironment{algo}{ \begin{block}{\textbf{Algorithm}}} {\end{block}}
+
+\newenvironment{theo}{ \begin{block}{\textbf{Theorem}} \begin{itshape}} {\end{itshape}\end{block}}
+
+\def\question {\textbf{\duong{Question. }}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

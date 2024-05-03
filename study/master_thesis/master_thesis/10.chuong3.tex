@@ -1,0 +1,298 @@
+\chapter{Tiêu chí vết - Tiêu chí lựa chọn đặc trưng}
+\begin{table}[htbp]
+	\caption{Bảng ký hiệu}
+	\centering
+	% \resizebox{12cm}{!} {%
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Symbol} & \textbf{Description} \\\hline
+			$C$ & number of classes   \\
+			
+			
+			$A'$& the transpose of matrix $A$ \\
+			
+			$\bar{\boldsymbol{x}}_i$& the class mean of the $i^{th}$ class   \\
+			
+			$\bar{\boldsymbol{x}}$& the overall mean   \\
+			$R$ & the set of selected features \\
+			$\bar{\boldsymbol{x}}_{iRf}$ & the mean of the $i^{th}$ class when the selected features are $\{R,f\}$\\
+			$\bar{\boldsymbol{x}}_{Rf}$ &  the overall mean when the selected features are $\{R, f\}$\\
+			
+			$n_i$ & number of observations in the $i^{th}$ class   \\
+			
+			$x_{ij}$& the $j^{th}$ sample of the $i^{th}$ class   \\
+			
+			
+			$S_{R}$ &The value of $S_w$ when $R$ is the set of selected features \\
+			
+			$t_{R}$ & $trace(S_w^{-1}S_b)$ when $R$ is the set of selected features \\
+			% 		$t_{Rf}$ & $trace(S_w^{-1}S_b)$ when $R\cup \{f\}$ is the set of selected features \\
+			\hline
+		\end{tabular}
+		\label{tab_notations}
+		%}
+\end{table}
+\section{Tiêu chí vết}
+Chương này sẽ trình bày chi tiết cơ sở của việc sử dụng tiêu chí vết cho việc lựa chọn đặc trưng.
+
+Tiêu chí vết là một thước đo hữu ích để phân lớp hữu ích để lựa chọn đặc trưng cho lớp bài toán toán phân loại (chi tiết hơn trong  \cite{fukunaga2013introduction,johnson2002applied}). Có nhiều phiên bản định nghĩa tiêu chí vết, chúng là tương đương nhau. Tuy nhiên, để phù hợp với lớp bài toán phân loại, chúng tôi sẽ giới thiệu định nghĩa sau
+\begin{definition}
+	Cho một tập dữ liệu gồm $C$ lớp, và có $n_i$ quan sát cho lớp thứ $i$, và đặt $\mathbf{x}_{ij}$ là mẫu thứ $j$ của lớp thứ $i$. Khi đó, ta có định nghĩa tiêu chí vết là
+	\begin{equation}
+		trace(S_w^{-1}S_b),
+	\end{equation}
+	trong đó, 
+	\begin{equation}
+		S_b = \sum_{i=1}^Cn_i(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })',
+	\end{equation}
+	và 
+	\begin{equation}
+		S_w = \sum_{i=1}^C\sum_{j=1}^{n_i}( {\boldsymbol{x}  }_{ij}-\bar{\boldsymbol{x} }_i)({\boldsymbol{x} }_{ij}-\bar{\boldsymbol{x} }_i)'.
+	\end{equation}
+\end{definition}
+$S_b$ còn được gọi là ma trận phân tán giữa các lớp (between-class scatter matrix) và $S_w$ là ma trận tán xạ trong lớp.
+
+Ở đây $A'$ là ma trận chuyển vị của ma trận $A$, và $\bar{\boldsymbol{x}}_i$ là giá trị trung bình của lớp thứ $i$, và $\bar{\boldsymbol{x}}$ là giá trị trung bình của toàn bộ dữ liệu. Nghĩa là,
+\begin{align*}
+	\bar{\boldsymbol{x}}_i &= \frac{1}{n_i}\sum_{j=1}^{n_i}(\bar{\boldsymbol{x}}_{ij}-\bar{\boldsymbol{x}}_i)\\
+	\bar{\boldsymbol{x}} &= \frac{1}{\sum_{i=1}^Cn_i}\sum_{i=1}^C\sum_{j=1}^{n_i}(\bar{\boldsymbol{x}}_{ij}-\bar{\boldsymbol{x}}_i).
+\end{align*}
+
+Từ đây, ta có kết quả sau
+\begin{theorem}
+	\begin{equation}\label{th1}
+		trace(S_w^{-1}S_b) = \sum_{i=1}^Cn_i(\bar{\boldsymbol{x}}_i- \bar{\boldsymbol{x}})'S_w^{-1}(\bar{\boldsymbol{x}}_i- \bar{\boldsymbol{x}})
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	\begin{align*}\label{th1}
+		trace(S_w^{-1}S_b) &= trace\left(S_w^{-1}\sum_{i=1}^Cn_i(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })'\right)\\
+		&= trace\left(\sum_{i=1}^Cn_iS_w^{-1}(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })'\right)\\
+		&= \sum_{i=1}^Cn_i\;trace\left(S_w^{-1}(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })'\right)\\    
+		&= \sum_{i=1}^Cn_i\;trace\left((\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })'S_w^{-1}(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })\right)\\   
+		&= \sum_{i=1}^Cn_i(\bar{\boldsymbol{x}}_i- \bar{\boldsymbol{x}})'S_w^{-1}(\bar{\boldsymbol{x}}_i- \bar{\boldsymbol{x}})
+	\end{align*}
+\end{proof}
+% Bổ sung thêm định nghĩa của KL-divergence và khoảng cách Mahalanobis
+Từ định lý trên, ta có thể thấy rằng tiêu chí vết \ref{th1} có thể được xem là tổng bình phương khoảng cách Mahalanobis từ trung bình của mỗi class đến trung bình của toàn bộ dữ liệu. Hơn nữa khi số lượng lớp là hai, tiêu chí \ref{th1} có thể được xem là ước lượng thực nghiệm của phân kỳ Kullback–Leibler cho hai phân phối chuẩn có cùng ma trận hiệp phương sai \cite{kong2014pairwise}. 
+
+Vì tiêu chí này đo khả năng tách biệt của các lớp, nên chúng tôi sẽ định hướng vào việc tối đa nó. Để đơn giản ký hiệu, chúng tôi sẽ viết $\{R,f\}$ thay cho $R\cup \{f\}$, và $t_{R, f}$ thay cho  $t_{\{R, f\}}$. Ta có định lý sau
+\begin{theorem}\label{th2}
+	Với $R$ là tập hợp các đặc trưng được chọn, và $f$ là một đặc trưng tùy ý mà không nằm trong $R$. Đặt $S_{Rf}$ là giá trị của $S_w$ khi $\{R, f\}$ là tập hợp các đặc trưng được chọn, và $S_R$ là giá trị của $S_w$ khi $R$ là tập hợp các đặc trưng được chọn
+	\begin{equation}
+		S_{Rf} = \begin{pmatrix}
+			S_R & v\\
+			v'& u
+		\end{pmatrix},
+	\end{equation}
+	với $ u \in \mathbb{R}^{+}, v \in \mathbb{R}^{|R| \times 1}, |R| $ số lượng phần tử trong $R$.\\
+	Nếu $u - v'S_R^{-1}v>0$ thì
+	\begin{equation}
+		t_{R,f}\ge t_R.
+	\end{equation}
+	Ngược lại, nếu $u - v'S_R^{-1}v<0$ thì
+	\begin{equation}\label{eq7}
+		t_{R,f}< t_R.
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Đặt $R$ là tập hợp các đặc trưng đưa vào mô hình. Đặt $\bar{\boldsymbol{x}}_{iR}, \bar{\boldsymbol{x}}_R$ lần lượt là trung bình của lớp thứ $i$, và trung bình toàn bộ dữ liệu của tập hợp R. Tương tự, đặt $\bar{\boldsymbol{x}}_{iRf}, \bar{\boldsymbol{x}}_{Rf}$ lần lượt là trung bình của lớp thứ $i$ và trung bình của toàn bộ dữ liệu toàn bộ dữ liệu của tập hợp $\{R, f\}$. Khi đó, ta có
+	\begin{equation}
+		\bar{\boldsymbol{x}}_{iRf} = \begin{pmatrix}
+			\bar{\boldsymbol{x}}_{iR}\\\bar{\boldsymbol{x}}_{if}
+		\end{pmatrix}, \;\;
+		\bar{\boldsymbol{x}}_{Rf} = \begin{pmatrix}
+			\bar{\boldsymbol{x}}_{R}\\\bar{\boldsymbol{x}}_{f}
+		\end{pmatrix},
+	\end{equation}
+	với  $\bar{\boldsymbol{x}}_{if}, \bar{\boldsymbol{x}}_f$ lần lượt là trung bình lớp thứ $i$ và trung bình của toàn bộ dữ liệu của đặc trưng $f$.
+	
+	Nếu $u\neq v'S_R^{-1}v$ thì $M = (u-v'S_R^{-1}v)^{-1}$ tồn tại. Do đó,
+	\begin{equation}
+		S_{Rf}^{-1} = \begin{pmatrix}
+			S_R^{-1}+S_R^{-1}vMv'S_R^{-1} & -S_R^{-1}vM\\
+			-Mv'S_R^{-1}&M
+		\end{pmatrix}
+	\end{equation}
+	
+	Tiếp theo, đặt
+	\begin{align*}
+		\eta_{iRf} &= (\bar{\boldsymbol{x}} _{iRf}-\bar{\boldsymbol{x}}_{Rf})'S_{Rf}^{-1}(\bar{\boldsymbol{x}} _{iRf}-\bar{\boldsymbol{x}}_{Rf})\\
+		% &=((\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)',
+		% (\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)')\\
+		% &\times \begin{pmatrix}
+			% S_R^{-1}(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)+S_R^{-1}vMv'S_R^{-1}(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)-S_R^{-1}vM(\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)\\
+			% -Mv'S_R^{-1}(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)+M(\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)'
+			% \end{pmatrix}\\
+		&= \eta_{iR}+(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)'S_R^{-1}vMv'S_R^{-1}(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)\\
+		& - 2(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)'S_R^{-1}vM(\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)\\
+		% &- (\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)'Mv'S_R^{-1}(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)\\
+		&+ (\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)'M(\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f),
+	\end{align*}
+	với  
+	$\eta_{iR} = (\bar{\boldsymbol{x}} _{iR}-\bar{\boldsymbol{x}}_{R})'S_{R}^{-1}(\bar{\boldsymbol{x}} _{iR}-\bar{\boldsymbol{x}}_{R})$. Để ý rằng $ M\in \mathbb{R}, M\neq 0$. Do đó,
+	\begin{align*}
+		\frac{\eta_{iRf}-\eta_{iR}}{M}     &=
+		(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)'S_R^{-1}vv'S_R^{-1}(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)\\
+		& - 2(\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)'S_R^{-1}v(\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)\\
+		&+ (\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)'(\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f).
+	\end{align*}
+	Áp dụng bất đẳng thức Cauchy-Schwarz, $||a||^2+||b||^2\ge 2 \langle a,b\rangle$, với  $a = (\bar{\boldsymbol{x}}_{iR}-\bar{\boldsymbol{x}}_R)S_R^{-1}v$, và $b = (\bar{\boldsymbol{x}}_{if}-\bar{\boldsymbol{x}}_f)$, ta thấy rằng
+	\begin{equation*}
+		\frac{\eta_{iRf}-\eta_{iR}}{M} \ge 0.
+	\end{equation*}
+	Vì $
+	t_{R,f} - t_{R} = \sum_{i=1}^C (\eta_{iRf}- \eta_{iR})$, nên nếu $u - v'S_R^{-1}v>0$ thì $t_{R,f}\ge t_R,$ ngược lại nếu $u - v'S_R^{-1}v<0$ thì $t_{R,f}< t_R.$
+\end{proof}
+
+Ý nghĩa của định lý \ref{th2} là việc cải thiến hay suy thoái của một mô hình sau khi thêm một đặc trưng không chỉ phụ thuộc vào bản thân các đặc trưng mà còn phụ thuộc vào sự tương quan giữa đặc trưng đó với các đặc trưng khác đã có trong mô hình. Hơn nữa, từ phương trình \ref{eq7}, ta có thể thấy rằng thêm một đặc trưng có thể làm giảm đi khả năng phân lớp của một mô hình. Vì thế, lựa chọn đặc trưng là cần phải loại bỏ các đặc trưng mà đóng góp của chúng cho hiệu suất của mô hình là không đáng kể. Thuộc tính này là mong muốn và không phải tất cả các tiêu chí lựa chọn đặc trưng đều có thể đáp ứng được. Ví dụ, với trung bình bình phương sai số (mean square error - MSE), việc thêm vào các đặc trưng, dù có dư thừa hay không cũng không làm tăng MSE. Định lý dưới đây sẽ làm rõ điều này.
+
+\begin{theorem} \label{th3}
+	Đặt $MSE_X$ là giá trị trung bình bình phương sai số khi ta hồi quy $Y$ dựa trên $X$. Giả sử $T$ chứa các đặc trưng tùy ý được thêm vào mô hình và đặt
+	\begin{equation}
+		U = (X\;\;\;T).
+	\end{equation}
+	Đặt $MSE_U$ là giá trị trung bình bình phương sai số khi ta hồi quy $Y$ dựa trên $U$. Khi đó, nếu $M = (T'T - T'X(X'X)^{-1}X'T)^{-1}$ tồn tại thì $MSE_U \le MSE_X$.
+\end{theorem}
+\begin{proof}
+	Đặt $H = X(X'X)^{-1}X'$, khi đó ta có $H^2 = H$, nghĩa là $H$ là ma trận lũy đẳng, do đó $I-H$ cũng là ma trận lũy đẳng, thật vậy
+	\begin{equation*}
+		(I-H)^2 = I - 2H + H^2 = I - 2H + H = I-H.
+	\end{equation*}
+	Do đó, tổng bình phương sai số khi hôi quy $Y$ trên $X$ là
+	\begin{equation*}
+		SSE_X = (Y-\hat{Y}_X)'(Y-\hat{Y}_X)
+		= Y'(I-H)Y
+	\end{equation*}
+	với $\hat{Y}_X$ là vector giá trị dự đoán của mô hình khi hồi quy $Y$ trên $X$.
+	
+	Chú ý rằng $M$ là ma trận đối xứng, khi đó đặt $\hat{Y}_U$ là vector giá trị dự đoán của mô hình khi hồi quy $Y$ trên $U$. Do đó, 
+	\begin{align*}
+		\small
+		&\;\;\;\;\;(U'U)^{-1}U'Y \\
+		&= HY+HTMT'HY-HTMT'Y - TMT'HY+TMT'Y\\
+		&= HY-(I-H)TMT'+(I-H)TMT'Y.
+	\end{align*}
+	Suy ra
+	\begin{align*}
+		&\;\;\;\;\;Y-\hat{Y}_U \\
+		&= Y-\hat{Y}_X+(I-H)TMT'HY-(I-H)TMT'Y\\
+		&= Y- \hat{Y}_X-(I-H)TMT'(I-H)Y
+	\end{align*}
+	Nên tổng bình phương sai số khi hồi quy $Y$ trên $U$ là
+	\begin{align*}
+		SSE_U &= (Y-\hat{Y}_U)'(Y-\hat{Y}_U)\\
+		&= SSE_X-2Y'(I-H)TMT'(I-H)(Y-\hat{Y}_X)\\
+		&\;\;\;\;+Y'(I-H)TMT'(I-H)TMT'(I-H)Y
+	\end{align*}
+	Hơn nữa, ta cũng có $(I-H)TMT'$ là ma trận lũy đẳng, và $Y'(I-H)TMT'(I-H)Y\ge 0$. Vì thế, 
+	\begin{align*}
+		&\;\;\;\;\;Y'(I-H)TMT'(I-H)TMT'(I-H)Y\\
+		&=Y'(I-H)TMT'(I-H)Y\\
+		&\le 2Y'(I-H)TMT'(I-H)Y.
+	\end{align*}
+	Suy ra, $SSE_U\le SSE_X$. Lại có $U = (X T)$ có nghĩa là số lượng mẫu trên $X$ bằng với số lượng mẫu trên $T$, nên $MSE_U\le MSE_X$.
+\end{proof}
+
+\section{Thuật toán lựa chọn đặc trưng song song dựa trên tiêu chí vết}\label{methods}
+Trong mục này, chúng tôi sẽ trình bày chi tiết về thuật toán lựa chọn đặc trưng song song dựa trên tiêu chí vết (PFST). Hơn nữa, để có được các thuộc tính mong muốn của tiêu chí vết như đã đề cập ở trên, phương pháp này sẽ dựa trên các nhận xét sau.
+
+\subsection{Cơ sở sử dụng tiêu chí vết}
+Đầu tiên, như đã trình bày trong phần \ref{section:preliminaire}, việc lựa chọn chuyển tiến nhanh hơn lựa chọn chuyển lùi bởi vì nó liên tục thêm các đặc trưng phù hợp nhất vào mô hình. Tuy nhiên, ta vẫn phải chịu một chi phí tính toán tương đối lớn. Một cách tiềm năng để tăng tốc độ xử lý của quá trình này là áp dụng thuật toán Early Dropping (Early Dropping heuristic) \cite{borboudakis2019forward}. Thuật toán này sẽ loại bỏ khỏi trong các lần lặp lại tiếp theo các đặc trưng được cho là không có khả năng làm tăng hiệu suất của mô hình. Trong bài báo \cite{borboudakis2019forward}, nhóm tác giả đã đánh giá khả năng đó bằng trị số $p$ ($p-$value). Tuy nhiên, việc tính toán trị số $p$ đòi hỏi sử dụng bootstrap rất tốn kém chi phí tính toán. Chúng tôi sẽ tiếp cận theo một hướng khác, chúng tôi sử dụng thuật toán Early Dropping và dùng tiêu chí vết để làm công cụ đánh giá. Điều này không yêu cầu phải lặp lại nhiều lần trong cả dữ liệu cho mỗi bước tiến như việc sử dụng trị số $p$.
+
+Thứ hai, lựa chọn đặc trưng từng bước dường như là một biện pháp khắc phục sai số trong lựa chọn tiến. Lựa chọn đặc trưng từng bước thêm các đặc trưng vào mô hình một cách tuần tự như trong lựa chọn tiến. Hơn nữa, sau khi thêm vào một đặc trưng mới, cách tiếp cận này sẽ loại bỏ khỏi mô hình các đặc trưng mà không còn quan trọng dựa theo tiêu chí lựa chọn đặc trưng đang được sử dụng. Tuy nhiên, điều này sẽ làm tăng chi phí tính toán khi kết hợp các bước lùi để loại bỏ các đặc trưng không cần thiết. Trong bài báo \cite{zhang2011adaptive}, nhóm tác giả có đề xuất một thuật toán là chỉ lùi một bước khi bình phương sai số (squared error) giảm không quá một nửa mức giảm bình phương sai số trong các bước tiến trước đó. Thực tế, bài báo \cite{nguyen2019faster} đã chỉ ra một ví dụ mô phỏng để cho thấy rằng việc lựa chọn đặc trưng từng bước hiếm khi thực hiện một bước lùi. Vì vậy, trong cách tiếp cận của chúng tôi, chúng tôi sẽ thêm các đặc trưng đến khi đạt được mô hình thỏa mãn, và sau đó sử dụng lựa chọn lùi để loại bỏ các đặc trưng dư thừa.
+
+Thứ ba, với tập dữ liệu chỉ có một đặc trưng, thì $trace(S_w^{-1}S_b)$ có thể được rút gọn thành \begin{equation}
+	t = \frac{\sum_{i=1}^C n_i(\bar{\boldsymbol{x} }_i-\bar{\boldsymbol{x} })^2}{\sum_{i=1}^C\sum_{j=1}^{n_i}(\boldsymbol{x} _{ij}-\bar{\boldsymbol{x} }_i)^2},
+\end{equation} còn với tập dữ liệu có những đặc trưng đã được chuẩn hóa thì $S_b$ có thể được rút gọn thành $S_b = \sum_{i=1}^C n_i \bar{x}_i \bar{x}_i'$. Đặt \begin{equation}
+	t_R = trace(S^{-1}_wS_b)
+\end{equation} với $R$ là tập hợp các đặc trưng được chọn trong mô hình.
+
+%For the sake of clarity, we added an overview of the descriptions for the used notations in Table \ref{tab_notations}
+\subsection{Thuật toán}
+\begin{breakablealgorithm}
+	\caption{\textbf{Thuật toán tiến-lùi song song với loại bỏ sớm}\\
+		(Parallel forward-backward algorithm with early dropping)}\label{alg:pfbaed}
+	\noindent\textbf{Input:} Tập hợp $A$ gồm tất cả các đặc trưng. Các feature được chia vào các khối $F_1,..., F_B$, và nhãn $Y$ tương ứng, tham số tiến là $\alpha$, tham số lùi $\beta$, tham số loại bỏ sớm là $\gamma$, số bước tối đa sau khi bắt đầu lại là maxRef.\\
+	\textbf{Output:} Tập hợp $R$ các đặc trưng được chọn.
+	
+	\noindent\textbf{Quy trình:}
+	\begin{algorithmic}[1]
+		\State $f_b \gets \arg\max_f \{t_{\{f\}}: f\in F_b \}, b=1,...,B$ chạy song song trên $B$ khối.
+		\State $R \gets \{f_1,...,f_B\}$.\\
+		\textbf{\# Forward with forward-dropping stage:}
+		\While{$\bigcup_{1\le b\le B} {F}_b \neq \emptyset$}
+		\State $f_b,F_b \gets OneForwardDropping(F_b,Y,\alpha,\gamma)$ (chạy song song trên $B$ khối).
+		\State $R \gets R\cup \{f_1,..., f_B\}$ 
+		\EndWhile\\
+		\textbf{\# Re-forward stage:}
+		\State Bắt đầu lại với tập hợp $A\setminus R$ và lại chia chúng vào $B$ khối $F_1,..., F_B$.
+		
+		\State runs $\gets 0$
+		\While{runs $<$ maxRef~\&~ $\bigcup_{1\le b\le B} {F}_b \neq \emptyset$}
+		\State $f_b,F_b \gets$ OneReforward$(F_b,Y,\alpha)$ (chạy song song trên $B$ khối)
+		\State $R \gets R\cup \{f_1,..., f_B\}$
+		\State runs $\gets$ runs $+1$
+		\EndWhile\\
+		\textbf{\# Backward stage:}
+		\State Chia $R$ thành $B$ khối.
+		\State $f_b \gets \arg \max_{f\in F_b} t_{R\setminus\{f\}}, b=1,...B$ chạy song song trên $B$ khối
+		\State $f_r \gets \arg \max_{f\in \{f_1,...,f_B\}} t_{R\setminus \{f\}}$
+		\If{$t_R - t_{R\setminus\{f_r\} } <\beta$}
+		\State $R \gets R\setminus \{f_r\}$
+		\Else
+		\State break
+		\EndIf
+		\State \Return $R$
+	\end{algorithmic}
+\end{breakablealgorithm}
+
+Thuật toán chúng tôi đề xuất là thuật toán PFST được trình bày trong thuật toán \ref{alg:pfbaed}. Chúng tôi trước tiên chia các đặc trưng thành $B$ khối để chạy song song $B$ khối. Bắt đầu với tập hợp các đặc trưng được chọn $R$ là tập rỗng. Do đó, chúng tôi tính $\arg\max_{f}\{t_f:f\in F_b\}, b = 1,...,B$ song song trên $B$ khối và sinh ra một tập hợp $R$ đầu tiên.
+
+Sau đó, chúng tôi sử dụng thuật toán \ref{alg:ofd} để lần lượt thêm vào các đặc trưng tốt với mô hình và loại bỏ các đặc trưng không quan trọng khỏi các lần lặp lại tiếp theo (ta gọi bước này là \textit{forward-dropping}). Cụ thể hơn, thuật toán loại bỏ tất các đặc trưng không thể cái thiện được tiêu chí vết một lượng lớn hơn $\beta$ trong một khối. Điều này giúp giảm được chi phí tính toán của việc quét lại các đặc trưng mà dường như chúng không thể cải thiện được mô hình khi so sánh với các đặc trưng khác.
+
+Tuy nhiên, một nhược điểm của cách làm này là ta vô tình loại bỏ đi một đặc trưng tưởng chừng là không quan trọng. Nghĩa là, ở bước này nó không quan trọng, nhưng khi kết hợp được với một số đặc trưng khác thì nó sẽ giúp cải thiện tốt hơn cho mô hình. Vì thế, sau khi những bước này kết thúc, chúng tôi sử dụng thuật toán \ref{alg:or} để chạy lại từ đầu với tập hợp các đặc trưng là $P = A\setminus R$ và lại chia chúng vào $B$ khối. Sau đó tiến hành lựa chọn lần nữa và lần này không loại bỏ những đặc trưng sớm (ta gọi bước này là \textit{re-forward}). Vì hầu hết các đặc trưng quan trọng đã có trong mô hình, nên giai đoạn này cũng sẽ không tốn quá nhiều chi phí tính toán như việc chạy song song lựa chọn tiến. Thực nghiệm cũng cho thấy, thuật toán PFST mất ít thời gian hơn so với các kĩ thuật, thuật toán khác.
+
+Cuối cùng, việc đưa vào các đặc trưng mới, có thể làm cho những đặc trưng được đưa vào trước đó trở nên dư thừa, lý do giải thích đơn giản nhất có thể là do tính tương quan cao của các đặc trưng. Do đó, giai đoạn cuối cùng của thuật toán PFST sẽ cố gắng loại bỏ các đặc trưng dư thừa nếu có. Trong giai đoạn này, chúng tôi tiến hành lựa chọn lùi để loại bỏ các đặc trưng dư thừa còn lại trong mô hình (ta gọi bước này là \textit{backward}). Nhắc lại, điều này giúp tránh phát sinh chi phí tính toán cho việc kiểm tra lùi sau mỗi lần đưa vào một đặc trưng mới. Điều này khác với các bước lùi trong lựa chọn từng bước.
+
+Chú ý rằng một giá trị $\gamma$ cao thì sẽ phải loại bỏ nhiều đặc trưng hơn và quét lại ít hơn trong quá trình forward-dropping. Tuy nhiên, phụ thuộc vào dữ liệu và tiêu chí chọn, ta có thể ưu tiên sử dụng một giá trị $\gamma$ thấp hơn cho dữ liệu nhiều chiều. Lý do là một giá trị $\gamma$ cao có khả năng loại bỏ quá nhiều đặc trưng, dẫn đến ít đặc trưng có cơ hội được thêm vào mô hình trong quá trình forward-dropping. Điều này làm cho quá trình forward-dropping sẽ kết thúc sớm, và khi đó sẽ còn một lượng lớn đặc trưng cần quét lại trong quá trình re-forward.
+
+Một điều quan trọng cần chú ý là sau bước forward-dropping là re-foward. Do đó, sau các bước forward-dropping, thuật toán sẽ xếp hạng các đặc trưng theo mức độ quan trọng. Có thể chỉ định số lượng tối đa các đặc trưng được đưa vào mô hình nếu người dùng muốn bộ bộ đặc trưng có số lượng nhỏ hơn những gì thật sự thu được. Do đó, chúng tôi có thể chỉ định số lượng đặc trưng tối đa được đưa vào mô hình cho gia đoạn re-foward.
+
+Điều cuối cùng nhưng cũng không kém phần quan trọng, nếu số lượng các đặc trưng được chọn sau giai đoạn re-forward là không đáng kể, người dùng nên sử dụng tính năng lùi an toàn thay vì lùi song song. Điều này là do khi số lượng đặc trưng trong mô hình ít, sẽ dẫn đến việc tính toán song song làm thuật toán chạy chậm hơn.
+
+\begin{breakablealgorithm}
+	\caption{\textbf{OneForwardDropping} }\label{alg:ofd}
+	\noindent\textbf{Input:} Một khối các đặc trưng $F_b$ và nhãn $Y$ tương ứng, tham số loại bỏ sớm là $\gamma$.\\
+	\textbf{Output:} Một đặc trưng tốt $f_b$ được chọn, một khối các đặc trưng còn lại $F_b$.
+	\begin{algorithmic}[1]
+		\State $f_b \gets \arg\max_{f\in F_b}	t_{R,f}	$
+		
+		\If {$t_{R,f_b}-t_R<\alpha$}
+		\State \# if there is no more relevant features, drop block by setting it to  $\emptyset$
+		\State $F_b\gets \emptyset$
+		\Else
+		\State \# Early dropping:
+		\State $D \gets \{f:t_{\{R,f\}}-t_R<\gamma  \}$
+		\State $F_b \gets F_b\setminus \{D, f_b \} $
+		\EndIf
+		\State \Return $f_b,F_b$
+	\end{algorithmic}
+\end{breakablealgorithm}
+
+\begin{breakablealgorithm}
+	\caption{\textbf{OneReforward} }\label{alg:or}
+	\noindent\textbf{Input:} Một khối các đặc trưng $F_b$ và nhãn $Y$ tương ứng, tham số tiến là $\alpha$.
+	\textbf{Output:} Một đặc trưng tốt $f_b$ được chọn, một khối các đặc trưng còn lại $F_b$.
+	\begin{algorithmic}[1]
+		\State $f_b \gets \arg\max_{f\in F_b}	t_{R,f}	$
+		\If{$t_{R,f_b}-t_R<\alpha$}
+		\State \# if there is no more relevant features, drop block by setting it to  $\emptyset$:
+		
+		\State $F_b\gets \emptyset$
+		\Else
+		\State $F_b \leftarrow F_b\setminus\{f_b\}$
+		\EndIf
+		\State \Return $f_b,F_b$
+	\end{algorithmic}
+\end{breakablealgorithm}

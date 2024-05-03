@@ -1,0 +1,200 @@
+\begin{thebibliography}{10}
+
+\bibitem{ang2015supervised}
+Jun~Chin Ang, Andri Mirzal, Habibollah Haron, and Haza Nuzly~Abdull Hamed.
+\newblock Supervised, unsupervised, and semi-supervised feature selection: a
+  review on gene selection.
+\newblock {\em IEEE/ACM transactions on computational biology and
+  bioinformatics}, 13(5):971--989, 2015.
+
+\bibitem{arai2016unsupervised}
+Hiromasa Arai, Crystal Maung, Ke~Xu, and Haim Schweitzer.
+\newblock Unsupervised feature selection by heuristic search with provable
+  bounds on suboptimality.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~30, 2016.
+
+\bibitem{bennasar2015feature}
+Mohamed Bennasar, Yulia Hicks, and Rossitza Setchi.
+\newblock Feature selection using joint mutual information maximisation.
+\newblock {\em Expert Systems with Applications}, 42(22):8520--8532, 2015.
+
+\bibitem{bolon2015feature}
+Ver{\'o}nica Bol{\'o}n-Canedo, Noelia S{\'a}nchez-Maro{\~n}o, and Amparo
+  Alonso-Betanzos.
+\newblock {\em Feature selection for high-dimensional data}.
+\newblock Springer, 2015.
+
+\bibitem{borboudakis2019forward}
+Giorgos Borboudakis and Ioannis Tsamardinos.
+\newblock Forward-backward selection with early dropping.
+\newblock {\em The Journal of Machine Learning Research}, 20(1):276--314, 2019.
+
+\bibitem{de2006parallelizing}
+Jerffeson~Teixeira de~Souza, Stan Matwin, and Nathalie Japkowicz.
+\newblock Parallelizing feature selection.
+\newblock {\em Algorithmica}, 45(3):433--456, 2006.
+
+\bibitem{donoho2005stable}
+David~L Donoho, Michael Elad, and Vladimir~N Temlyakov.
+\newblock Stable recovery of sparse overcomplete representations in the
+  presence of noise.
+\newblock {\em IEEE Transactions on information theory}, 52(1):6--18, 2005.
+
+\bibitem{Dua:2019}
+Dheeru Dua and Casey Graff.
+\newblock {UCI} machine learning repository, 2017.
+
+\bibitem{fukunaga2013introduction}
+Keinosuke Fukunaga.
+\newblock {\em Introduction to statistical pattern recognition}.
+\newblock Elsevier, 2013.
+
+\bibitem{garcia2006parallel}
+Daniel~J Garcia, Lawrence~O Hall, Dmitry~B Goldgof, and Kurt Kramer.
+\newblock A parallel feature selection algorithm from random subsets.
+\newblock In {\em Proceedings of the international workshop on parallel data
+  mining}, volume~18, pages 64--75. Citeseer, 2006.
+
+\bibitem{goldberg1988genetic}
+David~E Goldberg and John~Henry Holland.
+\newblock Genetic algorithms and machine learning.
+\newblock 1988.
+
+\bibitem{guillen2009efficient}
+Alberto Guill{\'e}n, Antti Sorjamaa, Yoan Miche, Amaury Lendasse, and Ignacio
+  Rojas.
+\newblock Efficient parallel feature selection for steganography problems.
+\newblock In {\em International Work-Conference on Artificial Neural Networks},
+  pages 1224--1231. Springer, 2009.
+
+\bibitem{guyon2007competitive}
+Isabelle Guyon, Jiwen Li, Theodor Mader, Patrick~A Pletscher, Georg Schneider,
+  and Markus Uhr.
+\newblock Competitive baseline methods set new standards for the nips 2003
+  feature selection benchmark.
+\newblock {\em Pattern recognition letters}, 28(12):1438--1444, 2007.
+
+\bibitem{guyon2002gene}
+Isabelle Guyon, Jason Weston, Stephen Barnhill, and Vladimir Vapnik.
+\newblock Gene selection for cancer classification using support vector
+  machines.
+\newblock {\em Machine learning}, 46(1):389--422, 2002.
+
+\bibitem{james2013introduction}
+Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
+\newblock {\em An introduction to statistical learning}, volume 112.
+\newblock Springer, 2013.
+
+\bibitem{johnson2002applied}
+Richard~Arnold Johnson, Dean~W Wichern, et~al.
+\newblock {\em Applied multivariate statistical analysis}, volume~5.
+\newblock Prentice hall Upper Saddle River, NJ, 2002.
+
+\bibitem{kong2014pairwise}
+Deguang Kong and Chris Ding.
+\newblock Pairwise-covariance linear discriminant analysis.
+\newblock In {\em Twenty-Eighth AAAI Conference on Artificial Intelligence},
+  2014.
+
+\bibitem{kumar2014feature}
+Vipin Kumar and Sonajharia Minz.
+\newblock Feature selection: a literature review.
+\newblock {\em SmartCR}, 4(3):211--229, 2014.
+
+\bibitem{li2017feature}
+Jundong Li, Kewei Cheng, Suhang Wang, Fred Morstatter, Robert~P Trevino,
+  Jiliang Tang, and Huan Liu.
+\newblock Feature selection: A data perspective.
+\newblock {\em ACM Computing Surveys (CSUR)}, 50(6):1--45, 2017.
+
+\bibitem{liu2012feature}
+Huan Liu and Hiroshi Motoda.
+\newblock {\em Feature selection for knowledge discovery and data mining},
+  volume 454.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{lopez2006solving}
+F{\'e}lix~Garc{\i}a L{\'o}pez, Miguel~Garc{\i}a Torres, Bel{\'e}n~Meli{\'a}n
+  Batista, Jos{\'e} A~Moreno P{\'e}rez, and J~Marcos Moreno-Vega.
+\newblock Solving feature subset selection problem by a parallel scatter
+  search.
+\newblock {\em European Journal of Operational Research}, 169(2):477--489,
+  2006.
+
+\bibitem{masaeli2010convex}
+Mahdokht Masaeli, Yan Yan, Ying Cui, Glenn Fung, and Jennifer~G Dy.
+\newblock Convex principal feature selection.
+\newblock In {\em Proceedings of the 2010 SIAM International Conference on Data
+  Mining}, pages 619--628. SIAM, 2010.
+
+\bibitem{melab2006grid}
+Nouredine Melab, S{\'e}bastien Cahon, and El-Ghazali Talbi.
+\newblock Grid computing for parallel bioinspired algorithms.
+\newblock {\em Journal of parallel and Distributed Computing},
+  66(8):1052--1061, 2006.
+
+\bibitem{nguyen2019faster}
+Thu Nguyen.
+\newblock Faster feature selection with a dropping forward-backward algorithm.
+\newblock {\em arXiv preprint arXiv:1910.08007}, 2019.
+
+\bibitem{ni2019justifying}
+Jianmo Ni, Jiacheng Li, and Julian McAuley.
+\newblock Justifying recommendations using distantly-labeled reviews and
+  fine-grained aspects.
+\newblock In {\em Proceedings of the 2019 Conference on Empirical Methods in
+  Natural Language Processing and the 9th International Joint Conference on
+  Natural Language Processing (EMNLP-IJCNLP)}, pages 188--197, 2019.
+
+\bibitem{scikit-learn}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,
+  M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos,
+  D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay.
+\newblock Scikit-learn: Machine learning in {P}ython.
+\newblock {\em Journal of Machine Learning Research}, 12:2825--2830, 2011.
+
+\bibitem{saeys2007review}
+Yvan Saeys, I{\~n}aki Inza, and Pedro Larra{\~n}aga.
+\newblock A review of feature selection techniques in bioinformatics.
+\newblock {\em bioinformatics}, 23(19):2507--2517, 2007.
+
+\bibitem{sinaga2021entropy}
+Kristina~P Sinaga, Ishtiaq Hussain, and Miin-Shen Yang.
+\newblock Entropy k-means clustering with feature reduction under unknown
+  number of clusters.
+\newblock {\em IEEE Access}, 9:67736--67751, 2021.
+
+\bibitem{singh2009parallel}
+Sameer Singh, Jeremy Kubica, Scott Larsen, and Daria Sorokina.
+\newblock Parallel large scale feature selection for logistic regression.
+\newblock In {\em Proceedings of the 2009 SIAM international conference on data
+  mining}, pages 1172--1183. SIAM, 2009.
+
+\bibitem{tropp2004greed}
+Joel~A Tropp.
+\newblock Greed is good: Algorithmic results for sparse approximation.
+\newblock {\em IEEE Transactions on Information theory}, 50(10):2231--2242,
+  2004.
+
+\bibitem{tsamardinos2019greedy}
+Ioannis Tsamardinos, Giorgos Borboudakis, Pavlos Katsogridakis, Polyvios
+  Pratikakis, and Vassilis Christophides.
+\newblock A greedy feature selection algorithm for big data of high
+  dimensionality.
+\newblock {\em Machine learning}, 108(2):149--202, 2019.
+
+\bibitem{zhang2011adaptive}
+Tong Zhang.
+\newblock Adaptive forward-backward greedy algorithm for learning sparse
+  representations.
+\newblock {\em IEEE transactions on information theory}, 57(7):4689--4708,
+  2011.
+
+\bibitem{zhao2013massively}
+Zheng Zhao, Ruiwen Zhang, James Cox, David Duling, and Warren Sarle.
+\newblock Massively parallel feature selection: an approach based on variance
+  preservation.
+\newblock {\em Machine learning}, 92(1):195--220, 2013.
+
+\end{thebibliography}

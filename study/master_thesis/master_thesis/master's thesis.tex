@@ -1,0 +1,102 @@
+\documentclass[a4paper,openany,oneside]{book}
+\usepackage[utf8]{vietnam}
+\usepackage[top=3.5cm, bottom=3cm, left=3.5cm, right=2cm] {geometry}
+\usepackage{amssymb,amsthm, makeidx, enumerate, mdframed, pgf,tikz, mathrsfs}
+\usetikzlibrary{calc}
+\usepackage{scrextend}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\usepackage{url}
+\newtheorem{algorithm}{Thuật toán}
+\pagestyle{fancy}
+\newcommand{\vol}{\textrm{vol}}
+\changefontsizes{13pt}
+\setlength{\parindent}{0.6cm}
+\setlength{\parskip}{0.2cm}
+\makeindex
+\usepackage{pdfpages}
+\usepackage{algorithm}
+\makeatletter
+\renewcommand{\ALG@name}{Thuật toán}
+\makeatother
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{algpseudocode}
+% \newtheorem{proof}{Proof}[section]
+%\newtheorem{alg}{Thuật toán}[chapter]
+\usepackage{multirow}
+\usepackage{caption}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\captionsetup[algorithm]{
+	labelfont = bf,
+	labelsep = period
+}
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+{% \begin{breakablealgorithm}
+%		\begin{center}
+			\refstepcounter{algorithm}% New algorithm
+			~\par
+			\hrule height.8pt depth0pt \kern2pt
+			\hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+			\renewcommand{\caption}[2][\relax]{% Make a new \caption
+				{\raggedright\textbf{\fname@algorithm~\thealgorithm.} ##2\par}%
+				\ifx\relax##1\relax % #1 is \relax
+				\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+				\else % #1 is not \relax
+				\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+				\fi
+%				\kern2pt\hrule\kern1pt
+				\vspace{1pt}
+				\hrule height.8pt depth0pt \kern2pt
+				\hrule height.8pt depth0pt \kern2pt
+			}
+		}{% \end{breakablealgorithm}
+		\kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+%	\end{center}
+}
+\makeatother
+
+\DeclareCaptionFormat{algor}{%
+	\hrulefill\par\offinterlineskip\vskip1pt%
+	\textbf{#1#2}#3\offinterlineskip\hrulefill}
+\DeclareCaptionStyle{algori}{singlelinecheck=off,format=algor,labelsep=space}
+\captionsetup[algorithm]{style=algori}
+
+\renewcommand{\listalgorithmname}{Danh sách các thuật toán}
+\renewcommand{\listtablename}{Danh sách các bảng}
+\renewcommand{\listfigurename}{Danh sách các sơ đồ}
+\allowdisplaybreaks
+\begin{document}
+	\input def
+	\pagestyle{myplain}
+	\include{1.biangoai}
+	\include{2.biatrong}
+	\include{3.loicamdoan}
+	\include{4.loicamon}
+	\include{5.ttLVtiengViet}
+	\include{6.ttLVtiengAnh}
+	\tableofcontents
+	\listoffigures
+	\listoftables
+	\listofalgorithms
+	\include{7.loinoidau}
+	\include{8.chuong1}
+	\include{9.chuong2}
+    \include{10.chuong3}
+    \include{10.chuong4}
+	\include{10.ketluan}
+
+	\include{11.thamkhao}
+	\include{12.phuluc}
+	\newpage
+	\addcontentsline{toc}{chapter}{\indexname}
+	\printindex
+
+\end{document}

@@ -1,0 +1,152 @@
+\begin{frame}{Choices of missing data imputation methods}
+\textbf{\textit{\underline{Proof:}}}
+Note that equation \eqref{equation-inq} is equivalent to 
+% \vspace{-15pt}
+\begin{equation}
+    \mathbf{Y}'(I-\mathbf{H}_x)\mathbf{Y}\le
+    \mathbf{y}'(I-\mathbf{H}_u)\mathbf{y} + \mathbf{z}'(I-\mathbf{H}_v)\mathbf{z},
+\end{equation}
+where 
+\begin{align}
+    \mathbf{H}_u &= \mathbf{U}(\mathbf{U}'\mathbf{U})^{-1}\mathbf{U}',\\ 
+    \mathbf{H}_v &= \mathbf{V}(\mathbf{V}'\mathbf{V})^{-1}\mathbf{V}', \\
+    \mathbf{H}_x &= \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'.
+\end{align}
+Hence, we want to prove that 
+% \vspace{-10pt}
+\begin{equation}
+    \mathbf{y}'\mathbf{H}_u \mathbf{y}+\boldsymbol{z}'\mathbf{H}_v \boldsymbol{z}\ge \mathbf{Y}'\mathbf{H}_x\mathbf{Y},
+\end{equation}
+% \vspace{-5pt}
+\end{frame}
+\begin{frame}{Choices of missing data imputation methods}
+Without loss of generality, assume that the data is centered so that $\sum\limits_{i=1}^n u_{i1} = 0$, $\sum\limits_{i=1}^n v_{i1} = 0$, $\sum\limits_{i=1}^n v_{i2} = 0$, so $\bar{\mathbf{v}}_2 = 0$. Next, let $\alpha = \sum\limits_{i=1}^ny_i$, $\alpha_1 = \sum\limits_{i=1}^n y_iu_{i1}$, $a_1=\sum\limits_{i=1}^n u_{i1}^2$, we have
+    \vspace{-5pt}
+    \begin{align*}
+        \mathbf{y}'\mathbf{U} &= \begin{pmatrix}
+        \sum\limits_{i=1}^ny_i & \sum\limits_{i=1}^n y_iu_{i1}
+        \end{pmatrix} = \begin{pmatrix}
+            \alpha & \alpha_1
+        \end{pmatrix},\\
+    % \end{equation}
+    % \begin{equation}
+        \mathbf{U}'\mathbf{U} &= \begin{pmatrix}
+            1 & \sum\limits_{i=1}^n u_{i1}\\
+            \sum\limits_{i=1}^n u_{i1} & \sum\limits_{i=1}^n u_{i1}^2
+        \end{pmatrix} = \begin{pmatrix}
+            n & 0 \\ 0 & a_1
+        \end{pmatrix},\\
+    % \end{equation}
+    % \begin{equation}
+        \mathbf{U}'\mathbf{y} &= \begin{pmatrix}
+            \sum\limits_{i=1}^n y_i \\ \sum\limits_{i=1}^n y_iu_{i1}
+        \end{pmatrix} = \begin{pmatrix}
+            \alpha \\ \alpha_1
+        \end{pmatrix}.
+    \end{align*}
+    % \vspace{-15pt}
+\end{frame}
+\begin{frame}{Choices of missing data imputation methods}
+This implies 
+    % \vspace{-5pt}
+    \begin{align}\label{yHuy}
+        \mathbf{y}'\mathbf{H}_u \mathbf{y} &=  \mathbf{y}'\left(\mathbf{U}(\mathbf{U}'\mathbf{U})^{-1}\mathbf{U}'\right) \mathbf{y}
+        = \left(\mathbf{y}'\mathbf{U}\right)\left(\mathbf{U}'\mathbf{U}\right)^{-1} \left(\mathbf{U}'\mathbf{y}\right) \notag\\
+        % &= \frac{1}{n\cdot\sum\limits_{i=1}^n u_{i1}^2}\left[\left(\sum\limits_{i=1}^n y_i\right)^2\cdot\sum\limits_{i=1}^n u_{i1}^2 + n\cdot\left(\sum\limits_{i=1}^n y_iu_{i1}\right)^2\right]\\
+        &= \frac{\alpha^2}{n} + \frac{\alpha_1^2}{a_1}.
+    \end{align}
+Similarly, let $\beta = \sum\limits_{i=1}^m z_i$, $\beta_1 = \sum\limits_{i=1}^m z_iv_{i1}$, $\beta_2 = \sum\limits_{i=1}^m z_iv_{i2}$, $b_1=\sum\limits_{i=1}^m v_{i1}^2$,
+$b_1=\sum\limits_{i=1}^m v_{i2}^2$,
+$c=\sum\limits_{i=1}^m v_{i1}v_{i2}$. Then, 
+\begin{align*}
+    % \small
+        \mathbf{z}'\mathbf{V} &= \begin{pmatrix}
+            \sum\limits_{i=1}^m z_i & \sum\limits_{i=1}^m z_iv_{i1} & \sum\limits_{i=1}^mz_iv_{i12}
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+            \beta & \beta_1 & \beta_2
+        \end{pmatrix}
+            \end{align*}
+\end{frame}
+\begin{frame}{Choices of missing data imputation methods}
+\begin{align*}
+        \mathbf{V}'\mathbf{V} &= \begin{pmatrix}
+            m & \sum\limits_{i=1}^m v_{i1} &\sum\limits_{i=1}^m v_{i2}\\
+            \sum\limits_{i=1}^m v_{i1} & \sum\limits_{i=1}^m v_{i1}^2 & \sum\limits_{i=1}^m v_{i1}v_{i2}\\
+            \sum\limits_{i=1}^m v_{i2} &\sum\limits_{i=1}^m v_{i1}v_{i2} &\sum\limits_{i=1}^m v_{i2}^2
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+            m & 0 & 0 \\
+            0 & b_1 & c\\
+            0 & c & b_2
+        \end{pmatrix},\notag\\
+\mathbf{V}'\mathbf{z} &= \begin{pmatrix}
+            \sum\limits_{i=1}^m z_i \\\sum\limits_{i=1}^m z_iv_{i1} \\ z_iv_{i12}
+        \end{pmatrix} = \begin{pmatrix}
+            \beta \\ \beta_1 \\ \beta_2
+        \end{pmatrix}.
+            \end{align*}
+\end{frame}
+\begin{frame}{Choices of missing data imputation methods}
+Therefore,
+    \begin{align}\label{zHzz}
+        \mathbf{z}'\mathbf{H}_z \mathbf{z} &=  \mathbf{z}'\left(\mathbf{V}(\mathbf{V}'\mathbf{V})^{-1}\mathbf{V}'\right) \mathbf{z}
+        = \left(\mathbf{z}'\mathbf{V}\right)\left(\mathbf{V}'\mathbf{V}\right)^{-1} \left(\mathbf{V}'\mathbf{z}\right) \notag\\
+        &= \frac{\beta^2}{m} + \frac{\beta_1^2b_2+\beta_2^2b_1-2\beta_1\beta_2c}{b_1b_2-c^2}\notag\\
+        % &= \frac{\beta^2}{m} + \frac{\beta_1^2b_2+\beta_2^2b_1-2\beta_1\beta_2c}{b_1b_2-c^2}\notag\\
+        &= \frac{\beta^2}{m} + \frac{\left(\beta_1b_2-\beta_2c\right)^2}{b_2\left(b_1b_2-c^2\right)} + \frac{\beta_2^2}{b_2}.
+    \end{align}
+    \vspace{-5pt}
+    Besides,
+    \begin{align*}
+        \mathbf{Y}'\mathbf{X}&= \begin{pmatrix}
+            \sum\limits_{i=1}^n y_i +\sum\limits_{i=1}^m z_i & \sum\limits_{i=1}^n y_iu_{i1} +\sum\limits_{i=1}^m z_iv_{i1} & \sum\limits_{i=1}^mz_iv_{i12}
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+            \alpha + \beta & \alpha_1 + \beta_1 & \beta_2
+        \end{pmatrix}
+    \end{align*}
+\end{frame}
+\begin{frame}{Choices of missing data imputation methods}
+\begin{align*}
+        \mathbf{X}'\mathbf{X} &= \begin{pmatrix}
+            m & \sum\limits_{i=1}^n u_{i1} +\sum\limits_{i=1}^m v_{i1} &\sum\limits_{i=1}^m v_{i2}\\
+            \sum\limits_{i=1}^n u_{i1} +\sum\limits_{i=1}^m v_{i1} & \sum\limits_{i=1}^n u_{i1}^2 + \sum\limits_{i=1}^m v_{i1}^2 & \sum\limits_{i=1}^m v_{i1}v_{i2}\\
+            \sum\limits_{i=1}^m v_{i2} &\sum\limits_{i=1}^m v_{i1}v_{i2} &\sum\limits_{i=1}^m v_{i2}^2
+        \end{pmatrix}\\
+        &= \begin{pmatrix}
+            m & 0 & 0 \\
+            0 & a_1 + b_1 & c\\
+            0 & c & b_2
+        \end{pmatrix},\\\notag
+    % \end{align*}
+    % and
+    % \begin{align*}
+        \mathbf{X}'\mathbf{Y}&= \begin{pmatrix}
+            \sum\limits_{i=1}^n y_i +\sum\limits_{i=1}^m z_i \\ \sum\limits_{i=1}^n y_iu_{i1} +\sum\limits_{i=1}^m z_iv_{i1} \\ \sum\limits_{i=1}^mz_iv_{i12}
+        \end{pmatrix}= \begin{pmatrix}
+            \alpha + \beta \\ \alpha_1 + \beta_1 \\ \beta_2
+        \end{pmatrix}. 
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Choices of missing data imputation methods}
+Hence, 
+\begin{align}\label{YHxY}
+        \mathbf{Y}'\mathbf{H}_x \mathbf{Y} &=  \mathbf{Y}'\left(\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\right) \mathbf{Y}
+        = \left(\mathbf{Y}'\mathbf{X}\right)\left(\mathbf{X}'\mathbf{X}\right)^{-1} \left(\mathbf{X}'\mathbf{Y}\right)\notag\\
+        &= \frac{\left(\alpha + \beta\right)^2}{m} + \frac{\left[\alpha_1b_2+\beta_1b_2-\beta_2c\right]^2}{b_2\left[a_1b_2+b_1b_2-c^2\right]} + \frac{\beta_2^2}{b_2}.
+    \end{align}
+Now, applying Cauchy-Schwarz inequality, we have
+\begin{equation}
+        \frac{\alpha^2}{n} +\frac{\beta^2}{m}\ge \frac{\left(\alpha+\beta\right)^2}{m+n},\label{CS1}
+    \end{equation}
+\begin{align}\label{CS2}
+        \frac{\alpha_1^2}{a_1} + \frac{\left(\beta_1b_2-\beta_2c\right)^2}{\beta_2\left(b_1b_2-c^2\right)} &= \frac{1}{b_2}\left[\frac{\alpha_1^2b_2^2}{a_1b_2} +\frac{\left(\beta_1b_2-\beta_2c\right)^2}{b_1b_2-c^2}\right]\notag\\
+        &\ge \frac{\left(\alpha_1b_2+\beta_1b_2-\beta_2c\right)^2}{b_2\left(a_1b_2+b_1b_2-c^2\right)}.
+    \end{align}
+From \eqref{yHuy}, \eqref{zHzz}, \eqref{YHxY}, \eqref{CS1} and \eqref{CS2}, we have
+% \begin{equation}
+    $\mathbf{y}'\mathbf{H}_u \mathbf{y}+\boldsymbol{z}'\mathbf{H}_v \boldsymbol{z}\ge \mathbf{Y}'\mathbf{H}_x \mathbf{Y},$ as desired.
+% \end{equation}
+\end{frame}

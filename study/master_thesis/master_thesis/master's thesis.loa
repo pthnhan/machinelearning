@@ -1,0 +1,6 @@
+\contentsline {algorithm}{\numberline {1}\textbf {Lựa chọn tiến}\\ (Forward Feature Selection)}{26}{algorithm.1}%
+\contentsline {algorithm}{\numberline {2}\textbf {Lựa chọn lùi}\\ (Backward Feature Selection)}{26}{algorithm.2}%
+\contentsline {algorithm}{\numberline {3}\textbf {Lựa chọn từng bước}\\ (Stepwise Feature Selection)}{27}{algorithm.3}%
+\contentsline {algorithm}{\numberline {4}\textbf {Thuật toán tiến-lùi song song với loại bỏ sớm}\\ (Parallel forward-backward algorithm with early dropping)}{38}{algorithm.4}%
+\contentsline {algorithm}{\numberline {5}\textbf {OneForwardDropping} }{40}{algorithm.5}%
+\contentsline {algorithm}{\numberline {6}\textbf {OneReforward} }{40}{algorithm.6}%

@@ -1,0 +1,49 @@
+\usepackage{import}
+\usepackage{amsmath, amsthm, amssymb, mathtools}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{iftex}
+\usepackage{lmodern}
+\usepackage{tabu, longtable, booktabs, multirow, makecell, caption}
+
+\ifPDFTeX
+	\usepackage[utf8]{vntex}
+\fi
+
+\ifXeTeX
+	\usepackage[utf8]{inputenc}
+\fi
+
+\usetheme{Frankfurt}
+\usecolortheme{whale}
+
+\setitemize{
+	label=\usebeamerfont*{itemize item}
+  	\usebeamercolor[fg]{itemize item}
+	\usebeamertemplate{itemize item}
+}
+
+\tabulinesep=0.5\baselineskip
+
+\author{Huỳnh Quang Dự}
+\title[Mã hóa dựa trên định danh]
+{TÌM HIỂU MÃ~HÓA DỰA TRÊN ĐỊNH~DANH VÀ ỨNG DỤNG}
+\subtitle{Identity-Based Encryption and Applications}
+\institute{
+	Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM \\
+	Khoa Công nghệ Thông tin \\[\baselineskip]
+	GVHD: TS. Lê Văn Luyện
+}
+\date[09/07/2019]{}
+
+\newcommand{\algo}{$\mathcal{A}\ $}
+\newcommand{\adversary}{$\mathcal{A}\ $}
+\newcommand{\challenger}{$\mathcal{C}\ $}
+\newcommand{\scheme}{$\mathcal{E}\ $}
+\newcommand{\abs}[1]{\left| \ #1 \ \right|}
+\newcommand{\sectoc}{
+	\begin{frame}
+		\frametitle{Nội dung}
+		\tableofcontents[currentsection]
+	\end{frame}
+}

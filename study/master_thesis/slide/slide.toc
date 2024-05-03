@@ -1,0 +1,7 @@
+\beamer@sectionintoc {1}{Introduction and Motivation}{3}{0}{1}
+\beamer@sectionintoc {2}{ComImp algorithm}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{ComImp algorithm}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{ComImp algorithm for combining datasets}{6}{0}{2}
+\beamer@sectionintoc {3}{Combining datasets with dimension reduction (PCA-ComImp)}{9}{0}{3}
+\beamer@sectionintoc {4}{Choices of missing data imputation methods}{11}{0}{4}
+\beamer@sectionintoc {5}{Experiments}{21}{0}{5}

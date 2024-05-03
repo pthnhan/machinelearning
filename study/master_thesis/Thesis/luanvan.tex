@@ -1,0 +1,163 @@
+\documentclass[a4paper,openright]{book}
+\usepackage{amsmath,amssymb,tasks}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage{tkz-euclide}
+\usepackage{amssymb,amsthm,makeidx,enumerate,amsmath}
+\usepackage{mathrsfs} 
+\usepackage{pgf,tikz,pstricks-add}
+\usetikzlibrary{arrows}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{vietnam}
+\newtheorem{theorem}{Định lí}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm] {geometry}
+\setlength{\parindent}{0.6cm}
+\setlength{\parskip}{0.2cm}
+\makeindex
+\usepackage{mathpazo}
+\usepackage{subfig}
+\usepackage{xhfill}
+\usepackage{cases}
+\usepackage{commath}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+\usepackage{arydshln}
+\usepackage{tikz,tkz-euclide}
+%\usetkzobj{all}
+\usepackage{indentfirst}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\vt}[1]{\left\langle#1\right\rangle}
+\newcommand{\function}[3]{#1 \hspace{0.4cm} : \hspace{0.4cm} \mathbb{#2} \rightarrow \mathbb{#3}}
+\newcommand{\hoac}[1]{\left[\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\heva}[1]{\left\{\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\ve}{vectơ }
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\E}{\mathbb{E}}
+\newtheorem{DL}{Định lý}[section]
+\newtheorem{BD}[DL]{Bổ Đề}
+\newtheorem{HQ}[DL]{Hệ Quả}
+\newtheorem{TC}[DL]{Tính chất}
+\newtheorem{VD}[DL]{Ví dụ}
+\newtheorem{NX}[DL]{Nhận xét}
+\theoremstyle{definition}
+\newtheorem{DN}[DL]{Định nghĩa}
+%\newtheorem{NX}[DL]{Nhận xét}
+\theoremstyle{remark}
+\newcommand{\enter}{\\[6pt]}
+\newcommand{\XongCM}{\\[-30pt]
+	\begin{flushright}
+		$\blacksquare$
+\end{flushright}}
+\setlength{\parskip}{0.8em}
+\renewcommand{\baselinestretch}{1.2}
+\usepackage{mathpazo}
+\usepackage{scrextend}
+\changefontsizes{12pt}
+ \allowdisplaybreaks
+\usepackage{multicol}
+\newcommand{\lietke}[2]{\begin{listEX}[#1]#2\end{listEX}}
+\numberwithin{equation}{section}
+\usepackage{afterpage}
+
+\newcommand\blankpage{
+	\null
+	\thispagestyle{empty}
+%	\addtocounter{page}{-1}
+	\newpage
+}
+
+%\usepackage[style=ieee]{biblatex}
+%\addbibresource{bbli.bib}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithm}
+\makeatletter
+\renewcommand{\ALG@name}{Thuật toán}
+\makeatother
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{algpseudocode}
+% \newtheorem{proof}{Proof}[section]
+%\newtheorem{alg}{Thuật toán}[chapter]
+\usepackage{multirow}
+\usepackage{caption}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\captionsetup[algorithm]{
+	labelfont = bf,
+	labelsep = period
+}
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+{% \begin{breakablealgorithm}
+%		\begin{center}
+			\refstepcounter{algorithm}% New algorithm
+			~\par
+			\hrule height.8pt depth0pt \kern2pt
+			\hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+			\renewcommand{\caption}[2][\relax]{% Make a new \caption
+				{\raggedright\textbf{\fname@algorithm~\thealgorithm.} ##2\par}%
+				\ifx\relax##1\relax % #1 is \relax
+				\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+				\else % #1 is not \relax
+				\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+				\fi
+%				\kern2pt\hrule\kern1pt
+				\vspace{1pt}
+				\hrule height.8pt depth0pt \kern2pt
+				\hrule height.8pt depth0pt \kern2pt
+			}
+		}{% \end{breakablealgorithm}
+		\kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+%	\end{center}
+}
+\makeatother
+
+\DeclareCaptionFormat{algor}{%
+	\hrulefill\par\offinterlineskip\vskip1pt%
+	\textbf{#1#2}#3\offinterlineskip\hrulefill}
+\DeclareCaptionStyle{algori}{singlelinecheck=off,format=algor,labelsep=space}
+\captionsetup[algorithm]{style=algori}
+
+\usepackage{listings}
+\begin{document}
+\include{def.tex}
+\include{biangoai}
+\afterpage{\blankpage}
+\include{biatrong}
+\afterpage{\blankpage}
+\include{loicamon}
+\tableofcontents
+\include{loinoidau}
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{ketluan}
+%\include{thamkhao}
+%\newpage
+%\addcontentsline{toc}{chapter}{\indexname}
+%\printindex
+%\bibliographystyle{unsrt}
+%\bibliography{bbli}
+%\printbibliography[heading=none]
+\bibliographystyle{plain}
+\bibliography{bbli}
+%\include{appendix}
+\end{document}

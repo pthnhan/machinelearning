@@ -1,0 +1,169 @@
+\chapter{Thực nghiệm}\label{exper}
+\begin{table}[htbp]
+	\caption{Các tập dữ liệu được sử dụng trong thực nghiệm}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Tập dữ liệu & \# Số lớp & \# Số đặc trưng & \# Kích thước mẫu \\
+			\hline
+			Breast cancer & $2$ & $30$ & $569$ \\
+			\hline
+			Parkinson & $2$ & $754$ & $756$ \\
+			\hline
+			Mutants & $2$  & $5408$ & $31419$\\
+			\hline
+			Gene & $5$ & $20531$ & $801$ \\
+			\hline
+			Micromass & $10$ & $1087$ & $360$\\
+			\hline
+		\end{tabular}
+		\label{table_info_datasets}
+	\end{center}
+\end{table}
+
+Để mô tả hiệu suất của PFST, chúng tôi so sánh PFST với một số kĩ thuật gồm
+\begin{itemize}
+	\item Parallel Sequential Forward Selection (PSFS) \cite{scikit-learn},
+	\item Parallel Sequential Backward Selection (PSBS) \cite{scikit-learn},
+	\item Parallel Support Vector Machine Feature Selection based on Recursive Feature Elimination with Cross-Validation (PSVMR) \cite{guyon2002gene},
+	\item Parallel Mutual Information-based Feature Selection (PMI) \cite{bennasar2015feature}.
+\end{itemize}
+
+\section{Thông tin về các tập dữ liệu và các thiết lập}
+Các thực nghiệm đã được hoàn thành trên các tập dữ liệu lấy từ thư viện Scikit-learn \cite{scikit-learn} và kho dữ liệu máy học UCI \cite{Dua:2019}. Thông tin số liệu của các tập dữ liệu này được trình bày trong bảng \ref{table_info_datasets}.
+
+Chúng tôi đã cộng một lượng nhỏ nhiễu vào tập dữ liệu Gene và tập dữ liệu Mutants để tránh lỗi không tìm được nghịch đảo của các ma trận đơn khi chạy thuật toán PSFT. Ngoài ra, đối với tập dữ liệu Mutants, chúng tôi đã loại bỏ một dòng mà tất cả các giá trị trong dòng đều là rỗng. 
+
+Với thuật toán PSFT, các tham số được sử dụng là $\alpha=\gamma=0.05$, $\beta=0.01$. Với thuật toán PSBS và PSFS, chúng tôi đã sử dụng thuật toán KNN với $K=3$ làm hàm ước lượng. Với thuật toán PSVMR, chúng tôi sử dụng kernel tuyến tính và sử dụng kernel \lq\lq JMI\rq\rq~ cho thuật toán PMI. Để cho việc so sánh được công bằng, chúng tôi đã set số lượng đặc trưng cần được chọn từ các kĩ thuật khác bằng với số lượng đặc trưng mà PSFT chọn được.
+
+Về cấu hình, chúng tôi chạy thực nghiệm trên một CPU là AMD Ryzen 7 3700X với 8 nhân và 16 luồng, 3.6GHz và 16GB ram. Sau khi chọn được các đặc trưng, chúng tôi thực hiện bài toán phân loại bằng việc sử dụng mô hình phân tích biệt thức tuyến tính (linear discriminant analysis - LDA) và trình bày kết quả của 5-fold misclassification rate trong bảng \ref{table_error}. Ngoài ra, chúng tôi cũng trình bày thời gian chạy và số lượng đặc trưng được chọn từ tất cả đặc trưng ban đầu trong bảng \ref{tab_time}
+
+Chúng tôi sẽ bỏ những trường hợp nếu không nhận được kết quả sau 5 giờ hoặc khi có vấn đề về việc tràn ram, và ký hiueej NA trong bảng \ref{table_error} và \ref{tab_time}) để chỉ những trường hợp như vậy.
+
+\section{Kết quả và thảo luận}
+
+\begin{table*}[htbp]
+	\caption{5-fold misclassification rate}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|c|c|c|c|c|c|c|}
+			\hline
+			\textbf{Datasets} &
+			\textbf{\# Selected Features} & 
+			{\textbf{PFST (our)}} &
+			{\textbf{PSFS}} &
+			{\textbf{PSBS}} &
+			{\textbf{PSVMR}} &
+			{\textbf{PMI}} &
+			\textbf{Full Features} \\ \hline
+			\textbf{Breast cancer} &
+			$3$ &
+			{$\boldsymbol{0.042}$} &
+			{$0.111$} &
+			{$0.074$} &
+			{$0.051$} &
+			{$0.076$} &
+			$0.042$ \\ \hline
+			\textbf{Parkinson} &
+			$11$ &
+			{$\boldsymbol{0.112}$} &
+			{$0.234$} &
+			{NA} &
+			{NA} &
+			{$0.181$} &
+			$0.362$ \\ \hline
+			\textbf{Mutants} &
+			$6$ &
+			{\textbf{0.008}} &
+			{NA} &
+			{NA} &
+			{NA} &
+			{NA} &
+			0.010 \\ \hline
+			\textbf{Gene} &
+			$12$ &
+			{$\boldsymbol{0.006}$} &
+			{$0.009$} &
+			{NA} &
+			{NA} &
+			{$0.007$} &
+			$0.042$ \\ \hline
+			\textbf{Micromass} &
+			$19$ &
+			{$0.115$} &
+			{$0.310$} &
+			{$0.218$} &
+			{$\boldsymbol{0.096}$} &
+			{$0.228$} &
+			$0.129$ \\ \hline
+		\end{tabular}
+		\label{table_error}
+	}
+\end{table*}
+
+\begin{table*}[htbp]
+	\caption{Running time and number of selected features}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|c|c|ccccc|}
+			\hline
+			\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Datasets}}} &
+			\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}\# selected\\ features\end{tabular}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{\# Features}}} &
+			\multicolumn{5}{c|}{\textbf{Running Time (s)}}  \\ \cline{4-8} 
+			\multicolumn{1}{|c|}{} &
+			& &
+			\multicolumn{1}{c|}{\textbf{PFST (our)}} &
+			\multicolumn{1}{c|}{\textbf{PSFS}} &
+			\multicolumn{1}{c|}{\textbf{PSBS}} &
+			\multicolumn{1}{c|}{\textbf{PSVMR}} &
+			\multicolumn{1}{c|}{\textbf{PMI}} 
+			\\ \hline
+			\textbf{Breast cancer} &
+			3 & 30& 
+			\multicolumn{1}{c|}{\textbf{0.095}} &
+			\multicolumn{1}{c|}{1.403} &
+			\multicolumn{1}{c|}{8.268} &
+			\multicolumn{1}{c|}{12.470} &
+			\multicolumn{1}{c|}{0.646}    \\ \hline
+			\textbf{Parkinson} &
+			11 & 754&
+			\multicolumn{1}{c|}{\textbf{3.219}} &
+			\multicolumn{1}{c|}{163.32} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{77.269}   \\ \hline
+			\textbf{Mutants} &
+			6 & 5408 &
+			\multicolumn{1}{c|}{\textbf{674.702}} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} \\ \hline
+			\textbf{Gene} &
+			12 & 20531 & 
+			\multicolumn{1}{c|}{\textbf{172.386}} &
+			\multicolumn{1}{c|}{5350.14} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{NA} &
+			\multicolumn{1}{c|}{2706.45}   \\ \hline
+			\textbf{Micromass} &
+			19 & 1087&
+			\multicolumn{1}{c|}{\textbf{16.1}} &
+			\multicolumn{1}{c|}{252.9} &
+			\multicolumn{1}{c|}{10561.3} &
+			\multicolumn{1}{c|}{46.909} &
+			\multicolumn{1}{c|}{144.684} 
+			\\ \hline
+		\end{tabular}
+		\label{tab_time}
+	}
+\end{table*}  
+
+Từ bảng \ref{table_error} và \ref{tab_time}, ta có thể thấy rằng phương pháp lựa chọn đặc trưng PFST không chỉ có hiệu suất tốt về mặt tốc độ mà con đạt độ chính xác cao cho bài toán phân loại, Ví dụ, với tập dữ liệu \lq\lq Breast cancer\rq\rq, PFST đã chọn ra tập hợp gồm 3 đặc trưng từ 30 đặc trưng ban đầu với chỉ 0.095 giây, trong khi PSBS cần 8.268 giây và PSVMR cần 12.470 giây. Không chỉ có thời gian chạy tốt nhất, phương pháp PFST còn đạt được kết quả phân loại tốt nhất với tỉ lệ phân loại sai chỉ 0.042, đây cũng là tỉ lệ phân loại sai khi sử dụng tất cả đặc trưng. Rõ ràng, kết quả này đã cho thấy, PFST lựa chọn được các đặc trưng tốt, ảnh hưởng thật sự đến kết quả phân loại. Ngoài ra, ta cũng thấy rằng hiệu suất của PFST tốt hơn PSBS - một phiên bản lựa chọn đặc trưng lùi.
+
+
+Với tập dữ liệu Parkinson, PFST đã lựa chọn ra 11 trong tổng số 754 đặc trưng. Kết quả thu được là tỉ lệ phân loại sai vẫn là thấp nhất với chỉ 0.112, khoảng 33\% tỉ lệ phân loại sai khi sử dụng toàn bộ đặc trưng (0.362), và 66.87\% tỉ lệ phân loại sai của phương pháp tốt thứ hai là PMI (0.181). Điều này cho thấy PFST đã loại bỏ rất hiệu quả các đặc trưng dư thừa và đẩy được hiệu suất lên đáng kể. Về mặt thời gian chạy, PFST chỉ mất 3.219 giây để chọn 11 đặc trưng từ 754 đặc trưng, trong khi PMI cần đến 77.269 giây, PSFS cần 163.32 giây. PSBS và PSVMR không thể thu được kết quả khi thời gian chạy vượt quá 5 giờ.
+
+Trong tập dữ liệu nhiều đặc trưng nhất, tập dữ liệu Gene, PFST đã rút gọn 20531 đặc trưng xuống còn 12 đặc trưng trong chưa đầy 3 phút và đạt được tỉ lệ phân loại sai tốt nhất với chỉ 0.006. Mặc dùng PSFS và PMI cũng đạt được kết quả phân loại tốt với tỉ lệ phân loại sai lần lượt là 0.009 và 0.007, nhưng hai phương pháp này chạy lâu hơn PFST, còn đối với PSBS và PSVMR đã không thể thu được kết quả trong vòng 5 giờ chạy.
+
+Mặc dù PFST là thuật toán nhanh nhất trong số các thuật toán được sử dụng trong phần thực nghiệm này, nhưng phương pháp này cũng làm tốt hơn các phương pháp khác về tỉ lệ phân loại sai với bốn trong năm tập dữ liệu. Với tập dữ liệu Micromass, hiệu suất tốt nhất về kết quả phân loại thuộc về phương pháp PSVMR, và tốt thứ hai là PFST. Tuy nhiên, PSVMR chỉ tốt hơn PFST rất ít, không đáng kể (chỉ thấp hơn 1.9\% tỉ lệ phân loại sai), nhưng thời gian chạy lại gần gấp 3 lần PSFT (46.909 giây so với 16.1 giây).
+
+

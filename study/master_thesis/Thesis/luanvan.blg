@@ -1,0 +1,69 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: luanvan.aux
+A level-1 auxiliary file: def.aux
+A level-1 auxiliary file: biangoai.aux
+A level-1 auxiliary file: biatrong.aux
+A level-1 auxiliary file: loicamon.aux
+A level-1 auxiliary file: loinoidau.aux
+A level-1 auxiliary file: chapter1.aux
+A level-1 auxiliary file: chapter2.aux
+A level-1 auxiliary file: chapter3.aux
+A level-1 auxiliary file: chapter4.aux
+A level-1 auxiliary file: ketluan.aux
+The style file: plain.bst
+Database file #1: bbli.bib
+Warning--I didn't find a database entry for "nguyen2014efficiency"
+Warning--I didn't find a database entry for "shishkin2016efficiency"
+Warning--I didn't find a database entry for "farahat2011efficiency"
+Warning--I didn't find a database entry for "guillen2009efficiency"
+Warning--I didn't find a database entry for "lopez2006solve"
+Warning--I didn't find a database entry for "aggarwal2001outlier"
+Warning--I didn't find a database entry for "hodge2004survey"
+Warning--I didn't find a database entry for "kotsiantis2007supervised"
+Warning--I didn't find a database entry for "kohavi1995study"
+Warning--can't use both volume and number fields in arai2016unsupervised
+Warning--empty journal in goldberg1988genetic
+Warning--can't use both volume and number fields in johnson2002applied
+You've used 33 entries,
+            2118 wiz_defined-function locations,
+            719 strings with 10761 characters,
+and the built_in function-call counts, 12729 in all, are:
+= -- 1234
+> -- 700
+< -- 10
++ -- 279
+- -- 242
+* -- 985
+:= -- 2105
+add.period$ -- 102
+call.type$ -- 33
+change.case$ -- 214
+chr.to.int$ -- 0
+cite$ -- 36
+duplicate$ -- 430
+empty$ -- 927
+format.name$ -- 242
+if$ -- 2612
+int.to.chr$ -- 0
+int.to.str$ -- 33
+missing$ -- 37
+newline$ -- 167
+num.names$ -- 66
+pop$ -- 226
+preamble$ -- 1
+purify$ -- 186
+quote$ -- 0
+skip$ -- 298
+stack$ -- 0
+substring$ -- 823
+swap$ -- 93
+text.length$ -- 10
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 122
+warning$ -- 3
+while$ -- 117
+width$ -- 35
+write$ -- 361
+(There were 12 warnings)

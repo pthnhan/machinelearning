@@ -1,0 +1,82 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: master's thesis.aux
+A level-1 auxiliary file: 1.biangoai.aux
+A level-1 auxiliary file: 2.biatrong.aux
+A level-1 auxiliary file: 3.loicamdoan.aux
+A level-1 auxiliary file: 4.loicamon.aux
+A level-1 auxiliary file: 5.ttLVtiengViet.aux
+A level-1 auxiliary file: 6.ttLVtiengAnh.aux
+A level-1 auxiliary file: 7.loinoidau.aux
+A level-1 auxiliary file: 8.chuong1.aux
+A level-1 auxiliary file: 9.chuong2.aux
+A level-1 auxiliary file: 10.chuong3.aux
+A level-1 auxiliary file: 10.chuong4.aux
+A level-1 auxiliary file: 10.ketluan.aux
+A level-1 auxiliary file: 11.thamkhao.aux
+The style file: abbrv.bst
+A level-1 auxiliary file: 12.phuluc.aux
+Database file #1: myrefs.bib
+Repeated entry---line 284 of file myrefs.bib
+ : @article{lopez2006solving
+ :                          ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 378 of file myrefs.bib
+ : @article{guyon2003introduction
+ :                               ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 539 of file myrefs.bib
+ : @article{kumar2014feature
+ :                          ,
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "nguyen2014efficiency"
+Warning--I didn't find a database entry for "shishkin2016efficiency"
+Warning--I didn't find a database entry for "farahat2011efficiency"
+Warning--I didn't find a database entry for "guillen2009efficiency"
+Warning--I didn't find a database entry for "lopez2006solve"
+Warning--can't use both volume and number fields in arai2016unsupervised
+Warning--empty journal in goldberg1988genetic
+Warning--can't use both volume and number fields in johnson2002applied
+Warning--can't use both volume and number fields in kohavi1995study
+You've used 51 entries,
+            2118 wiz_defined-function locations,
+            823 strings with 14097 characters,
+and the built_in function-call counts, 20036 in all, are:
+= -- 1994
+> -- 1008
+< -- 20
++ -- 404
+- -- 344
+* -- 1482
+:= -- 3226
+add.period$ -- 160
+call.type$ -- 51
+change.case$ -- 317
+chr.to.int$ -- 0
+cite$ -- 55
+duplicate$ -- 718
+empty$ -- 1502
+format.name$ -- 344
+if$ -- 4203
+int.to.chr$ -- 0
+int.to.str$ -- 51
+missing$ -- 54
+newline$ -- 256
+num.names$ -- 102
+pop$ -- 336
+preamble$ -- 1
+purify$ -- 271
+quote$ -- 0
+skip$ -- 534
+stack$ -- 0
+substring$ -- 1382
+swap$ -- 195
+text.length$ -- 20
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 194
+warning$ -- 4
+while$ -- 193
+width$ -- 53
+write$ -- 562
+(There were 3 error messages)

@@ -1,0 +1,13 @@
+\chapter*{Lời nói đầu}
+\addcontentsline{toc}{chapter}{Lời nói đầu}
+
+Sự phát triển của dữ liệu ngày nay đặt ra thách thức trong quản lý, lưu trữ và áp dụng vào các bài toán cụ thể. Trong khi các phương pháp trích xuất đặc trưng có thể giảm kích thước dữ liệu để thực hành, nhưng các phương pháp này không giúp giảm thiểu chi phí lưu trữ dữ liệu. Trong khi đó, việc lựa chọn đặc trưng giúp loại bỏ các đặc trưng dư thừa và do đó hữu ích không chỉ trong thực hành nghiên cứu dữ liệu mà còn trong giảm chi phí quản lý và lưu trữ.  Trong đề tài luận văn cao học này, chúng tôi phát triển một phương pháp \lq\lq Sử dụng tính toán song song để lựa chọn đặc trưng dựa trên tiêu chí tỉ lệ vết (Parallel feature selection based on the trace ratio criterion - PFST)\rq\rq cho bài toán phân loại. Tiêu chí được sử dụng là một thước đo về khả năng tách lớp được sử dụng trong LDA, để đánh giá tính hữu dụng của đặc trưng. Dựa trên tiêu chí này, PFST sẽ nhanh chóng tìm thấy các đặc trưng quan trọng từ một tập hợp các đặc trưng gốc của tập dữ liệu lớn bằng cách sử dụng sức mạnh của tính toán song song để thực hiện lựa chọn đặc trưng và loại bỏ các đặc trưng dư thừa. Sau khi các đặc trưng quan trọng nhất được đưa vào mô hình, chúng tôi đánh giá phương pháp thông qua các thử nghiệm khác nhau bằng cách sử dụng LDA làm mô hình phân loại. Thực nghiệm cho thấy rằng phương pháp của chúng tôi có thể chọn ra một tập hợp con nhỏ các đặc trưng trong thời gian ngắn, tiết kiệm thời gian hơn so với một số phương pháp khác. Ngoài ra, độ chính xác khi phân loại dựa trên các đặc trưng được lựa chọn bằng PFST cũng đạt độ chính xác cao và tốt hơn các phương pháp khác, và tốt hơn việc phân loại dựa trên tập các đặc trưng gốc ban đầu.
+
+Nội dung khóa luận này bao gồm 4 chương. Trong đó,
+\begin{description}
+	\item[Chương 1:] Chương này giới thiệu tổng quan về lý do chọn đề tài và các nghiên cứu khoa học liên quan.
+	\item[Chương 2:] Chương này trình bày các kiến thức nền tảng về vấn đề lựa chọn đặc trưng cho lớp các bài toán phân loại.
+	\item[Chương 3:] Chương này trình bày về tiêu chí vết - tiếu chí lựa chọn đặc trưng. Thuật toán PSFT - thuật toán lựa chọn đặc trưng song song dựa trên tiêu chí vết.
+	\item[Chương 4:] Chương này trình bày về các tập dữ liệu được sử dụng khi làm thực nghiệm và thông tin về phần cứng được sử dụng. Trình bày các thuật toán được dùng để so sánh với PFST và thảo luận kết quả
+	\item[Cuối cùng:] Phần kết luận và danh mục các tài liệu tham khảo.
+\end{description}

@@ -1,0 +1,731 @@
+\documentclass[xcolor={dvipsnames}]{beamer} %[envcountsect]
+\usepackage{amsmath,amsthm,latexsym,amsfonts,amsbsy, makeidx, graphics,amssymb,enumerate}
+\usepackage{hyperref}
+\usepackage{bm}
+ \usepackage[utf8x]{vietnam}
+
+
+\usepackage{hyperref}
+\hypersetup{pdfpagemode=FullScreen}
+
+\usetheme{Madrid}
+\usefonttheme{serif}
+%\usetheme{CambridgeUS}
+
+%\usetheme{Warsaw} %Themes http://www.hartwork.org/beamer-theme-matrix/
+\definecolor{colorA}{RGB}{50, 34, 150}
+\definecolor{colorB}{RGB}{140, 151, 154}
+\definecolor{secinhead}{RGB}{249,196,95}
+\definecolor{titlebg}{RGB}{51,51,51}
+\setbeamercolor{structure}{fg=colorA,bg=colorB}
+%\usefonttheme{professionalfonts}
+%\usepackage[pdftex]{graphicx}
+%\usepackage[all]{xy}
+%\end{flushleft}
+%\usepackage{xcolor}
+
+\input{def.tex}
+%\input{defcaodang.tex}
+%\usetheme{AnnArbor}
+
+%\setlength{\parskip}{\baselineskip}
+\setlength{\parskip}{8pt}
+
+\usenavigationsymbolstemplate{} %Xóa thanh điều khiển
+
+
+
+
+
+\def\p{\pause} % dùng để chiếu từng đoạn
+%\def\p{} %dùng để in slide
+
+
+% \usepackage{algorithm,algorithmic}
+% \usepackage{algorithm}
+\usepackage{algorithm}
+\makeatletter
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{algpseudocode}
+\usepackage{multirow}
+
+\begin{document}
+%\title[PFST]{ 
+%	{\Large\bfseries SỬ DỤNG TÍNH TOÁN SONG SONG\\ĐỂ LỰA CHỌN ĐẶC TRƯNG\\DỰA TRÊN TIÊU CHÍ TỈ LỆ VẾT }
+%}
+%\institute[HCMUS]{ĐẠI HỌC KHOA HỌC TỰ NHIÊN TP. HỒ CHÍ MINH}
+%\vspace{0.5cm}
+%\begin{table}[]
+%\begin{tabular}{lll}
+%Thu Nguyen  & Rabindra Khadka$^{\star}$ & Nhan Phan $^{\star}$ \\
+%Anis Yazidi & Pål Halvorsen             & Michael A. Riegler  
+%\end{tabular}
+%\end{table}
+%}
+%\author[Phan Thành Nhân]{\tduong{Phan Thành Nhân}}
+
+\title[\bf LUẬN VĂN TỐT NGHIỆP]{\small {KHÓA LUẬN TỐT NGHIỆP} \\
+	\small QUY DẪN\\TỪ TRƯỜNG HỢP TRUNG BÌNH\\VỀ TRƯỜNG HỢP XẤU NHẤT\\ DỰA TRÊN ĐỘ ĐO GAUSS} 
+\author[Phan Thành Nhân]{ Sinh viên: Phan Thành Nhân.\\
+	Giảng viên hướng dẫn: TS Lê Văn Luyện.}
+\institute[HCMUS]{ĐẠI HỌC KHOA HỌC TỰ NHIÊN TP. HỒ CHÍ MINH}
+\date[\today]
+
+\begin{frame}{\bf \centerline{IJCNN 2023}}
+	\maketitle
+\end{frame}
+	\begin{frame}{Contents}
+	\tableofcontents
+\end{frame}
+\section{Introduction and Motivation}
+\begin{frame}{Introduction and Motivation}
+    \begin{exam}
+        Suppose that we have two datasets
+\begin{align*}\label{eq1}
+\small
+    \mathcal{D}_1 &= \begin{pmatrix}
+    \text{person} &\text{height (cm)} & \text{weight (kg)}  \\
+    1 & 120 & 80 \\
+    2 & 150 & 70 \\
+    3 & 140 & 80 \\
+    4 & 135 & 85 
+    \end{pmatrix},\\
+    \mathcal{D}_2 &= \begin{pmatrix}
+    \text{person} & \text{weight (kg)} & \text{calo/meal}\\
+    5 & 90 & 100  \\
+    6 & 85 & 150 \\
+    7 & 92 & 170 
+    \end{pmatrix}.
+\end{align*}        
+% \begin{align*}\label{eq1}
+% \small
+%     \mathcal{D}_1 &= \begin{pmatrix}
+%     \text{person} &\text{height (cm)} & \text{weight (kg)} & \text{BSL (mg/dl)} \\
+%     1 & 120 & 80 & 80\\
+%     2 & 150 & 70 & 90\\
+%     3 & 140 & 80 & 85\\
+%     4 & 135 & 85 & 95
+%     \end{pmatrix},\\
+%     \mathcal{D}_2 &= \begin{pmatrix}
+%     \text{person} & \text{weight (kg)} & \text{calo/meal} &  \text{BSL (mg/dl)}\\
+%     5 & 90 & 100  & 100\\
+%     6 & 85 & 150 & 95\\
+%     7 & 92 & 170 & 82
+%     \end{pmatrix}.
+% \end{align*}
+    \end{exam}
+\end{frame}
+
+\begin{frame}{Introduction and Motivation}
+\begin{moti}
+Combining the information from these datasets together can help increase the sample sizes and may allow more efficient model training, prediction, and inferences. \\
+
+This motivates us to propose \textbf{\textit{ComImp}} (Combine datasets based on Imputation), a framework that allows vertically combine datasets based on missing data imputation.
+\end{moti}
+\end{frame}
+\section{ComImp algorithm}
+\subsection{ComImp algorithm}
+\begin{frame}{ComImp algorithm}
+\begin{block}{}
+\scalebox{0.88}{
+    \begin{minipage}{\linewidth}
+\begin{algorithm}[H]
+\textbf{Input:} 
+\begin{enumerate}
+    \item datasets $\mathcal{D}_i = \{ \mathcal{X}_i, \mathbf{y}_i\}, i = 1,...,r$
+    \item $\mathcal{F}_i$: set of features in $\mathcal{X}_i$
+    \item $g(\mathcal{X}, \mathcal{H})$: a transformation that rearranges features in $\mathcal{X}$ to follow the order of the features in the set of features $\mathcal{H}$ and insert empty columns if a feature in $\mathcal{H}$ does not exist in $\mathcal{X}$
+    \item Imputer $I$.
+\end{enumerate}
+
+\textbf{Procedure:} 
+\begin{algorithmic}[1]
+    \State $\mathcal{F} = \bigcup_{i=1}^r \mathcal{F}_i$
+    \State  $\mathcal{X}_i^{*} \leftarrow g(\mathcal{X}_i, \mathcal{F})$
+    \State $\mathcal{X}^* = \begin{pmatrix}
+        \mathcal{X}_1^*\\
+        \mathcal{X}_2^*\\
+        \vdots\\
+        \mathcal{X}_r^*
+    \end{pmatrix}, 
+    \mathbf{y} = \begin{pmatrix}
+        \mathbf{y}_1\\
+        \mathbf{y}_2\\
+        \vdots\\
+        \mathbf{y}_r
+    \end{pmatrix}$
+    \State $\mathcal{X} \leftarrow $ imputed version of $\mathcal{X}^*$ using imputer I.
+\end{algorithmic}
+\textbf{Return:} $\mathcal{D} = \{\mathcal{X}, \mathbf{y}\}$, the combined dataset of $\mathcal{D}_1,..., \mathcal{D}_r$.
+\end{algorithm}
+\end{minipage}}
+\end{block}
+\end{frame}
+
+\subsection{ComImp algorithm for combining datasets}
+\begin{frame}{ComImp algorithm for combining datasets}
+    As an illustration, we use the datasets $\mathcal{D}_1, \mathcal{D}_2$. A newly merged dataset $\mathcal{D}$ can be formed by the following process:
+    \begin{enumerate}
+    \item The union of set of features $\mathcal{F}$ consists of \textit{height, weight, and calo/meal},
+    \item
+    \begin{align*}
+    \small
+        \mathcal{X}^*_1&= 
+        \begin{pmatrix}
+    \text{person} &\text{height} & \text{weight} & \text{(calo/meal)}\\
+    1 & 120 & 80 & *\\
+    2 & 150 & 70 & *\\
+    3 & 140 & 80 & *\\
+    4 & 135 & 85 & *
+    \end{pmatrix},\\
+% \end{equation*}
+% and 
+%     \begin{equation*}
+    % \small
+        \mathcal{X}^*_2&= 
+        \begin{pmatrix}
+    \text{person} &\text{height} & \text{weight} & \text{calo/meal}\\
+    5 & * & 90 & 100 \\
+    6 & * & 85 & 150\\
+    7 & * & 92 & 170
+    \end{pmatrix},
+\end{align*}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{ComImp algorithm for combining datasets}
+    \begin{enumerate}
+    \setcounter{enumi}{2}
+    \item Stack $\mathcal{X}_1^*, \mathcal{X}_2^*$ vertically, and stack $\mathbf{y}_1,  \mathbf{y}_2$ vertically
+    \begin{equation*}
+    \small
+        \mathcal{X}^*= 
+        \begin{pmatrix}
+    \text{person} &\text{height} & \text{weight} & \text{calo/meal}\\
+    1 & 120 & 80 & *\\
+    2 & 150 & 70 & *\\
+    3 & 140 & 80 & *\\
+    4 & 135 & 85 & *\\
+    5 & * & 90 & 100 \\
+    6 & * & 85 & 150\\
+    7 & * & 92 & 170
+    \end{pmatrix},
+\end{equation*}
+and 
+\begin{equation*}
+    \mathbf{y}% = \begin{pmatrix}
+    %     \mathbf{y}_1\\ 
+    %     \mathbf{y}_2
+    % \end{pmatrix} 
+    = \begin{pmatrix}
+        80\\ 90 \\ 85\\ 95\\
+        100 \\ 95\\82
+    \end{pmatrix}
+\end{equation*}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{ComImp algorithm for combining datasets}
+    \begin{enumerate}
+    \setcounter{enumi}{3}
+\item $\mathcal{X}=$ imputed version of $\mathcal{X}^*$. Suppose that mean imputation is being used, then
+    \begin{equation*}
+    \small
+        \mathcal{X}=%\begin{matrix}
+            % \text{person} \;\;\; \text{height} \;\;\;  \text{weight} \;\;\;\;  \text{calo/meal}\\
+        \begin{pmatrix}
+    \text{(person)} &\text{(height)} & \text{(weight)} & \text{(calo/meal)}\\
+    1 & 120 & 80 & 140\\
+    2 & 150 & 70 & 140\\
+    3 & 140 & 80 & 140\\
+    4 & 135 & 85 & 140\\
+    5 & 136.25 & 90 & 100 \\
+    6 & 136.25 & 85 & 150\\
+    7 & 136.25 & 92 & 170
+    \end{pmatrix},
+    % \end{matrix}
+\end{equation*}
+\item $\mathcal{D}=(\mathcal{X},\mathbf{y}).$
+\end{enumerate}
+\end{frame}
+\section{Combining datasets with dimension reduction (PCA-ComImp)}
+\begin{frame}{Combining datasets with dimension reduction (PCA-ComImp)}
+    \begin{block}{}
+\scalebox{1}{
+    \begin{minipage}{\linewidth}
+\begin{algorithm}[H]
+\textbf{Input:} 
+\begin{enumerate}
+    \item Datasets $\mathcal{D}_i = \{ \mathcal{X}_i, \mathbf{y}_i\}, i = 1,2$ consists of $\mathcal{D}_i^{(tr)} = \{ \mathcal{X}_i^{(tr)}, \mathbf{y}_i^{(tr)}\}, i = 1,2$ as the training sets and $\mathcal{D}_i^{(ts)} = \{ \mathcal{X}_i^{(ts)}, \mathbf{y}_i^{(ts)}\}$ as the test sets,
+    \item $\mathcal{F}_i$: set of features in $\mathcal{X}_i$,
+    \item $g(\mathcal{X}, \mathcal{H})$: a transformation that rearranges features in $\mathcal{X}$ to follow the order of the features in the set of features $\mathcal{H}$ and insert empty columns if a feature in $\mathcal{H}$ does not exist in $\mathcal{X}$
+    \item Imputer $I$, classifier $\mathcal{C}$.
+\end{enumerate}
+\end{algorithm}
+\end{minipage}}
+\end{block}
+\end{frame}
+
+\begin{frame}{Combining datasets with dimension reduction (PCA-ComImp)}
+    \begin{block}{}
+\scalebox{1}{
+    \begin{minipage}{\linewidth}
+\begin{algorithm}[H]
+\textbf{Procedure:} 
+\begin{algorithmic}[1]
+    \State $\mathcal{F} =  \mathcal{F}_1 \cup \mathcal{F}_2, \; \mathcal{S} = \mathcal{F}_1 \cap \mathcal{F}_2, \; \mathcal{Q}_1 = \mathcal{F}_1\setminus \mathcal{F}_2, \; \mathcal{Q}_2 = \mathcal{F}_2\setminus \mathcal{F}_1$
+    \State $(\mathcal{R}_i^{(tr)}, V) \leftarrow pca(\mathcal{Q}_i^{(tr)})$ and  
+    $\mathcal{R}_i^{(ts)} \leftarrow \mathcal{Q}_i^{(ts)}V$
+    \State $\mathcal{H} = \mathcal{S} \cup  \mathcal{R}_1 \cup \mathcal{R}_2$
+    \State $\mathcal{X}_i^* \leftarrow g(\mathcal{S} \cup \mathcal{R}_i, \mathcal{H}), i = 1, 2$
+    \State $\mathcal{X}^* = \begin{pmatrix}
+    \mathcal{X}_1^*\\
+    \mathcal{X}_2^*
+    \end{pmatrix}, 
+    \mathbf{y} = \begin{pmatrix}
+    \mathbf{y}_1\\
+    \mathbf{y}_2
+    \end{pmatrix}$
+    \State $\mathcal{X} \leftarrow $ imputed version of $\mathcal{X}^*$ using imputer I.
+\end{algorithmic}
+
+\textbf{Return:} $\mathcal{D} = \{\mathcal{X}, \mathbf{y}\}$, the combined dataset of $\mathcal{D}_1,\mathcal{D}_2$.
+\end{algorithm}
+\end{minipage}}
+\end{block}
+\end{frame}
+
+\section{Choices of missing data imputation methods}
+\begin{frame}{Choices of missing data imputation methods}
+    \begin{theo}
+Assume that we have two datasets $\mathcal{D}_1 = \{\mathbf{U}, \mathbf{y}\}, \mathcal{D}_2 = \{\mathbf{V}, \boldsymbol{z}\}$ where $\mathbf{U}$ 
+%is an one-dimensional input
+, $\mathbf{V}$
+%is a two-dimensional 
+are inputs, and $\mathbf{y}, \boldsymbol{z}$ are the labels, such that
+% \vspace{-20pt}
+\begin{align}
+    \mathbf{U} &= (\mathbf{1}_n \; \;\mathbf{u}_1)  = \begin{pmatrix}
+        1 & u_{11}\\
+        1 & u_{21}\\
+        \vdots &\vdots\\
+        1 & u_{n1}
+    \end{pmatrix},\quad
+    \mathbf{V} = (\mathbf{1}_m \; \;\mathbf{v}_1 \; \;\mathbf{v}_2)  = \begin{pmatrix}
+        1 & v_{11} & v_{12}\\
+        1 & v_{21} & v_{22} \\
+        \vdots &\vdots & \vdots\\
+        1 & v_{m1} & v_{m2}
+    \end{pmatrix},    
+\end{align}
+where $u_{ij}, v_{ij}\in \mathbb{R}$, and 
+\begin{equation}
+    \mathbf{y}=\begin{pmatrix}
+        y_1\\y_2\\\vdots\\y_n
+    \end{pmatrix}, \boldsymbol{z}=\begin{pmatrix}
+        z_1\\z_2\\\vdots\\z_m
+    \end{pmatrix}, \mathbf{Y} = \begin{pmatrix}
+        \mathbf{y}\\\boldsymbol{z} 
+    \end{pmatrix}.
+\end{equation}
+\end{theo}
+\end{frame}
+
+
+\begin{frame}{Choices of missing data imputation methods}
+    \begin{theo}
+Next, let $\bar{\mathbf{v}}_2$ be the mean of $\mathbf{v}_2$. If mean imputation is being used for ComImp then the resulting combined input is 
+% \vspace{-10pt}
+\begin{equation}
+\mathbf{X} =  \begin{pmatrix}
+    1_n & \mathbf{u}_1 & \bar{\mathbf{v}}_2\\
+    1_m & \mathbf{v}_1 & \mathbf{v}_2
+\end{pmatrix}.
+\end{equation}
+ Then, we have the following relation between the sum of squared errors ($SSE$) of the model fitted on $\mathcal{D} = \{\mathbf{X}, \mathbf{Y}\}$, 
+ % \vspace{-15pt}
+\begin{equation}\label{equation-inq}
+    SSE_{\mathcal{D}} \ge SSE_{\mathcal{D}_1}+ SSE_{\mathcal{D}_2}.
+\end{equation}
+\end{theo}
+\end{frame}
+\input{proof}
+
+
+\begin{frame}{Choices of missing data imputation methods}
+Factors should be considered when choosing the imputer for ComImp: speed, imputation quality, and the ability to predict sample by sample.
+\begin{itemize}
+\item When the datasets to be combined are small, methods that are slow but can give promising imputation quality, such as kNN, MICE, missForest, can be considered. 
+
+\item Matrix decomposition methods may not be suitable when the data is not of low rank, and are not suitable for imputation in online learning, which requires the handling of each sample as it comes. 
+
+\item When the uncertainty of imputed values is of interest, then Bayesian techniques can be used. However, Bayesian imputation techniques can be slow. 
+
+\item DIMV is a scalable imputation method that estimates the conditional distribution of the missing values based on a subset of observed entries. As a result, the method provides an explainable imputation, along with the confident region, in a simple and straight forward manner.
+
+\end{itemize}
+\end{frame}
+
+\section{Experiments}
+\begin{frame}{Experiments}
+    \begin{block}{\textbf{Datasets}}
+        \begin{table}[htbp]
+\begin{center}
+\caption{Descriptions of datasets used in the experiments}
+    \begin{tabular}{|c|c|c|c|}
+		\hline
+		Dataset & \# Classes & \# Features & \# Samples \\
+		\hline
+		Seed & 3 & 7 & 210\\\hline
+		Wine & 3 & 13 & 178 \\\hline
+		Epileptic Seizure & 2 &  178 &  11,500\\\hline
+		Gene & $5$ & $20531$ & $801$ \\\hline
+	\end{tabular}
+	\label{table_info_datasets}
+\end{center}
+\end{table}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Regression simulation}
+    \begin{enumerate}
+        \item Run a Monte Carlo experiment for regression with 10000 repeats. For each loop, we generate a dataset $\mathcal{D}_1$ of 300 samples, and a dataset $\mathcal{D}_2$ of 200 samples  based on the following relation
+         \begin{equation}
+             Y = 1 + X_1+0.5X_2+X_3+\epsilon 
+         \end{equation}
+        where $\mathbf{X} = (X_1, X_2, X_3)^T$ follows a multivariate Gaussian distribution with the following mean and covariance matrix
+\begin{equation}
+    \boldsymbol {\mu }=\begin{pmatrix}
+        1\\2\\0.5   
+    \end{pmatrix}, 
+% \end{equation}
+% \begin{equation}
+    \mathbf{\Sigma} = \begin{pmatrix}
+        1 & 0.5 & 0.3\\
+        0.5 & 1 & 0.4\\
+        0.3 & 0.4 & 1
+    \end{pmatrix} 
+\end{equation}
+and $\epsilon \sim \mathcal{ N}(0,0.2\,I)$, where $I$ is the identity matrix.
+    \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Regression simulation}
+    \begin{enumerate}
+        \setcounter{enumi}{1}
+        \item  Delete the first feature of $\mathcal{D}_1$ and the second feature of $\mathcal{D}_2$. 
+        \item Added Gaussian noise with variance $0.05$ to the second feature and Gaussian noise with variance $0.1$ to the third feature of $\mathcal{D}_2$.
+        \item $\mathcal{D}_1, \mathcal{D}_2$ is split again into training and testing sets ratio 7:3, respectively. 
+    \end{enumerate}
+    \end{block}
+    % Note: When giving a presentation, explain the meaning of f1, f2, and f
+    \begin{block}{Results}
+        \begin{table}[htbp]
+        \caption{mean $\pm$ variance of MSE on test sets of regression models fitted on $\mathcal{D}_1,\mathcal{D}_2,\mathcal{D}$, respectively.}
+        \label{tab-regr}
+        \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+        \hline
+        model & \bf $f_1$  &{\bf $f_2$}&{\bf $f$}\\ \hline 
+        MSE & 3.327 $\pm$ 0.093 & 3.044 $\pm$ 0.131 & 0.734 $\pm$ 0.002\\\hline
+        \end{tabular}
+        \end{center}
+        \end{table}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Experiments of merging two datasets}
+        Conduct experiments on the Seed dataset and repeat the experiment 1000 times. Follow these steps for each iteration:
+        \begin{enumerate}
+            \item Delete the first two columns of the input in $\mathcal{D}_1$ and split it into training and testing sets of equal sizes.
+            \item Delete the last columns of the input data in $\mathcal{D}_2$ and split it into the training and testing sets of equal sizes.
+            \item Fit models $f_1, f_2$ on the training set of $\mathcal{D}_1, \mathcal{D}_2$, respectively.
+            \item Use ComImp to combine the training sets of $\mathcal{D}_1, \mathcal{D}_2$ to the training sets of $\mathcal{D}$, and do similarly for the testing portions
+            \item Fit a model $f$ on the training set of $\mathcal{D}$.
+        \end{enumerate}
+    \end{block}
+\end{frame}
+\begin{frame}{Experiments}
+    \begin{block}{Results}
+        \begin{table}[htbp]
+\caption{mean $\pm$ variance of the accuracy on test sets of  models fitted on $\mathcal{D}_1,\mathcal{D}_2,\mathcal{D}$ of the Seed dataset, respectively.}
+\label{tab-merge2}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_1$}
+\\ \hline 
+\multicolumn{1}{|c|}{Classifier}& \multicolumn{1}{|c|}{\bf ${f}_1$}  &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression & 0.909 $\pm$ 0.001 &0.913 $\pm$ 0.001\\\hline
+SVM & 0.917 $\pm$ 0.001 & 0.925 $\pm$ 0.001\\\hline
+\hline
+\multicolumn{1}{|c|}{}&\multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_2$}
+\\ \hline 
+\multicolumn{1}{|c|}{Classifier}&\multicolumn{1}{|c|}{\bf ${f}_2$} &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression & 0.858 $\pm$ 0.006 & 0.896 $\pm$ 0.003\\\hline
+SVM & 0.882 $\pm$ 0.003 & 0.890 $\pm$ 0.003\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Experiments of merging three datasets}
+    We conduct experiments on the Wine dataset.
+    \begin{enumerate}
+        \item Randomly split the data into three datasets $\mathcal{D}_1, \mathcal{D}_2, \mathcal{D}_3$
+        \item Delete the first column of the input of $\mathcal{D}_1$, the last 8 columns of $\mathcal{D}_2$, and the $5^{th}$ and $6^{th}$ column of the input of $\mathcal{D}_3$
+    \end{enumerate}
+    \end{block}
+\end{frame}
+\begin{frame}{Experiments}
+    \begin{block}{Results}
+        \begin{table}[htbp]
+\caption{mean $\pm$ variance of the accuracy on test sets of models fitted on $\mathcal{D}_1,\mathcal{D}_2, \mathcal{D}_3, \mathcal{D}$ of the Wine dataset, respectively.}
+\label{tab-merge3}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|}%{lllllll}
+\hline
+\multicolumn{1}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_1$}\\ \hline 
+\multicolumn{1}{|c|}{Classifier}& \multicolumn{1}{c}{\bf ${f}_1$}  &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression  & 0.912 $\pm$ 0.004 & 0.941 $\pm$ 0.002 \\\hline
+SVM & 0.934 $\pm$ 0.003 & 0.955 $\pm$ 0.001\\\hline
+\hline
+\multicolumn{1}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_2$}\\ \hline 
+\multicolumn{1}{|c|}{Classifier}& \multicolumn{1}{c}{\bf ${f}_2$}  &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression  & 0.735 $\pm$ 0.010& 0.781 $\pm$ 0.007\\\hline
+SVM & 0.793 $\pm$ 0.007& 0.826 $\pm$ 0.005 \\\hline
+\hline
+\multicolumn{1}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_3$}\\ \hline 
+\multicolumn{1}{|c|}{Classifier}&\multicolumn{1}{|c|}{\bf ${f}_3$} &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression &0.946 $\pm$ 0.003& 0.971 $\pm$ 0.001\\\hline
+SVM &0.953 $\pm$ 0.002&0.968 $\pm$ 0.001\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+\begin{block}{ComImp with transfer learning}
+    We conduct experiments on multi-variate time series datasets related to EEG signals.
+    \begin{enumerate}
+        \item Randomly split the data into two datasets $\mathcal{D}_1, \mathcal{D}_2$ with 6:4 ratio.
+        \item Simulate the bad EEG recordings with missing values. Delete the first 16 columns of $\mathcal{D}_1$ and the last 17 columns of $\mathcal{D}_2$.
+        \item Split $\mathcal{D}_1, \mathcal{D}_2$ into training and testing sets with a 7:3 ratio.
+    \end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+\begin{block}{ComImp with transfer learning}
+To compare our methods with transfer learning, we conduct the following two procedures: 
+
+\begin{itemize}
+\item We train a fully connected two-layered neural network ($f_1$) on the training portion of $\mathcal{D}_1$. Next, we transfer the weights of $f_1$ to train a fully connected network $f_2$ on the training portion of $\mathcal{D}_2$ and fine-tune $f_2$. 
+
+\item For our method,
+\begin{enumerate}
+    \item Use ComImp to combine $\mathcal{D}_1$ and $\mathcal{D}_2$, which gives us $\mathcal{D}$ with $\mathcal{D}_{train}$ is the merge between the training portion of $\mathcal{D}_1$ and $\mathcal{D}_2$.
+    \item $\mathcal{D}_{test_1}$ corresponding to the testing portion of $\mathcal{D}_1$, and $\mathcal{D}_{test_2}$ corresponding to the testing portion of $\mathcal{D}_2$. We train a model $f$ on $\mathcal{D}_{train}$.
+    \item Transfer the weights of $f$ onto the training portion of $\mathcal{D}_1$ and fine-tune the model, which gives us model $f^{ComImp}_{1}$.
+    \item Do similarly for $\mathcal{D}_2$, which gives us $f^{ComImp}_{2}$.
+\end{enumerate}
+\end{itemize}
+Run the model for 10,000 epochs.
+\end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Results}
+        \begin{table}[htbp]
+        \caption{Comparison of transfer learning and transfer learning with ComImp on the EEG dataset.}
+\label{tab-eeg}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_1$}  &\multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_2$}
+\\ \hline  
+\multicolumn{1}{|c|}{Classifier}& \multicolumn{1}{|c|}{\bf ${f}_1$}  &\multicolumn{1}{|c|}{\bf $f^{ComImp}_{1}$} &\multicolumn{1}{|c|}{\bf ${f}_2$} &\multicolumn{1}{|c|}{\bf $f^{ComImp}_{2}$}
+\\ \hline 
+Transfer Learning & 0.774 & 0.796 & 0.839  & 0.849 \\
+\hline 
+\end{tabular}
+\end{center}
+        \end{table}
+    \end{block}
+\end{frame}
+\begin{frame}{Experiments}
+    \begin{block}{Data imputation performance for missing datasets}
+    We conduct experiments on the Wine dataset. 
+    \begin{enumerate}
+        \item Delete the first two columns of the input in $\mathcal{D}_1$ and split it into training and testing sets of equal sizes.
+        \item Delete the last two columns of the input data in $\mathcal{D}_2$.
+        \item Generate missing data at missing rates of $20\%, 40\%, 60\%$ on each training/testing set.
+        \item Use ComImp to combine the corresponding training and testing sets of $\mathcal{D}_1, \mathcal{D}_2$ to the training and testing sets of $\mathcal{D}$. 
+    \end{enumerate}
+For the ComImp approach, the missing values are automatically filled after merging the datasets. For the non-ComImp approach, we use softImpute to impute missing values. Then, we fit a models $f_1, f_2, f$ on the training set of $\mathcal{D}_1, \mathcal{D}_2, \mathcal{D}$, respectively.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Results}
+        \begin{table}[htbp]
+        \caption{mean $\pm$ variance of the accuracy on test sets of  models fitted on $\mathcal{D}_1$ of the Wine dataset.}
+\label{tab-imputation}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+
+\hline
+\multicolumn{2}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_1$}
+\\ \hline 
+\multicolumn{1}{|c|}{missing rate}&\multicolumn{1}{|c|}{Classifier}& \multicolumn{1}{|c|}{\bf ${f}_1$}  &\multicolumn{1}{|c|}{\bf ${f}$} 
+\\ \hline 
+\multirow{2}{*}{20\%}&Logistic Regression  & 0.917 $\pm$ 0.001 & 0.908 $\pm$ 0.001 \\ \cline{2-4}
+&SVM & 0.939 $\pm$ 0.001 & 0.939 $\pm$ 0.001 \\\hline
+\multirow{2}{*}{40\%}&Logistic Regression  & 0.883 $\pm$ 0.002 & 0.877 $\pm$ 0.002 \\ \cline{2-4}
+&SVM & 0.901 $\pm$ 0.001 & 0.901 $\pm$ 0.001 \\ \hline
+\multirow{2}{*}{60\%}&Logistic Regression  & 0.834 $\pm$ 0.002 & 0.831 $\pm$ 0.002\\ \cline{2-4}
+&SVM & 0.843 $\pm$ 0.002 & 0.846 $\pm$ 0.002\\\hline
+\multirow{2}{*}{80\%}&Logistic Regression  & 0.762 $\pm$ 0.004 & 0.762 $\pm$ 0.003\\ \cline{2-4}
+&SVM & 0.762 $\pm$ 0.004 & 0.766 $\pm$ 0.003 \\\hline
+\end{tabular}
+\end{center}
+        \end{table}
+    \end{block}
+\end{frame}
+\begin{frame}{Experiments}
+    \begin{block}{Results}
+        \begin{table}[htbp]
+        \caption{mean $\pm$ variance of the accuracy on test sets of  models fitted on $\mathcal{D}_2$ of the Wine dataset.}
+\label{tab-imputation}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+
+\hline
+\multicolumn{2}{|c|}{} &\multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_2$}
+\\ \hline 
+\multicolumn{1}{|c|}{missing rate}&\multicolumn{1}{|c|}{Classifier}&\multicolumn{1}{|c|}{\bf ${f}_2$} &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+\multirow{2}{*}{20\%}&Logistic Regression & 0.859 $\pm$ 0.007& 0.874 $\pm$ 0.004\\ \cline{2-4}
+&SVM & 0.882 $\pm$ 0.006& 0.893 $\pm$ 0.004\\\hline
+\multirow{2}{*}{40\%}&Logistic Regression  & 0.804 $\pm$ 0.009& 0.837 $\pm$ 0.005\\ \cline{2-4}
+&SVM & 0.814 $\pm$ 0.009& 0.846 $\pm$ 0.005\\ \hline
+\multirow{2}{*}{60\%}&Logistic Regression & 0.733 $\pm$ 0.010& 0.783 $\pm$ 0.007\\ \cline{2-4}
+&SVM & 0.716 $\pm$ 0.012 & 0.779 $\pm$ 0.008\\\hline
+\multirow{2}{*}{80\%}&Logistic Regression & 0.645 $\pm$ 0.012& 0.712 $\pm$ 0.008\\ \cline{2-4}
+&SVM & 0.603 $\pm$ 0.014& 0.692 $\pm$ 0.010\\\hline
+\end{tabular}
+\end{center}
+        \end{table}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+\begin{block}{Combining datasets using dimension reduction}
+ We conduct experiments on the Gene dataset. 
+ \begin{enumerate}
+     \item Split it into $\mathcal{D}_1, \mathcal{D}_2$ with a ratio $7:3$, and then split each of them into halves for training and testing.
+     \item Delete the first 10,000 columns of the input in $\mathcal{D}_1$ and the last 10,000 columns of the input in $\mathcal{D}_2$.
+     \item Apply ComImp with PCA and train a neural network $f$ on the merged data.
+     \item Train a separate model $f_1$ on $\mathcal{D}_1$, and $f_2$ on $\mathcal{D}_2$
+ \end{enumerate}
+ Repeat the experiment 100 times
+\end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+\begin{block}{Results}
+ We conduct experiments on the Gene dataset. 
+ \begin{enumerate}
+     \item Split it into $\mathcal{D}_1, \mathcal{D}_2$ with a ratio $7:3$, and then split each of them into halves for training and testing.
+     \item Delete the first 10,000 columns of the input in $\mathcal{D}_1$ and the last 10,000 columns of the input in $\mathcal{D}_2$.
+     \item Apply ComImp with PCA and train a neural network $f$ on the merged data.
+     \item Train a separate model $f_1$ on $\mathcal{D}_1$, and $f_2$ on $\mathcal{D}_2$
+ \end{enumerate}
+ Repeat the experiment 100 times
+\end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Results}
+        \begin{table}[htbp]
+        \caption{mean $\pm$ variance of the accuracy on test sets of regression models fitted on $\mathcal{D}_1,\mathcal{D}_2,\mathcal{D}$ of the Gene dataset, respectively.}
+\label{tab-gene}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_1$}
+\\ \hline 
+\multicolumn{1}{|c|}{Classifier}& \multicolumn{1}{|c|}{\bf ${f}_1$}  &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression & 0.998 $\pm$ 0.002 &0.998 $\pm$ 0.002\\\hline
+SVM & 0.995 $\pm$ 0.007 & 0.997 $\pm$ 0.003\\ \hline
+\hline
+\multicolumn{1}{|c|}{}&\multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_2$}
+\\ \hline 
+\multicolumn{1}{|c|}{Classifier}&\multicolumn{1}{|c|}{\bf ${f}_2$} &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression & 0.996 $\pm$ 0.006 & 0.996 $\pm$ 0.006\\\hline
+SVM & 0.955 $\pm$ 0.021 & 0.971 $\pm$ 0.012\\ \hline
+\end{tabular}
+\end{center}
+        \end{table}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{A case analysis of when OsImp may fail}
+\begin{itemize}
+    \item     This experiment is conducted on the Seed dataset with the same setup as in experiments of merging two datasets except that we delete the first three features of $\mathcal{D}_1$ and the last four features of $\mathcal{D}_2$.
+    
+    \item The Seed dataset has only seven features, and therefore, $\mathcal{D}_1$ and $\mathcal{D}_2$ have only one overlapping feature.
+\end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Experiments}
+    \begin{block}{Results}
+        \begin{table}[htbp]
+ \caption{mean $\pm$ variance of the accuracy on test sets of models fitted on $\mathcal{D}_1,\mathcal{D}_2,\mathcal{D}$ of the Seed dataset, respectively.}
+\label{tab-osimp-fail}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{}& \multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_1$} 
+\\ \hline 
+\multicolumn{1}{|c|}{Classifier}& \multicolumn{1}{|c|}{\bf ${f}_1$}  &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression & 0.912 $\pm$ 0.001 &0.911 $\pm$ 0.001 \\\hline
+SVM & 0.926 $\pm$ 0.001 & 0.923 $\pm$ 0.001\\\hline
+\hline
+\multicolumn{1}{|c|}{}&\multicolumn{2}{|c|}{\bf test set of $\mathcal{D}_2$}
+\\ \hline 
+\multicolumn{1}{|c|}{Classifier} &\multicolumn{1}{|c|}{\bf ${f}_2$} &\multicolumn{1}{|c|}{\bf ${f}$}
+\\ \hline 
+Logistic Regression & 0.730 $\pm$ 0.017 & 0.675 $\pm$ 0.020\\\hline
+SVM & 0.827 $\pm$ 0.008 & 0.826 $\pm$ 0.010\\\hline
+\end{tabular}
+\end{center}
+        \end{table}
+    \end{block}
+\end{frame}
+\begin{frame}{}
+    \centering{\LARGE{\textbf{Thank you for your attention!}}}
+\end{frame}
+\end{document} 
